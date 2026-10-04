@@ -16,14 +16,11 @@ GitHub Pages publishes the root of `main`.
 
 ## Domain connection
 
-First set `niffe.org` as the custom domain in repository Settings → Pages. Then replace Porkbun parking records for the apex and www with:
+The custom domain is configured in repository Settings → Pages. Porkbun DNS uses these records (TTL 600):
 
 | Type | Host | Value |
 | --- | --- | --- |
-| A | blank (apex) | 185.199.108.153 |
-| A | blank (apex) | 185.199.109.153 |
-| A | blank (apex) | 185.199.110.153 |
-| A | blank (apex) | 185.199.111.153 |
+| ALIAS | blank (apex) | thepheephee.github.io |
 | CNAME | www | thepheephee.github.io |
 
 Preserve unrelated mail and verification records. Enable Enforce HTTPS when GitHub finishes issuing the certificate.
