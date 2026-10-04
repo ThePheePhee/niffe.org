@@ -12,8 +12,6 @@ Plain HTML and CSS with a small progressive-enhancement script for pointer paral
 - `celestial.svg`: original unicursal hexagram, five-petalled centre, and orbital accents.
 - `depth.js`: gentle pointer depth, disabled on touch devices and for reduced motion.
 
-The reading shelf is a manually curated snapshot of the public favourites featured at https://www.goodreads.com/niffe on 4 October 2026. The four original typographic jackets link to Goodreads book pages; they are not reproductions of published covers. It does not automatically sync with Goodreads.
-
 Preview with `python -m http.server 4173` from this folder.
 
 GitHub Pages publishes the root of `main`.
