@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" fill="none"><g transform="translate(500 500)" stroke="#b89c68" stroke-width=".7">
+<circle r="173" opacity=".28"/><circle r="180" opacity=".25"/>
+<path d="M0 -158 137 79 -137 -79 0 158 137 -79 -137 79Z" stroke-width="1" opacity=".68"/>
+<path transform="rotate(0)" d="M0 0C-34 -18 -24 -50 0 -48C24 -50 34 -18 0 0Z" stroke="#ac85bd" opacity=".8"/>
+<path transform="rotate(72)" d="M0 0C-34 -18 -24 -50 0 -48C24 -50 34 -18 0 0Z" stroke="#ac85bd" opacity=".8"/>
+<path transform="rotate(144)" d="M0 0C-34 -18 -24 -50 0 -48C24 -50 34 -18 0 0Z" stroke="#ac85bd" opacity=".8"/>
+<path transform="rotate(216)" d="M0 0C-34 -18 -24 -50 0 -48C24 -50 34 -18 0 0Z" stroke="#ac85bd" opacity=".8"/>
+<path transform="rotate(288)" d="M0 0C-34 -18 -24 -50 0 -48C24 -50 34 -18 0 0Z" stroke="#ac85bd" opacity=".8"/>
+<circle r="8" stroke="#ac85bd" opacity=".8"/>
+<circle r="328" stroke="#9472aa" opacity=".25"/><circle r="410" opacity=".2"/>
+<path transform="translate(0.000 -410.000)" d="M0 -5Q1 0 5 0Q1 1 0 5Q-1 1 -5 0Q-1 0 0 -5Z" opacity=".7"/>
+<path transform="translate(221.663 -344.914)" d="M0 -5Q1 0 5 0Q1 1 0 5Q-1 1 -5 0Q-1 0 0 -5Z" opacity=".7"/>
+<path transform="translate(372.949 -170.320)" d="M0 -5Q1 0 5 0Q1 1 0 5Q-1 1 -5 0Q-1 0 0 -5Z" opacity=".7"/>
+<path transform="translate(405.827 58.349)" d="M0 -5Q1 0 5 0Q1 1 0 5Q-1 1 -5 0Q-1 0 0 -5Z" opacity=".7"/>
+<path transform="translate(309.857 268.493)" d="M0 -5Q1 0 5 0Q1 1 0 5Q-1 1 -5 0Q-1 0 0 -5Z" opacity=".7"/>
+<path transform="translate(115.510 393.392)" d="M0 -5Q1 0 5 0Q1 1 0 5Q-1 1 -5 0Q-1 0 0 -5Z" opacity=".7"/>
+<path transform="translate(-115.510 393.392)" d="M0 -5Q1 0 5 0Q1 1 0 5Q-1 1 -5 0Q-1 0 0 -5Z" opacity=".7"/>
+<path transform="translate(-309.857 268.493)" d="M0 -5Q1 0 5 0Q1 1 0 5Q-1 1 -5 0Q-1 0 0 -5Z" opacity=".7"/>
+<path transform="translate(-405.827 58.349)" d="M0 -5Q1 0 5 0Q1 1 0 5Q-1 1 -5 0Q-1 0 0 -5Z" opacity=".7"/>
+<path transform="translate(-372.949 -170.320)" d="M0 -5Q1 0 5 0Q1 1 0 5Q-1 1 -5 0Q-1 0 0 -5Z" opacity=".7"/>
+<path transform="translate(-221.663 -344.914)" d="M0 -5Q1 0 5 0Q1 1 0 5Q-1 1 -5 0Q-1 0 0 -5Z" opacity=".7"/>
+</g></svg>
