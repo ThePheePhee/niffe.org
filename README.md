@@ -29,5 +29,5 @@ Reference: https://docs.github.com/en/pages/configuring-a-custom-domain-for-your
 
 ## Quote
 
-Ursula K. Le Guin, *The Left Hand of Darkness* (1969).
-Attribution checked against https://www.goodreads.com/quotes/183468-the-only-thing-that-makes-life-possible-is-permanent-intolerable
+Frank Herbert, *Dune* (1965).
+Attribution checked against https://www.azquotes.com/quote/369135
