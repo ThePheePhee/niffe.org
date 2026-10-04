@@ -1,0 +1,2232 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>State Space Transition Kernel</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #11130f;
+      --panel: #1c211c;
+      --panel-2: #232a24;
+      --ink: #f1f4ea;
+      --muted: #abb3a5;
+      --line: #414a3f;
+      --accent: #79d5ff;
+      --visited: #f6c65b;
+      --current: #ffffff;
+      --active-edge: #ffd36a;
+      --low: #d93a35;
+      --high: #34d06d;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      min-height: 100%;
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 370px;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    main {
+      position: relative;
+      min-width: 0;
+      height: 100vh;
+      background:
+        radial-gradient(circle at 28% 24%, rgba(121, 213, 255, 0.12), transparent 28%),
+        linear-gradient(145deg, #11130f 0%, #161b17 52%, #0d1113 100%);
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      cursor: grab;
+      touch-action: none;
+    }
+
+    canvas:active {
+      cursor: grabbing;
+    }
+
+    aside {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      min-height: 0;
+      height: 100vh;
+      padding: 22px;
+      border-left: 1px solid var(--line);
+      background: var(--panel);
+      box-shadow: -16px 0 48px rgba(0, 0, 0, 0.22);
+      overflow: auto;
+      overscroll-behavior: contain;
+    }
+
+    h1,
+    h2,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      font-size: 20px;
+      line-height: 1.18;
+      font-weight: 720;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 760;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .subtle {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .warning {
+      color: #ffd36a;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    button,
+    select,
+    input[type="number"] {
+      height: 40px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: var(--panel-2);
+      color: var(--ink);
+      font: inherit;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    button:hover,
+    select:hover,
+    input[type="number"]:hover {
+      border-color: #6d7a67;
+      background: #2a332d;
+    }
+
+    button.primary {
+      border-color: rgba(121, 213, 255, 0.55);
+      background: #133142;
+      color: #dff6ff;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .metric {
+      min-height: 70px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #171d18;
+    }
+
+    .metric strong {
+      display: block;
+      margin-top: 7px;
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .metric span,
+    label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 760;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+
+    label {
+      display: grid;
+      gap: 8px;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--accent);
+    }
+
+    input[type="file"] {
+      width: 100%;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .option-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 128px;
+      gap: 8px;
+    }
+
+    .legend {
+      display: grid;
+      gap: 10px;
+    }
+
+    .legend-row {
+      display: grid;
+      grid-template-columns: 18px minmax(0, 1fr);
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .swatch {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .probability-bar {
+      height: 13px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--low), #f0c94b, var(--high));
+    }
+
+    .scale-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: -6px;
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 11px;
+    }
+
+    .history {
+      min-height: 102px;
+      max-height: 150px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #171d18;
+      overflow: auto;
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .path-section.hidden {
+      display: none;
+    }
+
+    .chain-tools,
+    .view-tools,
+    .trace-tools,
+    .playback-tools {
+      display: grid;
+      gap: 8px;
+    }
+
+    .trace-buttons {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 6px;
+    }
+
+    .trace-buttons button {
+      height: 32px;
+      font-size: 12px;
+    }
+
+    .trace-picker {
+      display: grid;
+      grid-template-columns: repeat(8, minmax(0, 1fr));
+      gap: 4px;
+      max-height: 132px;
+      overflow: auto;
+      padding: 7px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #171d18;
+    }
+
+    .trace-picker label {
+      display: block;
+      position: relative;
+      min-width: 0;
+      height: 23px;
+      cursor: pointer;
+    }
+
+    .trace-picker input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .trace-picker span {
+      display: grid;
+      place-items: center;
+      width: 100%;
+      height: 100%;
+      border: 1px solid rgba(241, 244, 234, 0.14);
+      border-radius: 5px;
+      background: #222822;
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .trace-picker input:checked + span {
+      border-color: rgba(121, 213, 255, 0.68);
+      background: #123142;
+      color: #dff6ff;
+    }
+
+    .floating-note {
+      position: absolute;
+      left: 22px;
+      bottom: 18px;
+      max-width: 430px;
+      color: rgba(241, 244, 234, 0.74);
+      font-size: 13px;
+      line-height: 1.45;
+      pointer-events: none;
+    }
+
+    .view-title {
+      position: absolute;
+      top: 56px;
+      color: rgba(241, 244, 234, 0.56);
+      font-size: 11px;
+      font-weight: 760;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      pointer-events: none;
+    }
+
+    .view-title.full {
+      left: 22px;
+    }
+
+    .view-title.trace {
+      right: 22px;
+    }
+
+    .view-counter {
+      position: absolute;
+      top: 82px;
+      transform: translateX(-50%);
+      padding: 5px 9px;
+      border: 1px solid rgba(241, 244, 234, 0.12);
+      border-radius: 999px;
+      background: rgba(18, 24, 22, 0.34);
+      color: rgba(241, 244, 234, 0.72);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 11px;
+      font-weight: 800;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .view-counter.hidden {
+      display: none;
+    }
+
+    .active-banner {
+      position: absolute;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 7px 12px;
+      border: 1px solid rgba(255, 211, 106, 0.28);
+      border-radius: 999px;
+      background: rgba(18, 24, 22, 0.45);
+      color: rgba(255, 244, 211, 0.92);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      font-weight: 800;
+      pointer-events: none;
+    }
+
+    .screen-legend {
+      position: absolute;
+      right: 22px;
+      bottom: 18px;
+      display: flex;
+      gap: 12px;
+      max-width: min(520px, calc(100% - 44px));
+      padding: 6px 8px;
+      border: 1px solid rgba(241, 244, 234, 0.08);
+      border-radius: 6px;
+      background: rgba(18, 24, 22, 0.24);
+      color: rgba(241, 244, 234, 0.52);
+      font-size: 10px;
+      line-height: 1.2;
+      pointer-events: none;
+    }
+
+    .screen-legend strong {
+      color: rgba(241, 244, 234, 0.6);
+      font-size: 10px;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+
+    .kernel-panel {
+      position: absolute;
+      right: 18px;
+      bottom: 18px;
+      width: min(980px, calc(100% - 36px));
+      max-height: calc(100vh - 36px);
+      padding: 14px;
+      border: 1px solid rgba(121, 213, 255, 0.24);
+      border-radius: 8px;
+      background: rgba(18, 24, 22, 0.9);
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.34);
+      backdrop-filter: blur(10px);
+      overflow: auto;
+    }
+
+    .kernel-panel.hidden {
+      display: none;
+    }
+
+    .kernel-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .kernel-sections {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .kernel-section {
+      display: grid;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .kernel-section.hidden {
+      display: none;
+    }
+
+    .kernel-section h3 {
+      margin: 0;
+      color: rgba(241, 244, 234, 0.74);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .kernel-grid {
+      display: grid;
+      gap: 1px;
+      aspect-ratio: 1;
+      min-height: 320px;
+    }
+
+    .kernel-cell {
+      display: grid;
+      place-items: center;
+      min-width: 0;
+      min-height: 0;
+      border-radius: 2px;
+      outline: 1px solid rgba(255, 255, 255, 0.025);
+      color: rgba(16, 19, 15, 0.9);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 5.5px;
+      font-weight: 800;
+      line-height: 1;
+      overflow: hidden;
+      text-shadow: 0 1px 1px rgba(255, 255, 255, 0.22);
+    }
+
+    .kernel-cell.active-row {
+      outline: 1px solid rgba(255, 95, 126, 0.95);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.36);
+    }
+
+    @media (max-width: 980px) {
+      body {
+        grid-template-columns: 1fr;
+        grid-template-rows: minmax(460px, 58vh) auto;
+        height: auto;
+        overflow: auto;
+      }
+
+      main,
+      aside {
+        height: auto;
+        min-height: 0;
+      }
+
+      aside {
+        border-top: 1px solid var(--line);
+        border-left: 0;
+      }
+
+      .floating-note {
+        left: 16px;
+        right: 16px;
+        bottom: 14px;
+        max-width: none;
+      }
+
+      .screen-legend {
+        left: 16px;
+        right: 16px;
+        bottom: 70px;
+        width: auto;
+        max-width: none;
+      }
+
+      .view-title {
+        display: none;
+      }
+
+      .view-counter {
+        top: 92px;
+      }
+
+      .kernel-sections {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <canvas id="scene" aria-label="3D cube state space visualization"></canvas>
+    <div class="screen-legend" id="screenLegend">
+      <span id="solidLegend">Solid color: expected hitting time (green = shorter, red = longer)</span>
+      <span>Aura: next-step probability</span>
+      <span>White: current state</span>
+    </div>
+    <div class="active-banner" id="activeBanner">state 21</div>
+    <div class="view-title full" id="fullTitle">Full space</div>
+    <div class="view-title trace" id="traceTitle"></div>
+    <div class="view-counter" id="fullStepCounter">full steps 0</div>
+    <div class="view-counter hidden" id="traceStepCounter">trace activations 0</div>
+    <p class="floating-note">Drag to rotate. The state space is a 4 x 4 x 4 block of transparent cubes, each cube one state.</p>
+
+    <section class="kernel-panel hidden" id="kernelPanel" aria-label="transition kernel matrix">
+      <div class="kernel-head">
+        <h2>Transition Kernel</h2>
+        <p class="subtle" id="kernelCaption">active row highlighted</p>
+      </div>
+      <div class="kernel-sections">
+        <section class="kernel-section">
+          <h3>Full kernel</h3>
+          <div class="kernel-grid" id="fullKernelGrid"></div>
+        </section>
+        <section class="kernel-section hidden" id="traceKernelSection">
+          <h3>Trace kernel</h3>
+          <div class="kernel-grid" id="traceKernelGrid"></div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <aside>
+    <div>
+      <h1>Transition Kernel Walk</h1>
+      <p class="subtle">A voxel state space with a base transition kernel, then a visit-sensitive row update at each step.</p>
+    </div>
+
+    <div class="controls" aria-label="simulation controls">
+      <button class="primary" id="toggle" title="Start or pause">&#9654;</button>
+      <button id="step" title="Advance one transition">&#8631;</button>
+      <button id="reset" title="Reset walk">&#8634;</button>
+      <button class="primary" id="spin" title="Toggle slow rotation">&#10227;</button>
+      <button id="kernelToggle" title="Show transition kernel">K</button>
+      <button class="primary" id="pathToggle" title="Toggle path history">P</button>
+    </div>
+
+    <div class="metric-grid">
+      <div class="metric">
+        <span>Step</span>
+        <strong id="stepCount">0</strong>
+      </div>
+      <div class="metric">
+        <span>Visited</span>
+        <strong id="visitedCount">1</strong>
+      </div>
+      <div class="metric">
+        <span>Current</span>
+        <strong id="currentState">21</strong>
+      </div>
+    </div>
+
+    <section class="view-tools">
+      <h2>View</h2>
+      <label>
+        Representation
+        <select id="representationSelect">
+          <option value="cubes">Transparent cubes</option>
+          <option value="numbered-points">Numbered points</option>
+          <option value="plain-points">Plain points</option>
+        </select>
+      </label>
+    </section>
+
+    <section class="trace-tools">
+      <h2>Trace</h2>
+      <label>
+        Trace arrangement
+        <select id="traceArrangement">
+          <option value="compact">Compact near-cube</option>
+          <option value="full-space">Full-space positions</option>
+        </select>
+      </label>
+      <div class="trace-buttons">
+        <button id="traceNone" type="button">None</button>
+        <button id="traceAll" type="button">All</button>
+        <button id="traceEven" type="button">Even</button>
+        <button id="traceRandom" type="button">Random</button>
+      </div>
+      <div class="trace-picker" id="tracePicker" aria-label="Trace state picker"></div>
+      <p class="subtle" id="traceSummary">No trace selected.</p>
+    </section>
+
+    <section class="playback-tools">
+      <h2>Playback</h2>
+      <label>
+        Step speed <span id="speedValue">680 ms</span>
+        <input id="speed" type="range" min="0" max="100" value="55">
+      </label>
+    </section>
+
+    <section class="chain-tools">
+      <h2>Chain</h2>
+      <div class="option-grid">
+        <label>
+          Full states
+          <input id="stateCount" type="number" min="8" max="125" step="1" value="64">
+        </label>
+        <button id="applyStateCount">Apply</button>
+      </div>
+      <label>
+        Start state
+        <select id="startState"></select>
+      </label>
+      <div class="option-grid">
+        <label>
+          Generated chain type
+          <select id="chainType">
+            <option value="irreducible">Irreducible</option>
+            <option value="reducible">Reducible split</option>
+            <option value="reducible-branching">Reducible, branching start</option>
+            <option value="cycle-ordered">n-cycle, ordered</option>
+            <option value="cycle-random">n-cycle, random</option>
+          </select>
+        </label>
+        <button id="newKernel">New kernel</button>
+      </div>
+      <label>
+        Generated between-state movement <span id="movementValue">70%</span>
+        <input id="movement" type="range" min="0" max="100" value="70">
+      </label>
+      <p class="subtle">For generated stochastic kernels: higher values make transitions spread more broadly between states and reduce self-loop dominance.</p>
+      <label>
+        Import Markov maker JSON or CSV
+        <input id="importFile" type="file" accept=".json,.csv,application/json,text/csv,text/plain">
+      </label>
+      <p class="subtle" id="importStatus">No imported matrix.</p>
+    </section>
+
+    <section class="legend" aria-label="legend">
+      <h2>Encoding</h2>
+      <div class="legend-row">
+        <span class="swatch" style="background: var(--current); border-color: var(--active-edge);"></span>
+        <span>Current state</span>
+      </div>
+      <div class="legend-row">
+        <span class="swatch" style="background: var(--visited);"></span>
+        <span>Visited state</span>
+      </div>
+      <div class="legend-row">
+        <span class="swatch" style="background: var(--accent);"></span>
+        <span>Transition path</span>
+      </div>
+      <div class="probability-bar" aria-hidden="true"></div>
+      <div class="scale-labels" aria-hidden="true"><span>min</span><span>mid</span><span>max</span></div>
+      <p class="subtle" id="legendText">Solid color gives relative expected hitting time: green is shorter and red is longer or unreachable. The transparent aura gives relative next-step probability. The matrix shows numeric probabilities for the base kernel, with the active row highlighted.</p>
+    </section>
+
+    <section class="path-section" id="pathSection">
+      <h2>Path</h2>
+      <div class="history" id="history"></div>
+    </section>
+  </aside>
+
+  <script>
+    const canvas = document.getElementById("scene");
+    const ctx = canvas.getContext("2d");
+    const toggleButton = document.getElementById("toggle");
+    const stepButton = document.getElementById("step");
+    const resetButton = document.getElementById("reset");
+    const spinButton = document.getElementById("spin");
+    const kernelToggle = document.getElementById("kernelToggle");
+    const pathToggle = document.getElementById("pathToggle");
+    const representationSelect = document.getElementById("representationSelect");
+    const stateCountInput = document.getElementById("stateCount");
+    const applyStateCountButton = document.getElementById("applyStateCount");
+    const startStateInput = document.getElementById("startState");
+    const newKernelButton = document.getElementById("newKernel");
+    const speedInput = document.getElementById("speed");
+    const speedValue = document.getElementById("speedValue");
+    const movementInput = document.getElementById("movement");
+    const movementValue = document.getElementById("movementValue");
+    const importFileInput = document.getElementById("importFile");
+    const importStatus = document.getElementById("importStatus");
+    const chainTypeInput = document.getElementById("chainType");
+    const stepCount = document.getElementById("stepCount");
+    const visitedCount = document.getElementById("visitedCount");
+    const currentState = document.getElementById("currentState");
+    const history = document.getElementById("history");
+    const pathSection = document.getElementById("pathSection");
+    const kernelPanel = document.getElementById("kernelPanel");
+    const fullKernelGrid = document.getElementById("fullKernelGrid");
+    const traceKernelSection = document.getElementById("traceKernelSection");
+    const traceKernelGrid = document.getElementById("traceKernelGrid");
+    const kernelCaption = document.getElementById("kernelCaption");
+    const legendText = document.getElementById("legendText");
+    const floatingNote = document.querySelector(".floating-note");
+    const solidLegend = document.getElementById("solidLegend");
+    const activeBanner = document.getElementById("activeBanner");
+    const tracePicker = document.getElementById("tracePicker");
+    const traceSummary = document.getElementById("traceSummary");
+    const traceNone = document.getElementById("traceNone");
+    const traceAll = document.getElementById("traceAll");
+    const traceEven = document.getElementById("traceEven");
+    const traceRandom = document.getElementById("traceRandom");
+    const traceTitle = document.getElementById("traceTitle");
+    const traceArrangement = document.getElementById("traceArrangement");
+    const fullStepCounter = document.getElementById("fullStepCounter");
+    const traceStepCounter = document.getElementById("traceStepCounter");
+
+    const DEFAULT_STATE_COUNT = 64;
+    const MIN_STATE_COUNT = 8;
+    const MAX_STATE_COUNT = 125;
+    const CUBE_SIZE = 1;
+    const CUBE_GAP = 0.28;
+    const CUBE_STEP = CUBE_SIZE + CUBE_GAP;
+    const VISIT_MEMORY = 0.64;
+    let fullDimensions = { x: 4, y: 4, z: 4 };
+    let states = buildStateSpace(DEFAULT_STATE_COUNT);
+
+    let width = 0;
+    let height = 0;
+    let dpr = 1;
+    let rotationX = -0.62;
+    let rotationY = 0.74;
+    let dragging = false;
+    let lastPointer = { x: 0, y: 0 };
+    let running = false;
+    let autoSpin = true;
+    let showKernel = false;
+    let showPathHistory = true;
+    let representation = "cubes";
+    let lastStepAt = 0;
+    let importedKernelLoaded = false;
+    let importedMatrixInvalid = false;
+    let kernelMeta = { summary: "uniform start, stochastic perturbation" };
+    let baseKernel = createKernel("irreducible");
+    let current = centerStateId();
+    let steps = 0;
+    let traceActivations = 0;
+    let visited = new Set([current]);
+    let path = [current];
+    let probabilities = effectiveRow(current, visited);
+    let hittingProbabilities = computeFutureVisitProbabilities();
+    let expectedHittingTimes = computeExpectedHittingTimes();
+    let solidValues = computeSolidValues();
+    let traceStateIds = [];
+    let traceLayout = new Map();
+    let traceArrangementMode = "compact";
+    let traceProbabilities = [...probabilities];
+    let traceSolidValues = [...solidValues];
+    let traceExpectedHittingTimes = [...expectedHittingTimes];
+    let traceActiveState = null;
+    let traceExpectedTimeMode = false;
+    let selectedStartState = current;
+
+    function buildStateSpace(count, records = null) {
+      fullDimensions = compactTraceDimensions(count);
+      const nextStates = [];
+      for (let zIndex = 0; zIndex < fullDimensions.z; zIndex += 1) {
+        for (let yIndex = 0; yIndex < fullDimensions.y; yIndex += 1) {
+          for (let xIndex = 0; xIndex < fullDimensions.x; xIndex += 1) {
+            if (nextStates.length >= count) break;
+            const record = records ? records[nextStates.length] : null;
+            nextStates.push({
+              id: nextStates.length,
+              externalId: record?.externalId ?? nextStates.length,
+              label: record?.label ?? `S${nextStates.length}`,
+              editorX: record?.editorX,
+              editorY: record?.editorY,
+              x: (xIndex - (fullDimensions.x - 1) / 2) * CUBE_STEP,
+              y: (yIndex - (fullDimensions.y - 1) / 2) * CUBE_STEP,
+              z: (zIndex - (fullDimensions.z - 1) / 2) * CUBE_STEP,
+              xIndex,
+              yIndex,
+              zIndex
+            });
+          }
+        }
+      }
+      return nextStates;
+    }
+
+    function clampStateCount(value) {
+      return Math.max(MIN_STATE_COUNT, Math.min(MAX_STATE_COUNT, Math.round(Number(value) || DEFAULT_STATE_COUNT)));
+    }
+
+    function centerStateId() {
+      return states.reduce((best, state) => {
+        const stateDistance = Math.abs(state.x) + Math.abs(state.y) + Math.abs(state.z);
+        const bestDistance = Math.abs(best.x) + Math.abs(best.y) + Math.abs(best.z);
+        return stateDistance < bestDistance ? state : best;
+      }, states[0]).id;
+    }
+
+    function initialStateId() {
+      if (selectedStartState >= 0 && selectedStartState < states.length) return selectedStartState;
+      return chainTypeInput.value === "cycle-ordered" ? 0 : centerStateId();
+    }
+
+    function resize() {
+      const rect = canvas.getBoundingClientRect();
+      dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+      width = Math.floor(rect.width);
+      height = Math.floor(rect.height);
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function distance(a, b) {
+      const dx = a.x - b.x;
+      const dy = a.y - b.y;
+      const dz = a.z - b.z;
+      return Math.sqrt(dx * dx + dy * dy + dz * dz);
+    }
+
+    function normalize(row) {
+      const total = row.reduce((sum, value) => sum + value, 0);
+      if (!Number.isFinite(total) || total <= 0) return row.map(() => 0);
+      return row.map((value) => value / total);
+    }
+
+    function randomInt(min, max) {
+      return min + Math.floor(Math.random() * (max - min + 1));
+    }
+
+    function shuffle(values) {
+      const copy = [...values];
+      for (let index = copy.length - 1; index > 0; index -= 1) {
+        const swapIndex = Math.floor(Math.random() * (index + 1));
+        [copy[index], copy[swapIndex]] = [copy[swapIndex], copy[index]];
+      }
+      return copy;
+    }
+
+    function kernelMovement() {
+      return Math.max(0, Math.min(1, Number(movementInput.value) / 100));
+    }
+
+    function createUniformKernel() {
+      const probability = 1 / states.length;
+      return states.map(() => states.map(() => probability));
+    }
+
+    function perturbedRowFromUniform(uniformRow, fromId, allowedTargets, strength) {
+      const allowed = new Set(allowedTargets);
+      const movement = kernelMovement();
+      const locality = 1 - movement;
+      const hotCount = Math.max(1, Math.min(allowedTargets.length, Math.round(2 + locality * 5)));
+      const hotTargets = shuffle(allowedTargets).slice(0, hotCount);
+      const uniformAllowedProbability = 1 / allowedTargets.length;
+      const structuredWeights = uniformRow.map((value, toId) => {
+        if (!allowed.has(toId)) return 0;
+        const localBump = 1 + locality * 1.65 * Math.exp(-1.15 * distance(states[fromId], states[toId]));
+        const hotBump = hotTargets.includes(toId) ? 1 + locality * Math.random() * 3.6 : 1;
+        const selfBump = fromId === toId ? Math.max(0.18, 1 + locality * Math.random() * 1.6 - movement * 0.95) : 1;
+        const noise = Math.exp((Math.random() * 2 - 1) * strength * (0.35 + locality * 0.65));
+        return value * localBump * hotBump * selfBump * noise;
+      });
+      const structuredRow = normalize(structuredWeights);
+      const broadMix = 0.1 + movement * 0.82;
+      const mixed = structuredRow.map((value, toId) => {
+        if (!allowed.has(toId)) return 0;
+        return value * (1 - broadMix) + uniformAllowedProbability * broadMix;
+      });
+      return normalize(mixed);
+    }
+
+    function graphFromMatrix(matrix) {
+      return matrix.map((row) => row.map((value, toId) => value > 1e-12 ? toId : -1).filter((toId) => toId >= 0));
+    }
+
+    function reachableSet(matrix, start) {
+      const graph = graphFromMatrix(matrix);
+      const reachable = new Set([start]);
+      const stack = [start];
+      while (stack.length > 0) {
+        const from = stack.pop();
+        for (const to of graph[from]) {
+          if (reachable.has(to)) continue;
+          reachable.add(to);
+          stack.push(to);
+        }
+      }
+      return reachable;
+    }
+
+    function allStatesReachAll(matrix) {
+      return states.every((state) => reachableSet(matrix, state.id).size === states.length);
+    }
+
+    function closedSetIsClosed(matrix, closedSet) {
+      const closed = new Set(closedSet);
+      return closedSet.every((fromId) => matrix[fromId].every((value, toId) => value <= 1e-12 || closed.has(toId)));
+    }
+
+    function averageMaxProbability(matrix) {
+      return matrix.reduce((sum, row) => sum + Math.max(...row), 0) / matrix.length;
+    }
+
+    function kernelIsInteresting(matrix) {
+      const movement = kernelMovement();
+      const averageMax = averageMaxProbability(matrix);
+      const uniform = 1 / states.length;
+      const requiredPeak = uniform * (1.35 + (1 - movement) * 2.45);
+      const requiredRowShare = 0.18 + (1 - movement) * 0.27;
+      const rowPeaks = matrix.filter((row) => Math.max(...row) > requiredPeak).length;
+      return averageMax > uniform * (1.18 + (1 - movement) * 2.45) && rowPeaks >= Math.floor(states.length * requiredRowShare);
+    }
+
+    function buildClosedSets(type) {
+      const center = centerStateId();
+      const ids = shuffle(states.map((state) => state.id).filter((id) => type !== "reducible-branching" || id !== center));
+      const closedSetCount = randomInt(2, Math.min(4, Math.floor(ids.length / 3)));
+      const transientTarget = type === "reducible-branching" ? randomInt(2, 5) : randomInt(0, 7);
+      const transientIds = type === "reducible-branching" ? [center, ...ids.splice(0, transientTarget)] : ids.splice(0, transientTarget);
+      const closedSets = Array.from({ length: closedSetCount }, () => []);
+
+      for (let index = 0; index < closedSetCount; index += 1) {
+        closedSets[index].push(ids.shift());
+      }
+      while (ids.length > 0) {
+        closedSets[Math.floor(Math.random() * closedSets.length)].push(ids.shift());
+      }
+
+      return { closedSets, transientIds: transientIds.filter((id) => id !== undefined) };
+    }
+
+    function reducibleAllowedTargets(type, layout, fromId) {
+      const center = centerStateId();
+      const closedSet = layout.closedSets.find((set) => set.includes(fromId));
+      if (closedSet) return closedSet;
+
+      const allNonCenter = states.map((state) => state.id).filter((id) => type !== "reducible-branching" || id !== center);
+      if (type === "reducible-branching" && fromId === center) return allNonCenter;
+
+      const transientRank = layout.transientIds.indexOf(fromId);
+      const laterTransients = layout.transientIds.slice(Math.max(0, transientRank + 1));
+      const closedTargets = layout.closedSets.flat();
+      const chosenClosedSets = shuffle(layout.closedSets).slice(0, randomInt(1, layout.closedSets.length)).flat();
+      return [...new Set([...laterTransients, ...chosenClosedSets, ...closedTargets.slice(0, randomInt(1, Math.max(1, closedTargets.length)))])];
+    }
+
+    function createReducibleCandidate(type) {
+      const uniform = createUniformKernel();
+      const layout = buildClosedSets(type);
+      const matrix = states.map((state) => {
+        const allowedTargets = reducibleAllowedTargets(type, layout, state.id);
+        return perturbedRowFromUniform(uniform[state.id], state.id, allowedTargets, 2.25);
+      });
+      return { matrix, layout };
+    }
+
+    function reducibleCandidateIsRealized(type, matrix, layout) {
+      const center = centerStateId();
+      const closedSetsAreClosed = layout.closedSets.every((set) => closedSetIsClosed(matrix, set));
+      if (!closedSetsAreClosed || layout.closedSets.length < 2) return false;
+
+      if (type === "reducible-branching") {
+        const initiallyReachable = reachableSet(matrix, center).size === states.length;
+        const closureAfterChoice = layout.closedSets.every((set) => {
+          const reachable = reachableSet(matrix, set[0]);
+          return reachable.size === set.length && set.every((id) => reachable.has(id));
+        });
+        return initiallyReachable && closureAfterChoice && kernelIsInteresting(matrix);
+      }
+
+      const hasMultipleClosedClasses = layout.closedSets.some((set) => set.length > 1);
+      const notIrreducible = !allStatesReachAll(matrix);
+      return hasMultipleClosedClasses && notIrreducible && kernelIsInteresting(matrix);
+    }
+
+    function createIrreducibleCandidate() {
+      const uniform = createUniformKernel();
+      return states.map((state) => perturbedRowFromUniform(uniform[state.id], state.id, states.map((target) => target.id), 2.05));
+    }
+
+    function createCycleKernel(randomize = false) {
+      const order = randomize ? shuffle(states.map((state) => state.id)) : states.map((state) => state.id);
+      const successor = new Map();
+      for (let index = 0; index < order.length; index += 1) {
+        successor.set(order[index], order[(index + 1) % order.length]);
+      }
+      return states.map((state) => {
+        const row = states.map(() => 0);
+        row[successor.get(state.id)] = 1;
+        return row;
+      });
+    }
+
+    function createKernel(type) {
+      importedKernelLoaded = false;
+      importedMatrixInvalid = false;
+      if (type === "cycle-ordered") {
+        kernelMeta = { summary: `ordered ${states.length}-cycle` };
+        return createCycleKernel(false);
+      }
+      if (type === "cycle-random") {
+        kernelMeta = { summary: `random ${states.length}-cycle` };
+        return createCycleKernel(true);
+      }
+
+      for (let attempt = 1; attempt <= 160; attempt += 1) {
+        if (type === "irreducible") {
+          const matrix = createIrreducibleCandidate();
+          if (allStatesReachAll(matrix) && kernelIsInteresting(matrix)) {
+            kernelMeta = { summary: `irreducible, stochastic attempt ${attempt}` };
+            return matrix;
+          }
+        } else {
+          const candidate = createReducibleCandidate(type);
+          if (reducibleCandidateIsRealized(type, candidate.matrix, candidate.layout)) {
+            kernelMeta = {
+              summary: `${type}, ${candidate.layout.closedSets.length} closed sets, ${candidate.layout.transientIds.length} transient states`
+            };
+            return candidate.matrix;
+          }
+        }
+      }
+
+      kernelMeta = { summary: `${type}, fallback stochastic kernel` };
+      return type === "irreducible" ? createIrreducibleCandidate() : createReducibleCandidate(type).matrix;
+    }
+
+    function effectiveRow(fromId, visitedSet) {
+      if (importedKernelLoaded) return baseKernel[fromId];
+      const adjusted = baseKernel[fromId].map((value, toId) => {
+        if (toId === fromId) return Math.max(value * 0.38, 0.001);
+        const visitFactor = visitedSet.has(toId) ? 1 - 0.82 * VISIT_MEMORY : 1 + 1.9 * VISIT_MEMORY;
+        return value * visitFactor;
+      });
+      return normalize(adjusted);
+    }
+
+    function chooseFrom(row) {
+      if (importedMatrixInvalid) return current;
+      const total = row.reduce((sum, value) => sum + value, 0);
+      if (!Number.isFinite(total) || total <= 0) return current;
+      const roll = Math.random();
+      let acc = 0;
+      for (let i = 0; i < row.length; i += 1) {
+        acc += row[i];
+        if (roll <= acc) return i;
+      }
+      return row.length - 1;
+    }
+
+    function adjustedKernelMatrix() {
+      if (importedKernelLoaded) return baseKernel;
+      return states.map((state) => effectiveRow(state.id, visited));
+    }
+
+    function expectedTimeModeActive() {
+      if (importedKernelLoaded) return allStatesReachAll(baseKernel);
+      return ["irreducible", "cycle-ordered", "cycle-random"].includes(chainTypeInput.value);
+    }
+
+    function statesThatCanReach(target, matrix) {
+      const canReach = states.map((state) => state.id === target);
+      let changed = true;
+      while (changed) {
+        changed = false;
+        for (const state of states) {
+          if (canReach[state.id]) continue;
+          const reachesKnownState = matrix[state.id].some((probability, toId) => probability > 1e-12 && canReach[toId]);
+          if (reachesKnownState) {
+            canReach[state.id] = true;
+            changed = true;
+          }
+        }
+      }
+      return canReach;
+    }
+
+    function solveLinearSystem(matrix, vector, clampToUnit = true) {
+      const n = vector.length;
+      const augmented = matrix.map((row, index) => [...row, vector[index]]);
+
+      for (let column = 0; column < n; column += 1) {
+        let pivot = column;
+        for (let row = column + 1; row < n; row += 1) {
+          if (Math.abs(augmented[row][column]) > Math.abs(augmented[pivot][column])) pivot = row;
+        }
+        if (Math.abs(augmented[pivot][column]) < 1e-12) continue;
+        [augmented[column], augmented[pivot]] = [augmented[pivot], augmented[column]];
+
+        const divisor = augmented[column][column];
+        for (let col = column; col <= n; col += 1) augmented[column][col] /= divisor;
+
+        for (let row = 0; row < n; row += 1) {
+          if (row === column) continue;
+          const factor = augmented[row][column];
+          for (let col = column; col <= n; col += 1) augmented[row][col] -= factor * augmented[column][col];
+        }
+      }
+
+      return augmented.map((row) => clampToUnit ? Math.max(0, Math.min(1, row[n])) : row[n]);
+    }
+
+    function hittingProbabilityFor(target, matrix) {
+      const canReach = statesThatCanReach(target, matrix);
+      if (!canReach[current]) return 0;
+
+      const equations = states.map(() => states.map(() => 0));
+      const constants = states.map(() => 0);
+
+      for (const from of states) {
+        if (from.id === target) {
+          equations[from.id][from.id] = 1;
+          constants[from.id] = 1;
+          continue;
+        }
+        if (!canReach[from.id]) {
+          equations[from.id][from.id] = 1;
+          constants[from.id] = 0;
+          continue;
+        }
+
+        equations[from.id][from.id] = 1;
+        for (const to of states) {
+          equations[from.id][to.id] -= matrix[from.id][to.id];
+        }
+      }
+
+      const probability = solveLinearSystem(equations, constants)[current];
+      if (probability > 1 - 1e-8) return 1;
+      if (probability < 1e-8) return 0;
+      return probability;
+    }
+
+    function computeFutureVisitProbabilities() {
+      const matrix = adjustedKernelMatrix();
+      return states.map((state) => hittingProbabilityFor(state.id, matrix));
+    }
+
+    function expectedHittingTimeFor(target, matrix) {
+      if (target === current) return 0;
+      if (hittingProbabilityFor(target, matrix) < 1 - 1e-8) return Infinity;
+
+      const canReach = statesThatCanReach(target, matrix);
+      const unknownIds = states
+        .map((state) => state.id)
+        .filter((id) => id !== target && canReach[id]);
+      const unknownIndex = new Map(unknownIds.map((id, index) => [id, index]));
+      const equations = unknownIds.map(() => unknownIds.map(() => 0));
+      const constants = unknownIds.map(() => 1);
+
+      for (const fromId of unknownIds) {
+        const rowIndex = unknownIndex.get(fromId);
+        equations[rowIndex][rowIndex] = 1;
+        for (const toId of unknownIds) {
+          equations[rowIndex][unknownIndex.get(toId)] -= matrix[fromId][toId];
+        }
+      }
+
+      return Math.max(0, solveLinearSystem(equations, constants, false)[unknownIndex.get(current)]);
+    }
+
+    function computeExpectedHittingTimes() {
+      const matrix = adjustedKernelMatrix();
+      return states.map((state) => expectedHittingTimeFor(state.id, matrix));
+    }
+
+    function computeSolidValues() {
+      return expectedHittingTimes;
+    }
+
+    function matrixReachableSet(matrix, start) {
+      const reachable = new Set([start]);
+      const stack = [start];
+      while (stack.length > 0) {
+        const from = stack.pop();
+        for (let to = 0; to < matrix.length; to += 1) {
+          if (matrix[from][to] <= 1e-12 || reachable.has(to)) continue;
+          reachable.add(to);
+          stack.push(to);
+        }
+      }
+      return reachable;
+    }
+
+    function matrixIsIrreducible(matrix) {
+      return matrix.length > 0 && matrix.every((_, index) => matrixReachableSet(matrix, index).size === matrix.length);
+    }
+
+    function matrixStatesThatCanReach(target, matrix) {
+      const canReach = matrix.map((_, index) => index === target);
+      let changed = true;
+      while (changed) {
+        changed = false;
+        for (let from = 0; from < matrix.length; from += 1) {
+          if (canReach[from]) continue;
+          const reachesKnownState = matrix[from].some((probability, to) => probability > 1e-12 && canReach[to]);
+          if (reachesKnownState) {
+            canReach[from] = true;
+            changed = true;
+          }
+        }
+      }
+      return canReach;
+    }
+
+    function hittingProbabilityInMatrix(start, target, matrix) {
+      if (start === target) return 1;
+      const canReach = matrixStatesThatCanReach(target, matrix);
+      if (!canReach[start]) return 0;
+
+      const equations = matrix.map(() => matrix.map(() => 0));
+      const constants = matrix.map(() => 0);
+      for (let from = 0; from < matrix.length; from += 1) {
+        if (from === target) {
+          equations[from][from] = 1;
+          constants[from] = 1;
+          continue;
+        }
+        if (!canReach[from]) {
+          equations[from][from] = 1;
+          constants[from] = 0;
+          continue;
+        }
+        equations[from][from] = 1;
+        for (let to = 0; to < matrix.length; to += 1) equations[from][to] -= matrix[from][to];
+      }
+
+      const probability = solveLinearSystem(equations, constants)[start];
+      if (probability > 1 - 1e-8) return 1;
+      if (probability < 1e-8) return 0;
+      return probability;
+    }
+
+    function expectedHittingTimeInMatrix(start, target, matrix) {
+      if (start === target) return 0;
+      if (hittingProbabilityInMatrix(start, target, matrix) < 1 - 1e-8) return Infinity;
+      const canReach = matrixStatesThatCanReach(target, matrix);
+      const unknownIds = matrix.map((_, index) => index).filter((id) => id !== target && canReach[id]);
+      const unknownIndex = new Map(unknownIds.map((id, index) => [id, index]));
+      const equations = unknownIds.map(() => unknownIds.map(() => 0));
+      const constants = unknownIds.map(() => 1);
+      for (const fromId of unknownIds) {
+        const rowIndex = unknownIndex.get(fromId);
+        equations[rowIndex][rowIndex] = 1;
+        for (const toId of unknownIds) equations[rowIndex][unknownIndex.get(toId)] -= matrix[fromId][toId];
+      }
+      return Math.max(0, solveLinearSystem(equations, constants, false)[unknownIndex.get(start)]);
+    }
+
+    function refreshTraceDistributions() {
+      traceProbabilities = states.map(() => 0);
+      traceSolidValues = states.map(() => 0);
+      traceExpectedHittingTimes = states.map(() => 0);
+      if (traceStateIds.length === 0) {
+        traceActiveState = null;
+        traceExpectedTimeMode = false;
+        return;
+      }
+
+      if (traceStateIds.includes(current)) traceActiveState = current;
+      if (!traceStateIds.includes(traceActiveState)) traceActiveState = latestTraceStateFromPath() ?? traceStateIds[0];
+
+      const rows = traceKernelRows();
+      const activeTraceIndex = traceStateIds.indexOf(traceActiveState);
+      rows[activeTraceIndex].forEach((value, index) => {
+        traceProbabilities[traceStateIds[index]] = value;
+      });
+
+      traceExpectedTimeMode = true;
+      traceStateIds.forEach((id, index) => {
+        const value = expectedHittingTimeInMatrix(activeTraceIndex, index, rows);
+        traceExpectedHittingTimes[id] = value;
+        traceSolidValues[id] = value;
+      });
+    }
+
+    function refreshDistributions(options = {}) {
+      probabilities = effectiveRow(current, visited);
+      hittingProbabilities = computeFutureVisitProbabilities();
+      expectedHittingTimes = computeExpectedHittingTimes();
+      solidValues = computeSolidValues();
+      refreshTraceDistributions();
+      updateKernelGrid();
+    }
+
+    function advance() {
+      current = chooseFrom(probabilities);
+      if (traceStateIds.includes(current)) traceActivations += 1;
+      visited.add(current);
+      path.push(current);
+      if (path.length > 42) path.shift();
+      steps += 1;
+      refreshDistributions();
+      updateUi();
+    }
+
+    function reset(options = {}) {
+      current = initialStateId();
+      steps = 0;
+      traceActivations = 0;
+      visited = new Set([current]);
+      path = [current];
+      refreshDistributions({ forceTraceSnapshot: options.forceTraceSnapshot });
+      updateUi();
+    }
+
+    function drawNewKernel() {
+      baseKernel = createKernel(chainTypeInput.value);
+      importStatus.classList.remove("warning");
+      importStatus.textContent = "No imported matrix.";
+      reset({ forceTraceSnapshot: true });
+    }
+
+    function updateMovementLabel() {
+      movementValue.textContent = `${movementInput.value}%`;
+    }
+
+    function stepIntervalMs() {
+      const speed = Math.max(0, Math.min(100, Number(speedInput.value)));
+      const slowFactor = (100 - speed) / 100;
+      return Math.round(45 + slowFactor * slowFactor * 2150);
+    }
+
+    function updateSpeedLabel() {
+      const interval = stepIntervalMs();
+      speedValue.textContent = interval < 1000 ? `${interval} ms` : `${(interval / 1000).toFixed(1)} s`;
+    }
+
+    function defaultStartStateId() {
+      return chainTypeInput.value === "cycle-ordered" ? 0 : centerStateId();
+    }
+
+    function setStartState(id = defaultStartStateId()) {
+      const numericId = Number(id);
+      selectedStartState = Math.max(0, Math.min(states.length - 1, Number.isFinite(numericId) ? numericId : defaultStartStateId()));
+      startStateInput.value = String(selectedStartState);
+    }
+
+    function buildStartStatePicker() {
+      startStateInput.innerHTML = states.map((state) => `<option value="${state.id}">${escapeHtml(state.label)}</option>`).join("");
+      setStartState(selectedStartState >= 0 && selectedStartState < states.length ? selectedStartState : defaultStartStateId());
+    }
+
+    function applyStateCount() {
+      const nextCount = clampStateCount(stateCountInput.value);
+      stateCountInput.value = String(nextCount);
+      if (nextCount === states.length) return;
+
+      running = false;
+      toggleButton.textContent = "\u25b6";
+      states = buildStateSpace(nextCount);
+      traceStateIds = [];
+      traceLayout = new Map();
+      traceActiveState = null;
+      selectedStartState = defaultStartStateId();
+      buildStartStatePicker();
+      buildTracePicker();
+      baseKernel = createKernel(chainTypeInput.value);
+      importStatus.classList.remove("warning");
+      importStatus.textContent = "No imported matrix.";
+      reset({ forceTraceSnapshot: true });
+    }
+
+    function stateLabel(id) {
+      return states[id]?.label ?? `S${id}`;
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");
+    }
+
+    function parseCsv(text) {
+      const rows = [];
+      let row = [];
+      let cell = "";
+      let inQuotes = false;
+      for (let index = 0; index < text.length; index += 1) {
+        const char = text[index];
+        const next = text[index + 1];
+        if (char === '"') {
+          if (inQuotes && next === '"') {
+            cell += '"';
+            index += 1;
+          } else {
+            inQuotes = !inQuotes;
+          }
+        } else if (char === "," && !inQuotes) {
+          row.push(cell);
+          cell = "";
+        } else if ((char === "\n" || char === "\r") && !inQuotes) {
+          if (char === "\r" && next === "\n") index += 1;
+          row.push(cell);
+          if (row.some((value) => value.trim() !== "")) rows.push(row);
+          row = [];
+          cell = "";
+        } else {
+          cell += char;
+        }
+      }
+      row.push(cell);
+      if (row.some((value) => value.trim() !== "")) rows.push(row);
+      return rows;
+    }
+
+    function parseNumberCell(value, label) {
+      const trimmed = String(value ?? "").trim();
+      if (trimmed === "") throw new Error(`Blank probability at ${label}.`);
+      const number = Number(trimmed);
+      if (!Number.isFinite(number)) throw new Error(`Non-finite probability at ${label}: ${trimmed}`);
+      if (number < 0 || number > 1) throw new Error(`Probability outside [0,1] at ${label}: ${number}`);
+      return number;
+    }
+
+    function parseJsonImport(text) {
+      const project = JSON.parse(text);
+      if (!project || project.schema !== "markov-chain-maker/v1") throw new Error("JSON is not a markov-chain-maker/v1 project export.");
+      if (!Array.isArray(project.states) || project.states.length === 0) throw new Error("JSON project has no states array.");
+      if (!Array.isArray(project.transitions)) throw new Error("JSON project has no transitions array.");
+
+      const records = project.states.map((state, index) => ({
+        externalId: state.id,
+        label: String(state.label ?? `S${state.id ?? index}`),
+        editorX: Number.isFinite(Number(state.x)) ? Number(state.x) : undefined,
+        editorY: Number.isFinite(Number(state.y)) ? Number(state.y) : undefined
+      }));
+      const idToIndex = new Map(project.states.map((state, index) => [state.id, index]));
+      const matrix = records.map(() => records.map(() => 0));
+
+      for (const transition of project.transitions) {
+        if (!idToIndex.has(transition.from) || !idToIndex.has(transition.to)) {
+          throw new Error(`Transition references an unknown state id: ${transition.from} -> ${transition.to}`);
+        }
+        const fromIndex = idToIndex.get(transition.from);
+        const toIndex = idToIndex.get(transition.to);
+        matrix[fromIndex][toIndex] = parseNumberCell(transition.probability, `${records[fromIndex].label} -> ${records[toIndex].label}`);
+      }
+
+      return {
+        records,
+        matrix,
+        sourceSummary: `JSON project, ${records.length} states${Array.isArray(project.absorbingGroups) && project.absorbingGroups.length > 0 ? `, ${project.absorbingGroups.length} absorbing group(s)` : ""}`
+      };
+    }
+
+    function parseCsvImport(text) {
+      const rows = parseCsv(text);
+      if (rows.length < 2) throw new Error("CSV must contain a header row and at least one matrix row.");
+      const columnLabels = rows[0].slice(1).map((label, index) => String(label || `S${index}`).trim());
+      if (columnLabels.length === 0) throw new Error("CSV header has no state labels.");
+      const dataRows = rows.slice(1);
+      if (dataRows.length !== columnLabels.length) throw new Error(`CSV has ${dataRows.length} matrix rows but ${columnLabels.length} column labels.`);
+
+      const records = dataRows.map((row, index) => ({
+        externalId: row[0] || columnLabels[index],
+        label: String(row[0] || columnLabels[index] || `S${index}`).trim()
+      }));
+      const matrix = dataRows.map((row, rowIndex) => {
+        const cells = row.slice(1);
+        if (cells.length !== columnLabels.length) throw new Error(`CSV row ${records[rowIndex].label} has ${cells.length} probabilities; expected ${columnLabels.length}.`);
+        return cells.map((cell, columnIndex) => parseNumberCell(cell, `${records[rowIndex].label} -> ${columnLabels[columnIndex]}`));
+      });
+
+      return { records, matrix, sourceSummary: `CSV matrix, ${records.length} states` };
+    }
+
+    function validateImportedMatrix(matrix, records) {
+      const invalidRows = [];
+      for (let rowIndex = 0; rowIndex < matrix.length; rowIndex += 1) {
+        const sum = matrix[rowIndex].reduce((total, value) => total + value, 0);
+        if (Math.abs(sum - 1) > 1e-8) invalidRows.push(`${records[rowIndex].label}: ${sum.toFixed(12)}`);
+      }
+      return invalidRows;
+    }
+
+    function loadImportedKernel(importData) {
+      if (importData.records.length > MAX_STATE_COUNT) throw new Error(`Imported matrix has ${importData.records.length} states; this visualizer currently supports at most ${MAX_STATE_COUNT}.`);
+      const rowWarnings = validateImportedMatrix(importData.matrix, importData.records);
+      running = false;
+      toggleButton.textContent = "\u25b6";
+      states = buildStateSpace(importData.records.length, importData.records);
+      stateCountInput.value = String(states.length);
+      traceStateIds = [];
+      traceLayout = new Map();
+      traceActiveState = null;
+      selectedStartState = defaultStartStateId();
+      buildStartStatePicker();
+      buildTracePicker();
+      baseKernel = importData.matrix.map((row) => [...row]);
+      importedKernelLoaded = true;
+      importedMatrixInvalid = rowWarnings.length > 0;
+      kernelMeta = {
+        summary: rowWarnings.length > 0
+          ? `${importData.sourceSummary}; invalid row sums: ${rowWarnings.join("; ")}`
+          : `${importData.sourceSummary}; valid row-stochastic`
+      };
+      reset({ forceTraceSnapshot: true });
+      importStatus.classList.toggle("warning", rowWarnings.length > 0);
+      importStatus.textContent = rowWarnings.length > 0
+        ? `Imported with invalid row sums: ${rowWarnings.join("; ")}`
+        : `Imported ${importData.sourceSummary}; all rows sum to 1.`;
+    }
+
+    function importMatrixFile(file) {
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const text = String(reader.result || "");
+          const looksJson = file.name.toLowerCase().endsWith(".json") || text.trim().startsWith("{");
+          const importData = looksJson ? parseJsonImport(text) : parseCsvImport(text);
+          loadImportedKernel(importData);
+        } catch (error) {
+          importStatus.classList.add("warning");
+          importStatus.textContent = `Import failed: ${error.message}`;
+        } finally {
+          importFileInput.value = "";
+        }
+      };
+      reader.onerror = () => {
+        importStatus.classList.add("warning");
+        importStatus.textContent = "Import failed: could not read the selected file.";
+        importFileInput.value = "";
+      };
+      reader.readAsText(file);
+    }
+
+    function probabilityColor(value, values, invert = false) {
+      const minValue = Math.min(...values);
+      const maxValue = Math.max(...values);
+      const span = maxValue - minValue;
+      const rawT = span === 0 ? 1 : Math.max(0, Math.min(1, (value - minValue) / span));
+      const t = invert ? 1 - rawT : rawT;
+      const low = [217, 58, 53];
+      const mid = [240, 201, 75];
+      const high = [52, 208, 109];
+      const left = t < 0.5 ? low : mid;
+      const right = t < 0.5 ? mid : high;
+      const localT = t < 0.5 ? t / 0.5 : (t - 0.5) / 0.5;
+      const rgb = left.map((channel, index) => Math.round(channel + (right[index] - channel) * localT));
+      return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+    }
+
+    function kernelProbabilityColor(value, values) {
+      const minValue = Math.min(...values);
+      const maxValue = Math.max(...values);
+      const span = maxValue - minValue;
+      const t = span === 0 ? 1 : Math.max(0, Math.min(1, (value - minValue) / span));
+      const red = [217, 58, 53];
+      const green = [52, 208, 109];
+      const rgb = red.map((channel, index) => Math.round(channel + (green[index] - channel) * t));
+      return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+    }
+
+    function expectedHittingRankScoresFor(referenceState, times, domainIds = states.map((state) => state.id)) {
+      const domain = new Set(domainIds);
+      const others = states
+        .filter((state) => domain.has(state.id) && state.id !== referenceState)
+        .map((state) => ({ id: state.id, time: times[state.id] }))
+        .sort((a, b) => a.time - b.time);
+      const scores = states.map(() => 1);
+      const finite = others.filter((item) => Number.isFinite(item.time));
+      const infinite = others.filter((item) => !Number.isFinite(item.time));
+      const denominator = Math.max(1, finite.length - (infinite.length > 0 ? 0 : 1));
+      for (let index = 0; index < finite.length; index += 1) {
+        scores[finite[index].id] = Math.max(0, 1 - index / denominator);
+      }
+      for (const item of infinite) scores[item.id] = 0;
+      return scores;
+    }
+
+    function rotatePoint(point) {
+      const cosY = Math.cos(rotationY);
+      const sinY = Math.sin(rotationY);
+      const cosX = Math.cos(rotationX);
+      const sinX = Math.sin(rotationX);
+      const x1 = point.x * cosY - point.z * sinY;
+      const z1 = point.x * sinY + point.z * cosY;
+      const y1 = point.y * cosX - z1 * sinX;
+      const z2 = point.y * sinX + z1 * cosX;
+      return { x: x1, y: y1, z: z2 };
+    }
+
+    function buildTracePicker() {
+      tracePicker.innerHTML = states.map((state) => `
+        <label>
+          <input type="checkbox" value="${state.id}">
+          <span title="${escapeHtml(state.label)}">${escapeHtml(state.label)}</span>
+        </label>
+      `).join("");
+    }
+
+    function setTraceStateIds(ids) {
+      traceStateIds = [...new Set(ids)].filter((id) => id >= 0 && id < states.length).sort((a, b) => a - b);
+      const selected = new Set(traceStateIds);
+      for (const input of tracePicker.querySelectorAll("input")) input.checked = selected.has(Number(input.value));
+      traceLayout = compactTraceLayout(traceStateIds);
+      traceActivations = 0;
+      traceActiveState = traceStateIds.includes(current) ? current : latestTraceStateFromPath() ?? traceStateIds[0] ?? null;
+      refreshTraceDistributions();
+      updateKernelGrid();
+      updateUi();
+    }
+
+    function compactTraceLayout(ids) {
+      const layout = new Map();
+      const count = ids.length;
+      if (count === 0) return layout;
+      const { x: xCount, y: yCount, z: zCount } = compactTraceDimensions(count);
+
+      ids.forEach((id, index) => {
+        const xIndex = index % xCount;
+        const yIndex = Math.floor(index / xCount) % yCount;
+        const zIndex = Math.floor(index / (xCount * yCount));
+        layout.set(id, {
+          ...states[id],
+          x: (xIndex - (xCount - 1) / 2) * CUBE_STEP,
+          y: (yIndex - (yCount - 1) / 2) * CUBE_STEP,
+          z: (zIndex - (zCount - 1) / 2) * CUBE_STEP,
+          traceXCount: xCount,
+          traceYCount: yCount,
+          traceZCount: zCount
+        });
+      });
+      return layout;
+    }
+
+    function compactTraceDimensions(count) {
+      const cubeRoot = Math.round(Math.cbrt(count));
+      if (cubeRoot ** 3 === count) return { x: cubeRoot, y: cubeRoot, z: cubeRoot };
+
+      let best = null;
+      for (let x = 1; x <= count; x += 1) {
+        for (let y = 1; y <= count; y += 1) {
+          const z = Math.ceil(count / (x * y));
+          const dimensions = [x, y, z].sort((a, b) => b - a);
+          const volume = dimensions[0] * dimensions[1] * dimensions[2];
+          const spread = dimensions[0] - dimensions[2];
+          const surface = dimensions[0] * dimensions[1] + dimensions[0] * dimensions[2] + dimensions[1] * dimensions[2];
+          const score = spread * 10 + (volume - count) * 0.1 + surface * 0.001;
+          if (!best || score < best.score) best = { dimensions, score };
+        }
+      }
+
+      return { x: best.dimensions[0], y: best.dimensions[1], z: best.dimensions[2] };
+    }
+
+    function project(point, view) {
+      const rotated = rotatePoint(point);
+      const size = Math.min(view.width, view.height) * view.scale;
+      const depth = 6.2;
+      const scale = size / (depth - rotated.z);
+      return {
+        x: view.x + view.width / 2 + rotated.x * scale,
+        y: view.y + view.height / 2 + rotated.y * scale,
+        z: rotated.z,
+        scale
+      };
+    }
+
+    function drawPolygon(points) {
+      ctx.beginPath();
+      ctx.moveTo(points[0].x, points[0].y);
+      for (let index = 1; index < points.length; index += 1) ctx.lineTo(points[index].x, points[index].y);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+    }
+
+    function cubeVertices(state, inflate = 0) {
+      const half = CUBE_SIZE / 2 + inflate;
+      return [
+        { x: state.x - half, y: state.y - half, z: state.z - half },
+        { x: state.x + half, y: state.y - half, z: state.z - half },
+        { x: state.x + half, y: state.y + half, z: state.z - half },
+        { x: state.x - half, y: state.y + half, z: state.z - half },
+        { x: state.x - half, y: state.y - half, z: state.z + half },
+        { x: state.x + half, y: state.y - half, z: state.z + half },
+        { x: state.x + half, y: state.y + half, z: state.z + half },
+        { x: state.x - half, y: state.y + half, z: state.z + half }
+      ];
+    }
+
+    function cubeFaces(vertices, view) {
+      const faceIndices = [
+        [0, 1, 2, 3],
+        [4, 5, 6, 7],
+        [0, 1, 5, 4],
+        [2, 3, 7, 6],
+        [1, 2, 6, 5],
+        [0, 3, 7, 4]
+      ];
+      return faceIndices.map((indices) => {
+        const projected = indices.map((index) => project(vertices[index], view));
+        return {
+          points: projected,
+          z: projected.reduce((sum, point) => sum + point.z, 0) / projected.length
+        };
+      }).sort((a, b) => a.z - b.z);
+    }
+
+    function drawCubeOutlines(view, dimensions = fullDimensions) {
+      const minX = -((dimensions.x - 1) * CUBE_STEP + CUBE_SIZE) / 2;
+      const maxX = ((dimensions.x - 1) * CUBE_STEP + CUBE_SIZE) / 2;
+      const minY = -((dimensions.y - 1) * CUBE_STEP + CUBE_SIZE) / 2;
+      const maxY = ((dimensions.y - 1) * CUBE_STEP + CUBE_SIZE) / 2;
+      const minZ = -((dimensions.z - 1) * CUBE_STEP + CUBE_SIZE) / 2;
+      const maxZ = ((dimensions.z - 1) * CUBE_STEP + CUBE_SIZE) / 2;
+      const lines = [];
+
+      for (let i = 0; i <= dimensions.x; i += 1) {
+        const x = i === dimensions.x ? maxX : minX + i * CUBE_STEP;
+        lines.push([{ x, y: minY, z: minZ }, { x, y: maxY, z: minZ }]);
+        lines.push([{ x, y: minY, z: maxZ }, { x, y: maxY, z: maxZ }]);
+        lines.push([{ x, y: minY, z: minZ }, { x, y: minY, z: maxZ }]);
+        lines.push([{ x, y: maxY, z: minZ }, { x, y: maxY, z: maxZ }]);
+      }
+      for (let i = 0; i <= dimensions.y; i += 1) {
+        const y = i === dimensions.y ? maxY : minY + i * CUBE_STEP;
+        lines.push([{ x: minX, y, z: minZ }, { x: maxX, y, z: minZ }]);
+        lines.push([{ x: minX, y, z: maxZ }, { x: maxX, y, z: maxZ }]);
+        lines.push([{ x: minX, y, z: minZ }, { x: minX, y, z: maxZ }]);
+        lines.push([{ x: maxX, y, z: minZ }, { x: maxX, y, z: maxZ }]);
+      }
+      for (let i = 0; i <= dimensions.z; i += 1) {
+        const z = i === dimensions.z ? maxZ : minZ + i * CUBE_STEP;
+        lines.push([{ x: minX, y: minY, z }, { x: maxX, y: minY, z }]);
+        lines.push([{ x: minX, y: maxY, z }, { x: maxX, y: maxY, z }]);
+        lines.push([{ x: minX, y: minY, z }, { x: minX, y: maxY, z }]);
+        lines.push([{ x: maxX, y: minY, z }, { x: maxX, y: maxY, z }]);
+      }
+
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = "rgba(241, 244, 234, 0.24)";
+      for (const [start, end] of lines) {
+        const ps = project(start, view);
+        const pe = project(end, view);
+        ctx.beginPath();
+        ctx.moveTo(ps.x, ps.y);
+        ctx.lineTo(pe.x, pe.y);
+        ctx.stroke();
+      }
+    }
+
+    function drawPath(projected, visiblePath = path) {
+      if (!showPathHistory) return;
+      if (visiblePath.length < 2) return;
+      ctx.lineWidth = 3;
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      for (let i = 1; i < visiblePath.length; i += 1) {
+        const previous = projected.get(visiblePath[i - 1]);
+        const next = projected.get(visiblePath[i]);
+        if (!previous || !next) continue;
+        const alpha = 0.18 + 0.7 * (i / visiblePath.length);
+        ctx.strokeStyle = `rgba(121, 213, 255, ${alpha})`;
+        ctx.beginPath();
+        ctx.moveTo(previous.x, previous.y);
+        ctx.lineTo(next.x, next.y);
+        ctx.stroke();
+      }
+    }
+
+    function drawState(state, projected, options = {}) {
+      const p = projected.get(state.id);
+      const viewProbabilities = options.probabilities || probabilities;
+      const viewSolidValues = options.solidValues || solidValues;
+      const viewExpectedHittingTimes = options.expectedHittingTimes || expectedHittingTimes;
+      const referenceState = options.referenceState ?? current;
+      const colorDomainIds = options.colorDomainIds || states.map((domainState) => domainState.id);
+      const domainProbabilities = colorDomainIds.map((id) => viewProbabilities[id]);
+      const domainSolidValues = colorDomainIds.map((id) => viewSolidValues[id]);
+      const nextProbability = viewProbabilities[state.id];
+      const solidValue = viewSolidValues[state.id];
+      const activeState = options.activeState ?? current;
+      const isCurrent = options.allowActive !== false && state.id === activeState;
+      const hasVisited = visited.has(state.id);
+      const isExpectedTimeMode = true;
+      const showVisitedOutline = hasVisited && !isExpectedTimeMode;
+      const rankScores = isExpectedTimeMode ? expectedHittingRankScoresFor(referenceState, viewExpectedHittingTimes, colorDomainIds) : null;
+      const color = isExpectedTimeMode ? probabilityColor(rankScores[state.id], [0, 1]) : probabilityColor(solidValue, domainSolidValues);
+      const auraColor = probabilityColor(nextProbability, domainProbabilities);
+      const maxNext = Math.max(...domainProbabilities);
+      const minNext = Math.min(...domainProbabilities);
+      const nextSpan = maxNext - minNext;
+      const nextNormalized = nextSpan === 0 ? 1 : (nextProbability - minNext) / nextSpan;
+      const maxSolid = Math.max(...domainSolidValues);
+      const minSolid = Math.min(...domainSolidValues);
+      const solidSpan = maxSolid - minSolid;
+      const solidNormalized = solidSpan === 0 ? 1 : (solidValue - minSolid) / solidSpan;
+      const sizeNormalized = isExpectedTimeMode ? rankScores[state.id] : solidNormalized;
+      const auraInflate = 0.035 + nextNormalized * 0.1;
+
+      if (representation === "numbered-points" || representation === "plain-points") {
+        const baseRadius = representation === "plain-points" ? 2.2 + sizeNormalized * 2.4 : 5.5 + sizeNormalized * 7;
+        const radius = representation === "plain-points"
+          ? isCurrent ? baseRadius + 3.2 : showVisitedOutline ? baseRadius + 0.8 : baseRadius
+          : isCurrent ? baseRadius + 6 : showVisitedOutline ? baseRadius + 2.5 : baseRadius;
+
+        ctx.beginPath();
+        ctx.fillStyle = auraColor;
+        ctx.globalAlpha = 0.08 + nextNormalized * 0.42;
+        ctx.arc(p.x, p.y, radius * (1.8 + nextNormalized * 1.2), 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalAlpha = 1;
+
+        ctx.beginPath();
+        ctx.fillStyle = isCurrent ? "#ffffff" : color;
+        ctx.strokeStyle = isCurrent ? "#ffd36a" : showVisitedOutline ? "#fff0bd" : "rgba(255,255,255,0.35)";
+        ctx.lineWidth = representation === "plain-points" ? isCurrent ? 2 : 0.9 : isCurrent ? 2.7 : 1.4;
+        ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
+        if (representation === "numbered-points") {
+          ctx.fillStyle = "#11130f";
+          ctx.font = "700 7px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillText(String(state.label).slice(0, 5), p.x, p.y + 0.5);
+        }
+        return;
+      }
+
+      ctx.fillStyle = auraColor;
+      ctx.strokeStyle = auraColor;
+      ctx.lineWidth = isCurrent ? 2.7 : 1.6;
+      ctx.globalAlpha = 0.08 + nextNormalized * 0.26;
+      for (const face of cubeFaces(cubeVertices(state, auraInflate), options.view)) drawPolygon(face.points);
+      ctx.globalAlpha = 1;
+
+      ctx.fillStyle = isCurrent ? "#ffffff" : color;
+      ctx.strokeStyle = isCurrent ? "#ffd36a" : showVisitedOutline ? "#fff0bd" : "rgba(255,255,255,0.35)";
+      ctx.lineWidth = isCurrent ? 3 : 1.4;
+      ctx.globalAlpha = 0.22 + sizeNormalized * 0.3;
+      for (const face of cubeFaces(cubeVertices(state), options.view)) drawPolygon(face.points);
+      ctx.globalAlpha = 1;
+
+      ctx.fillStyle = "#11130f";
+      ctx.font = "700 7px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText(String(state.label).slice(0, 5), p.x, p.y + 0.5);
+    }
+
+    function traceDimensions() {
+      if (traceArrangementMode === "full-space") return fullDimensions;
+      if (traceLayout.size === 0) return fullDimensions;
+      const first = traceLayout.values().next().value;
+      return { x: first.traceXCount, y: first.traceYCount, z: first.traceZCount };
+    }
+
+    function visibleTracePath() {
+      const traceSet = new Set(traceStateIds);
+      return path.filter((id) => traceSet.has(id));
+    }
+
+    function latestTraceStateFromPath() {
+      const visible = visibleTracePath();
+      return visible.length > 0 ? visible[visible.length - 1] : null;
+    }
+
+    function drawStateSet(statesToDraw, view, options = {}) {
+      if (representation === "plain-points") drawCubeOutlines(view, options.dimensions);
+      const colorDomainIds = statesToDraw.map((state) => state.id);
+      const projected = new Map(statesToDraw.map((state) => [state.id, project(state, view)]));
+      [...statesToDraw]
+        .sort((a, b) => projected.get(a.id).z - projected.get(b.id).z)
+        .forEach((state) => drawState(state, projected, { ...options, view, colorDomainIds }));
+      drawPath(projected, options.path || path);
+    }
+
+    function hiddenStatesThatCanReachVisible(sourceKernel, hiddenIds, visibleSet) {
+      const returnCapable = new Set();
+      let changed = true;
+      while (changed) {
+        changed = false;
+        for (const hiddenId of hiddenIds) {
+          if (returnCapable.has(hiddenId)) continue;
+          const reachesVisibleOrCapableHidden = sourceKernel[hiddenId].some((probability, toId) => (
+            probability > 1e-12 && (visibleSet.has(toId) || returnCapable.has(toId))
+          ));
+          if (reachesVisibleOrCapableHidden) {
+            returnCapable.add(hiddenId);
+            changed = true;
+          }
+        }
+      }
+      return returnCapable;
+    }
+
+    function solveTraceHittingColumn(sourceKernel, hiddenIds, visibleIds, targetVisibleId, returnCapableHiddenSet) {
+      const returnCapableHidden = hiddenIds.filter((id) => returnCapableHiddenSet.has(id));
+      const hiddenIndex = new Map(returnCapableHidden.map((id, index) => [id, index]));
+      const hitting = new Map(hiddenIds.map((id) => [id, 0]));
+      if (returnCapableHidden.length === 0) return hitting;
+
+      const equations = returnCapableHidden.map(() => returnCapableHidden.map(() => 0));
+      const constants = returnCapableHidden.map(() => 0);
+
+      for (const hiddenId of returnCapableHidden) {
+        const rowIndex = hiddenIndex.get(hiddenId);
+        equations[rowIndex][rowIndex] = 1;
+        constants[rowIndex] = sourceKernel[hiddenId][targetVisibleId] || 0;
+        for (const nextHiddenId of returnCapableHidden) {
+          const columnIndex = hiddenIndex.get(nextHiddenId);
+          equations[rowIndex][columnIndex] -= sourceKernel[hiddenId][nextHiddenId] || 0;
+        }
+      }
+
+      const solved = solveLinearSystem(equations, constants);
+      returnCapableHidden.forEach((hiddenId, index) => hitting.set(hiddenId, solved[index]));
+      return hitting;
+    }
+
+    function clampTraceKernelValue(value) {
+      if (value < 0 && value > -1e-10) return 0;
+      if (value > 1 && value < 1 + 1e-10) return 1;
+      return value;
+    }
+
+    function computeTraceKernel(sourceKernel, visibleIds) {
+      const visible = [...visibleIds];
+      if (visible.length === 0) return [];
+
+      const visibleSet = new Set(visible);
+      const hidden = states.map((state) => state.id).filter((id) => !visibleSet.has(id));
+      if (hidden.length === 0) return visible.map((fromId) => visible.map((toId) => sourceKernel[fromId][toId] || 0));
+
+      const returnCapableHiddenSet = hiddenStatesThatCanReachVisible(sourceKernel, hidden, visibleSet);
+      const hittingByTarget = new Map();
+      for (const targetVisibleId of visible) {
+        hittingByTarget.set(
+          targetVisibleId,
+          solveTraceHittingColumn(sourceKernel, hidden, visible, targetVisibleId, returnCapableHiddenSet)
+        );
+      }
+
+      return visible.map((fromId) => visible.map((toId) => {
+        let value = sourceKernel[fromId][toId] || 0;
+        const hiddenHitting = hittingByTarget.get(toId);
+        for (const hiddenId of hidden) {
+          value += (sourceKernel[fromId][hiddenId] || 0) * (hiddenHitting.get(hiddenId) || 0);
+        }
+        return clampTraceKernelValue(value);
+      }));
+    }
+
+    function traceKernelRows() {
+      return computeTraceKernel(adjustedKernelMatrix(), traceStateIds);
+    }
+
+    function renderKernelMatrix(grid, rows, rowIds, columnIds, activeRowId) {
+      const values = rows.flat();
+      grid.style.gridTemplateColumns = `repeat(${columnIds.length}, 1fr)`;
+      grid.style.minHeight = columnIds.length <= 12 ? "220px" : "320px";
+      grid.innerHTML = rows.map((row, rowIndex) => row.map((value, columnIndex) => {
+        const fromId = rowIds[rowIndex];
+        const toId = columnIds[columnIndex];
+        const fromLabel = stateLabel(fromId);
+        const toLabel = stateLabel(toId);
+        const classes = [
+          "kernel-cell",
+          fromId === activeRowId ? "active-row" : ""
+        ].filter(Boolean).join(" ");
+        return `<span class="${classes}" title="P(${escapeHtml(toLabel)} | ${escapeHtml(fromLabel)}) = ${value.toFixed(4)}" style="background:${kernelProbabilityColor(value, values)}">${value.toFixed(2)}</span>`;
+      }).join("")).join("");
+    }
+
+    function updateKernelGrid() {
+      if (!showKernel) return;
+      const stateIds = states.map((state) => state.id);
+      renderKernelMatrix(fullKernelGrid, baseKernel, stateIds, stateIds, current);
+
+      const hasTrace = traceStateIds.length > 0;
+      traceKernelSection.classList.toggle("hidden", !hasTrace);
+      if (hasTrace) {
+        renderKernelMatrix(
+          traceKernelGrid,
+          traceKernelRows(),
+          traceStateIds,
+          traceStateIds,
+          traceActiveState ?? -1
+        );
+      } else {
+        traceKernelGrid.innerHTML = "";
+      }
+
+      kernelCaption.textContent = hasTrace
+        ? `full row ${stateLabel(current)} highlighted; trace row ${stateLabel(traceActiveState)} highlighted`
+        : `row ${stateLabel(current)} highlighted, ${kernelMeta.summary}`;
+    }
+
+    function updateUi() {
+      stepCount.textContent = String(steps);
+      visitedCount.textContent = String(visited.size);
+      currentState.textContent = stateLabel(current);
+      activeBanner.textContent = `active state ${stateLabel(current)}`;
+      startStateInput.value = String(selectedStartState);
+      fullStepCounter.textContent = `full steps ${steps}`;
+      fullStepCounter.style.left = traceStateIds.length === 0 ? "50%" : "25%";
+      traceStepCounter.textContent = `trace activations ${traceActivations}`;
+      traceStepCounter.style.left = "75%";
+      traceStepCounter.classList.toggle("hidden", traceStateIds.length === 0);
+      pathSection.classList.toggle("hidden", !showPathHistory);
+      pathToggle.classList.toggle("primary", showPathHistory);
+      history.textContent = path.map((id, index) => `${String(steps - path.length + index + 1).padStart(3, " ")}  state ${stateLabel(id)}`).join("\n");
+      history.scrollTop = history.scrollHeight;
+      traceSummary.textContent = traceStateIds.length === 0
+        ? "No trace selected."
+        : `Trace contains ${traceStateIds.length} states. Trace active state is ${stateLabel(traceActiveState)}.`;
+      traceTitle.textContent = traceStateIds.length === 0
+        ? ""
+        : traceArrangementMode === "full-space"
+          ? `Trace in full space (${traceStateIds.length})`
+          : `Trace compacted (${traceStateIds.length})`;
+      representationSelect.value = representation;
+      traceArrangement.value = traceArrangementMode;
+      updateMovementLabel();
+      updateSpeedLabel();
+      if (representation === "cubes") {
+        floatingNote.textContent = `Drag to rotate. The state space is a ${fullDimensions.x} x ${fullDimensions.y} x ${fullDimensions.z} block containing ${states.length} transparent cube states.`;
+      } else if (representation === "numbered-points") {
+        floatingNote.textContent = `Drag to rotate. The state space is a ${fullDimensions.x} x ${fullDimensions.y} x ${fullDimensions.z} lattice containing ${states.length} numbered point states.`;
+      } else {
+        floatingNote.textContent = `Drag to rotate. The state space is a ${fullDimensions.x} x ${fullDimensions.y} x ${fullDimensions.z} lattice containing ${states.length} colored points, with cube outlines for orientation.`;
+      }
+      solidLegend.textContent = "Solid color: expected hitting time (green = shorter, red = longer)";
+      legendText.textContent = "Solid color gives relative expected hitting time: green is shorter and red is longer or unreachable. The transparent aura gives relative next-step probability. The matrix shows numeric probabilities for the base kernel, with the active row highlighted.";
+    }
+
+    function render(now = 0) {
+      if (running && now - lastStepAt > stepIntervalMs()) {
+        advance();
+        lastStepAt = now;
+      }
+
+      if (autoSpin && !dragging) rotationY += 0.0024;
+
+      ctx.clearRect(0, 0, width, height);
+      const hasTrace = traceStateIds.length > 0;
+      const gap = hasTrace ? 18 : 0;
+      const fullView = hasTrace
+        ? { x: 0, y: 0, width: width / 2 - gap / 2, height, scale: 0.4 }
+        : { x: 0, y: 0, width, height, scale: 0.44 };
+      drawStateSet(states, fullView, { dimensions: fullDimensions, allowActive: true, path });
+
+      if (hasTrace) {
+        ctx.save();
+        ctx.strokeStyle = "rgba(241, 244, 234, 0.12)";
+        ctx.beginPath();
+        ctx.moveTo(width / 2, 0);
+        ctx.lineTo(width / 2, height);
+        ctx.stroke();
+        ctx.restore();
+
+        const traceStates = traceArrangementMode === "full-space"
+          ? traceStateIds.map((id) => states[id])
+          : traceStateIds.map((id) => traceLayout.get(id));
+        const traceView = {
+          x: width / 2 + gap / 2,
+          y: 0,
+          width: width / 2 - gap / 2,
+          height,
+          scale: traceArrangementMode === "full-space" ? 0.4 : 0.48
+        };
+        drawStateSet(traceStates, traceView, {
+          dimensions: traceDimensions(),
+          activeState: traceActiveState,
+          probabilities: traceProbabilities,
+          solidValues: traceSolidValues,
+          expectedHittingTimes: traceExpectedHittingTimes,
+          referenceState: traceActiveState,
+          expectedTimeMode: traceExpectedTimeMode,
+          path: visibleTracePath()
+        });
+      }
+      requestAnimationFrame(render);
+    }
+
+    toggleButton.addEventListener("click", () => {
+      running = !running;
+      toggleButton.textContent = running ? "\u23f8" : "\u25b6";
+      lastStepAt = performance.now();
+    });
+
+    stepButton.addEventListener("click", advance);
+
+    resetButton.addEventListener("click", () => {
+      running = false;
+      toggleButton.textContent = "\u25b6";
+      reset();
+    });
+
+    spinButton.addEventListener("click", () => {
+      autoSpin = !autoSpin;
+      spinButton.classList.toggle("primary", autoSpin);
+    });
+
+    kernelToggle.addEventListener("click", () => {
+      showKernel = !showKernel;
+      kernelToggle.classList.toggle("primary", showKernel);
+      kernelPanel.classList.toggle("hidden", !showKernel);
+      updateKernelGrid();
+    });
+
+    pathToggle.addEventListener("click", () => {
+      showPathHistory = !showPathHistory;
+      updateUi();
+    });
+
+    representationSelect.addEventListener("change", () => {
+      representation = representationSelect.value;
+      updateUi();
+    });
+
+    applyStateCountButton.addEventListener("click", applyStateCount);
+
+    stateCountInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") applyStateCount();
+    });
+
+    traceArrangement.addEventListener("change", () => {
+      traceArrangementMode = traceArrangement.value;
+      updateUi();
+    });
+
+    startStateInput.addEventListener("change", () => {
+      setStartState(startStateInput.value);
+      reset({ forceTraceSnapshot: true });
+    });
+
+    tracePicker.addEventListener("change", () => {
+      const ids = [...tracePicker.querySelectorAll("input:checked")].map((input) => Number(input.value));
+      setTraceStateIds(ids);
+    });
+
+    traceNone.addEventListener("click", () => setTraceStateIds([]));
+
+    traceAll.addEventListener("click", () => setTraceStateIds(states.map((state) => state.id)));
+
+    traceEven.addEventListener("click", () => setTraceStateIds(states.filter((state) => state.id % 2 === 0).map((state) => state.id)));
+
+    traceRandom.addEventListener("click", () => {
+      const count = randomInt(10, 24);
+      setTraceStateIds(shuffle(states.map((state) => state.id)).slice(0, count));
+    });
+
+    newKernelButton.addEventListener("click", drawNewKernel);
+
+    chainTypeInput.addEventListener("change", () => {
+      if (chainTypeInput.value === "cycle-ordered") setStartState(0);
+      drawNewKernel();
+    });
+
+    movementInput.addEventListener("input", updateMovementLabel);
+
+    movementInput.addEventListener("change", drawNewKernel);
+
+    speedInput.addEventListener("input", updateSpeedLabel);
+
+    importFileInput.addEventListener("change", () => importMatrixFile(importFileInput.files[0]));
+
+    canvas.addEventListener("pointerdown", (event) => {
+      dragging = true;
+      lastPointer = { x: event.clientX, y: event.clientY };
+      canvas.setPointerCapture(event.pointerId);
+    });
+
+    canvas.addEventListener("pointermove", (event) => {
+      if (!dragging) return;
+      const dx = event.clientX - lastPointer.x;
+      const dy = event.clientY - lastPointer.y;
+      rotationY += dx * 0.008;
+      rotationX += dy * 0.008;
+      rotationX = Math.max(-1.45, Math.min(1.45, rotationX));
+      lastPointer = { x: event.clientX, y: event.clientY };
+    });
+
+    canvas.addEventListener("pointerup", (event) => {
+      dragging = false;
+      canvas.releasePointerCapture(event.pointerId);
+    });
+
+    window.addEventListener("resize", resize);
+    buildStartStatePicker();
+    buildTracePicker();
+    resize();
+    updateUi();
+    requestAnimationFrame(render);
+  </script>
+</body>
+</html>

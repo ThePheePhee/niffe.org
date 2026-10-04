@@ -1,0 +1,1858 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Markov Chain Maker</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #11130f;
+      --ink: #f1f4ea;
+      --muted: #abb3a5;
+      --panel: #1c211c;
+      --panel-2: #232a24;
+      --line: #414a3f;
+      --line-strong: #6d7a67;
+      --accent: #79d5ff;
+      --accent-2: #ffd36a;
+      --good: #34d06d;
+      --warn: #f6c65b;
+      --bad: #ff6d6a;
+      --node: #202920;
+      --node-selected: #123142;
+      --absorbing: #f6c65b;
+      --shadow: 0 18px 50px rgba(0, 0, 0, 0.34);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+    }
+
+    body {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      overflow: hidden;
+    }
+
+    header {
+      display: grid;
+      grid-template-columns: minmax(240px, 1fr) auto;
+      align-items: center;
+      gap: 18px;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(28, 33, 28, 0.92);
+      backdrop-filter: blur(8px);
+      z-index: 2;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      font-size: 20px;
+      line-height: 1.15;
+      letter-spacing: 0;
+    }
+
+    h2,
+    h3 {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button,
+    .file-button {
+      min-height: 36px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: var(--panel);
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 760;
+      cursor: pointer;
+    }
+
+    button:hover,
+    .file-button:hover {
+      border-color: var(--line-strong);
+      background: var(--panel-2);
+    }
+
+    button.primary {
+      border-color: rgba(121, 213, 255, 0.55);
+      background: #133142;
+      color: #dff6ff;
+    }
+
+    button.danger {
+      border-color: rgba(255, 109, 106, 0.32);
+      color: #ffd8d6;
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.45;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      min-height: 36px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: #171d18;
+      color: var(--ink);
+      padding: 8px 10px;
+      font-size: 13px;
+    }
+
+    input[type="checkbox"] {
+      width: 18px;
+      min-height: 18px;
+      accent-color: var(--accent);
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    label {
+      display: grid;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .app {
+      display: grid;
+      grid-template-columns: minmax(430px, 1fr) 390px;
+      min-height: 0;
+    }
+
+    .canvas-shell {
+      position: relative;
+      min-width: 0;
+      min-height: 0;
+      background:
+        linear-gradient(155deg, rgba(121, 213, 255, 0.055) 0%, transparent 34%),
+        linear-gradient(28deg, rgba(246, 198, 91, 0.035) 0%, transparent 38%),
+        linear-gradient(145deg, #10130f 0%, #151a16 48%, #0d1113 100%);
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      touch-action: none;
+      cursor: default;
+    }
+
+    .mode-strip {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      display: flex;
+      gap: 8px;
+      padding: 7px;
+      border: 1px solid rgba(152, 166, 146, 0.5);
+      border-radius: 8px;
+      background: rgba(18, 24, 22, 0.76);
+      box-shadow: var(--shadow);
+    }
+
+    .mode-strip button {
+      min-width: 76px;
+    }
+
+    .hint {
+      position: absolute;
+      left: 18px;
+      bottom: 16px;
+      max-width: min(580px, calc(100% - 36px));
+      padding: 9px 11px;
+      border: 1px solid rgba(152, 166, 146, 0.36);
+      border-radius: 8px;
+      background: rgba(18, 24, 22, 0.72);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+      pointer-events: none;
+    }
+
+    .selection-marquee {
+      position: absolute;
+      border: 1px solid rgba(121, 213, 255, 0.8);
+      background: rgba(121, 213, 255, 0.12);
+      border-radius: 6px;
+      pointer-events: none;
+    }
+
+    aside {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      min-height: 0;
+      padding: 16px;
+      border-left: 1px solid var(--line);
+      background: var(--panel);
+      overflow: auto;
+    }
+
+    section {
+      display: grid;
+      gap: 10px;
+      padding: 13px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #171d18;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 7px;
+    }
+
+    .metric {
+      min-width: 0;
+      padding: 9px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: #202720;
+    }
+
+    .metric span {
+      display: block;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .metric strong {
+      display: block;
+      margin-top: 6px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 18px;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 8px;
+      align-items: end;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .wide-buttons {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .bulk-grid {
+      display: grid;
+      grid-template-columns: 86px minmax(0, 1fr);
+      gap: 8px;
+      align-items: end;
+    }
+
+    .set-actions {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 8px;
+      align-items: end;
+    }
+
+    .check-row {
+      display: grid;
+      grid-template-columns: 20px minmax(0, 1fr);
+      align-items: center;
+      gap: 8px;
+      min-height: 34px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 760;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+
+    .status {
+      padding: 8px 10px;
+      border-radius: 7px;
+      background: #232a24;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .status.good {
+      background: rgba(52, 208, 109, 0.13);
+      color: var(--good);
+    }
+
+    .status.warn {
+      background: rgba(246, 198, 91, 0.13);
+      color: var(--warn);
+    }
+
+    .status.bad {
+      background: rgba(255, 109, 106, 0.13);
+      color: var(--bad);
+    }
+
+    .transition-list,
+    .invalid-list {
+      display: grid;
+      gap: 7px;
+      max-height: 220px;
+      overflow: auto;
+    }
+
+    .transition-row {
+      display: grid;
+      grid-template-columns: minmax(64px, 1fr) 96px 34px;
+      gap: 7px;
+      align-items: center;
+      padding: 7px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: #202720;
+    }
+
+    .transition-row button {
+      min-height: 34px;
+    }
+
+    .transition-label {
+      min-width: 0;
+      overflow: hidden;
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 760;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .tabs {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .matrix-scroll {
+      max-height: 340px;
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #171d18;
+    }
+
+    .heatmap {
+      display: grid;
+      gap: 1px;
+      min-width: max-content;
+      padding: 8px;
+    }
+
+    .heat-cell,
+    .axis-cell {
+      display: grid;
+      place-items: center;
+      min-width: 34px;
+      height: 30px;
+      border-radius: 4px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .axis-cell {
+      background: #232a24;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .axis-cell.selected {
+      background: #123142;
+      color: #dff6ff;
+    }
+
+    table {
+      border-collapse: collapse;
+      min-width: 100%;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+    }
+
+    th,
+    td {
+      min-width: 74px;
+      padding: 7px 8px;
+      border: 1px solid var(--line);
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    th {
+      position: sticky;
+      top: 0;
+      background: #232a24;
+      color: var(--muted);
+      font-weight: 800;
+      z-index: 1;
+    }
+
+    th.row-head {
+      left: 0;
+      z-index: 2;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    tr.selected th.row-head {
+      background: #123142;
+      color: #dff6ff;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .file-button {
+      display: grid;
+      place-items: center;
+      padding: 0 10px;
+      text-align: center;
+    }
+
+    .file-button input {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    @media (max-width: 980px) {
+      body {
+        overflow: auto;
+      }
+
+      .app {
+        grid-template-columns: 1fr;
+        grid-template-rows: minmax(540px, 62vh) auto;
+      }
+
+      aside {
+        border-top: 1px solid var(--line);
+        border-left: 0;
+      }
+
+      header {
+        grid-template-columns: 1fr;
+      }
+
+      .toolbar {
+        justify-content: start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Markov Chain Maker</h1>
+      <p class="status" id="projectStatus">Create states, draw weighted transitions, and repair rows explicitly.</p>
+    </div>
+    <div class="toolbar">
+      <button id="addState" class="primary" type="button">Add State</button>
+      <button id="downloadJson" type="button">Save JSON</button>
+      <label class="file-button">Load JSON<input id="loadJson" type="file" accept="application/json,.json"></label>
+      <button id="exportCsv" type="button">Export CSV</button>
+      <button id="exportNumpy" type="button">Copy NumPy</button>
+    </div>
+  </header>
+
+  <div class="app">
+    <main class="canvas-shell">
+      <canvas id="canvas" aria-label="Markov chain editor canvas"></canvas>
+      <div class="mode-strip" aria-label="editor modes">
+        <button id="selectMode" class="primary" type="button">Select</button>
+        <button id="multiSelectMode" type="button">Box Select</button>
+        <button id="edgeMode" type="button">Transition</button>
+      </div>
+      <div id="selectionMarquee" class="selection-marquee hidden"></div>
+      <p class="hint" id="hint">Select one or more source states, then use Transition mode and click a target state to add transitions.</p>
+    </main>
+
+    <aside>
+      <section>
+        <h2>Diagnostics</h2>
+        <div class="metrics">
+          <div class="metric"><span>States</span><strong id="stateCount">0</strong></div>
+          <div class="metric"><span>Edges</span><strong id="edgeCount">0</strong></div>
+          <div class="metric"><span>Invalid</span><strong id="invalidCount">0</strong></div>
+          <div class="metric"><span>Matrix</span><strong id="matrixState">No</strong></div>
+        </div>
+        <div class="invalid-list" id="invalidRows"></div>
+        <button id="makeZeroAbsorbing" type="button">Make Zero Rows Absorbing</button>
+      </section>
+
+      <section>
+        <h2>Bulk Setup</h2>
+        <div class="bulk-grid">
+          <label>
+            States
+            <input id="bulkStateCount" type="number" min="1" max="99" step="1" value="10">
+          </label>
+          <label>
+            Initial transitions
+            <select id="bulkTransitionMode">
+              <option value="empty">No transitions</option>
+              <option value="uniform">Uniform complete matrix</option>
+              <option value="random">Random complete matrix</option>
+            </select>
+          </label>
+        </div>
+        <button id="createBulkStates" class="primary" type="button">Create State Set</button>
+        <p class="status">This replaces the current project. Uniform and random modes include self-transitions and make every row sum to 1.</p>
+      </section>
+
+      <section>
+        <h2>Selected Set</h2>
+        <div class="metric">
+          <span>Selected States</span>
+          <strong id="selectedSetCount">0</strong>
+        </div>
+        <div class="set-actions">
+          <label>
+            Inside-set transitions
+            <select id="absorbingMode">
+              <option value="uniform">Uniform</option>
+              <option value="random">Random</option>
+            </select>
+          </label>
+          <button id="makeSetAbsorbing" class="primary" type="button" disabled>Make Jointly Absorbing</button>
+        </div>
+        <div class="buttons">
+          <button id="clearSelection" type="button" disabled>Clear Selection</button>
+          <button id="rearrangeGroups" type="button">Rearrange Groups</button>
+        </div>
+        <p class="status" id="setStatus">Use Box Select or Ctrl-click states to build a set.</p>
+      </section>
+
+      <section id="stateInspector">
+        <h2>Selected State</h2>
+        <label>
+          Label
+          <input id="stateLabel" type="text" maxlength="32" disabled>
+        </label>
+        <div class="row">
+          <label>
+            Row sum
+            <input id="rowSum" type="text" disabled>
+          </label>
+          <button id="deleteState" class="danger" type="button" disabled>Delete State</button>
+        </div>
+        <div class="status" id="rowStatus">Select a state to edit outgoing transitions.</div>
+        <div class="transition-list" id="outgoingList"></div>
+        <div class="wide-buttons">
+          <button id="normalizeRow" type="button" disabled>Normalize Row</button>
+          <button id="makeAbsorbing" type="button" disabled>Make Absorbing</button>
+          <button id="clearOutgoing" type="button" disabled>Clear Outgoing</button>
+        </div>
+        <button id="clearIncoming" type="button" disabled>Clear Incoming Transitions</button>
+        <button id="addRemainder" type="button" disabled>Add Self-loop Remainder</button>
+      </section>
+
+      <section>
+        <h2>Transition</h2>
+        <div class="row">
+          <label>
+            From
+            <select id="fromSelect"></select>
+          </label>
+          <label>
+            To
+            <select id="toSelect"></select>
+          </label>
+        </div>
+        <div class="row">
+          <label>
+            Probability
+            <input id="probabilityInput" type="number" min="0" max="1" step="0.01" value="1">
+          </label>
+          <button id="upsertTransition" class="primary" type="button">Set Transition</button>
+        </div>
+        <label class="check-row">
+          <input id="continuousNormalize" type="checkbox">
+          <span>Continuous normalization for newly added transitions</span>
+        </label>
+        <p class="status">When enabled, a new outgoing transition receives an equal share from each current outgoing transition. Empty rows are treated as an implicit self-loop of 1, so the first added edge gets probability 0.5.</p>
+        <button id="deleteTransition" class="danger" type="button" disabled>Delete Selected Transition</button>
+      </section>
+
+      <section>
+        <h2>Matrix View</h2>
+        <div class="tabs">
+          <button id="heatmapTab" class="primary" type="button">Heatmap</button>
+          <button id="tableTab" type="button">Table</button>
+        </div>
+        <div class="matrix-scroll">
+          <div id="heatmap" class="heatmap"></div>
+          <div id="tableWrap" class="hidden"></div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Project JSON</h2>
+        <textarea id="jsonPreview" readonly></textarea>
+      </section>
+    </aside>
+  </div>
+
+  <script>
+    const MAX_STATES = 99;
+    const NODE_RADIUS = 23;
+    const EPSILON = 1e-9;
+
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    const addStateButton = document.getElementById("addState");
+    const downloadJsonButton = document.getElementById("downloadJson");
+    const loadJsonInput = document.getElementById("loadJson");
+    const exportCsvButton = document.getElementById("exportCsv");
+    const exportNumpyButton = document.getElementById("exportNumpy");
+    const selectModeButton = document.getElementById("selectMode");
+    const multiSelectModeButton = document.getElementById("multiSelectMode");
+    const edgeModeButton = document.getElementById("edgeMode");
+    const selectionMarquee = document.getElementById("selectionMarquee");
+    const hint = document.getElementById("hint");
+    const projectStatus = document.getElementById("projectStatus");
+    const stateCount = document.getElementById("stateCount");
+    const edgeCount = document.getElementById("edgeCount");
+    const invalidCount = document.getElementById("invalidCount");
+    const matrixState = document.getElementById("matrixState");
+    const invalidRows = document.getElementById("invalidRows");
+    const makeZeroAbsorbingButton = document.getElementById("makeZeroAbsorbing");
+    const bulkStateCountInput = document.getElementById("bulkStateCount");
+    const bulkTransitionModeInput = document.getElementById("bulkTransitionMode");
+    const createBulkStatesButton = document.getElementById("createBulkStates");
+    const selectedSetCount = document.getElementById("selectedSetCount");
+    const absorbingModeInput = document.getElementById("absorbingMode");
+    const makeSetAbsorbingButton = document.getElementById("makeSetAbsorbing");
+    const clearSelectionButton = document.getElementById("clearSelection");
+    const rearrangeGroupsButton = document.getElementById("rearrangeGroups");
+    const setStatus = document.getElementById("setStatus");
+    const stateLabel = document.getElementById("stateLabel");
+    const rowSumInput = document.getElementById("rowSum");
+    const deleteStateButton = document.getElementById("deleteState");
+    const rowStatus = document.getElementById("rowStatus");
+    const outgoingList = document.getElementById("outgoingList");
+    const normalizeRowButton = document.getElementById("normalizeRow");
+    const makeAbsorbingButton = document.getElementById("makeAbsorbing");
+    const clearOutgoingButton = document.getElementById("clearOutgoing");
+    const clearIncomingButton = document.getElementById("clearIncoming");
+    const addRemainderButton = document.getElementById("addRemainder");
+    const fromSelect = document.getElementById("fromSelect");
+    const toSelect = document.getElementById("toSelect");
+    const probabilityInput = document.getElementById("probabilityInput");
+    const continuousNormalizeInput = document.getElementById("continuousNormalize");
+    const upsertTransitionButton = document.getElementById("upsertTransition");
+    const deleteTransitionButton = document.getElementById("deleteTransition");
+    const heatmapTab = document.getElementById("heatmapTab");
+    const tableTab = document.getElementById("tableTab");
+    const heatmap = document.getElementById("heatmap");
+    const tableWrap = document.getElementById("tableWrap");
+    const jsonPreview = document.getElementById("jsonPreview");
+
+    let dpr = 1;
+    let width = 0;
+    let height = 0;
+    let mode = "select";
+    let matrixView = "heatmap";
+    let connectSourceId = null;
+    let dragStateId = null;
+    let dragOffset = { x: 0, y: 0 };
+    let dragLastPoint = null;
+    let dragGroupIds = [];
+    let selectionStart = null;
+    let selectionRect = null;
+    let selected = { type: null, id: null, from: null, to: null };
+    let selectedStateIds = new Set();
+    let absorbingGroups = [];
+    let nextStateId = 0;
+    let states = [];
+    let transitions = new Map();
+
+    function makeProject() {
+      return {
+        schema: "markov-chain-maker/v1",
+        states: states.map((state) => ({
+          id: state.id,
+          label: state.label,
+          x: Math.round(state.x),
+          y: Math.round(state.y)
+        })),
+        absorbingGroups: absorbingGroups.map((group) => [...group]),
+        settings: {
+          continuousNormalization: continuousNormalizeInput.checked
+        },
+        transitions: Array.from(transitions.entries()).flatMap(([from, targets]) =>
+          Array.from(targets.entries()).map(([to, probability]) => ({
+            from: Number(from),
+            to: Number(to),
+            probability
+          }))
+        )
+      };
+    }
+
+    function labelForId(id) {
+      return states.find((state) => state.id === id)?.label || `S${id}`;
+    }
+
+    function sortedStates() {
+      return [...states].sort((a, b) => a.id - b.id);
+    }
+
+    function getTargets(fromId) {
+      if (!transitions.has(fromId)) transitions.set(fromId, new Map());
+      return transitions.get(fromId);
+    }
+
+    function clampProbability(value) {
+      const number = Number(value);
+      if (!Number.isFinite(number)) return 0;
+      return Math.max(0, Math.min(1, number));
+    }
+
+    function setTransition(fromId, toId, probability) {
+      if (!states.some((state) => state.id === fromId) || !states.some((state) => state.id === toId)) return;
+      const clamped = clampProbability(probability);
+      const targets = getTargets(fromId);
+      if (clamped <= EPSILON) {
+        targets.delete(toId);
+      } else {
+        targets.set(toId, clamped);
+      }
+      if (targets.size === 0) transitions.delete(fromId);
+    }
+
+    function addTransitionWithContinuousNormalization(fromId, toId, fallbackProbability) {
+      if (!continuousNormalizeInput.checked) {
+        setTransition(fromId, toId, fallbackProbability);
+        return;
+      }
+      if (!states.some((state) => state.id === fromId) || !states.some((state) => state.id === toId)) return;
+      const targets = getTargets(fromId);
+      if (targets.has(toId)) {
+        setTransition(fromId, toId, fallbackProbability);
+        return;
+      }
+      if (targets.size === 0 && fromId !== toId) targets.set(fromId, 1);
+      const existing = [...targets.entries()].filter(([, probability]) => probability > EPSILON);
+      if (existing.length === 0) {
+        setTransition(fromId, toId, fallbackProbability);
+        return;
+      }
+      const takeRatio = 1 / (existing.length + 1);
+      const newProbability = existing.reduce((sum, [, probability]) => sum + probability * takeRatio, 0);
+      for (const [targetId, probability] of existing) {
+        const remaining = probability * (1 - takeRatio);
+        if (remaining <= EPSILON) targets.delete(targetId);
+        else targets.set(targetId, remaining);
+      }
+      targets.set(toId, newProbability);
+    }
+
+    function deleteTransition(fromId, toId) {
+      if (!transitions.has(fromId)) return;
+      transitions.get(fromId).delete(toId);
+      if (transitions.get(fromId).size === 0) transitions.delete(fromId);
+      if (selected.type === "transition" && selected.from === fromId && selected.to === toId) {
+        selected = { type: null, id: null, from: null, to: null };
+      }
+    }
+
+    function rowSum(id) {
+      const targets = transitions.get(id);
+      if (!targets) return 0;
+      return Array.from(targets.values()).reduce((sum, value) => sum + value, 0);
+    }
+
+    function rowIsValid(id) {
+      return Math.abs(rowSum(id) - 1) <= EPSILON;
+    }
+
+    function invalidRowSummaries() {
+      return states
+        .filter((state) => !rowIsValid(state.id))
+        .map((state) => `${state.label}: ${rowSum(state.id).toFixed(6)}`);
+    }
+
+    function isRowStochasticMatrix() {
+      return states.length > 0 && states.every((state) => rowIsValid(state.id));
+    }
+
+    function denseMatrix() {
+      const ordered = sortedStates();
+      return ordered.map((fromState) => {
+        const targets = transitions.get(fromState.id) || new Map();
+        return ordered.map((toState) => targets.get(toState.id) || 0);
+      });
+    }
+
+    function addState(x = null, y = null) {
+      if (states.length >= MAX_STATES) {
+        setProjectMessage(`State limit is ${MAX_STATES}.`, "warn");
+        return;
+      }
+      const id = nextStateId;
+      nextStateId += 1;
+      const centerX = x ?? width / 2 + Math.cos(id * 2.4) * Math.min(width, height) * 0.22;
+      const centerY = y ?? height / 2 + Math.sin(id * 2.4) * Math.min(width, height) * 0.22;
+      const state = {
+        id,
+        label: `S${id}`,
+        x: Math.max(NODE_RADIUS + 8, Math.min(width - NODE_RADIUS - 8, centerX)),
+        y: Math.max(NODE_RADIUS + 8, Math.min(height - NODE_RADIUS - 8, centerY))
+      };
+      states.push(state);
+      selected = { type: "state", id: state.id, from: null, to: null };
+      selectedStateIds = new Set([state.id]);
+      updateAll();
+    }
+
+    function createStateSet(count, transitionMode) {
+      const stateCount = Math.max(1, Math.min(MAX_STATES, Math.round(Number(count) || 1)));
+      const centerX = width / 2;
+      const centerY = height / 2;
+      const layoutRadius = Math.max(90, Math.min(width, height) * 0.34);
+      states = Array.from({ length: stateCount }, (_, index) => {
+        const angle = -Math.PI / 2 + (index / stateCount) * Math.PI * 2;
+        const ringScale = stateCount <= 1 ? 0 : 1;
+        return {
+          id: index,
+          label: `S${index}`,
+          x: centerX + Math.cos(angle) * layoutRadius * ringScale,
+          y: centerY + Math.sin(angle) * layoutRadius * ringScale
+        };
+      }).map((state) => ({
+        ...state,
+        x: Math.max(NODE_RADIUS + 8, Math.min(width - NODE_RADIUS - 8, state.x)),
+        y: Math.max(NODE_RADIUS + 8, Math.min(height - NODE_RADIUS - 8, state.y))
+      }));
+
+      transitions = new Map();
+      absorbingGroups = [];
+      if (transitionMode === "uniform") createUniformTransitions();
+      if (transitionMode === "random") createRandomTransitions();
+
+      nextStateId = stateCount;
+      selected = states[0] ? { type: "state", id: states[0].id, from: null, to: null } : { type: null, id: null, from: null, to: null };
+      selectedStateIds = states[0] ? new Set([states[0].id]) : new Set();
+      connectSourceId = null;
+      bulkStateCountInput.value = String(stateCount);
+      updateAll();
+      setProjectMessage(`Created ${stateCount} states with ${transitionMode === "empty" ? "no" : transitionMode} transitions.`, transitionMode === "empty" ? "warn" : "good");
+    }
+
+    function createUniformTransitions() {
+      const probability = states.length > 0 ? 1 / states.length : 0;
+      for (const from of states) {
+        transitions.set(from.id, new Map(states.map((to) => [to.id, probability])));
+      }
+    }
+
+    function createRandomTransitions() {
+      for (const from of states) {
+        const weights = states.map(() => Math.random() + 0.02);
+        const total = weights.reduce((sum, value) => sum + value, 0);
+        transitions.set(from.id, new Map(states.map((to, index) => [to.id, weights[index] / total])));
+      }
+    }
+
+    function deleteSelectedState() {
+      if (selected.type !== "state") return;
+      const id = selected.id;
+      states = states.filter((state) => state.id !== id);
+      transitions.delete(id);
+      for (const targets of transitions.values()) targets.delete(id);
+      for (const [from, targets] of transitions.entries()) {
+        if (targets.size === 0) transitions.delete(from);
+      }
+      selectedStateIds.delete(id);
+      absorbingGroups = absorbingGroups
+        .map((group) => group.filter((stateId) => stateId !== id))
+        .filter((group) => group.length > 0);
+      selected = { type: null, id: null, from: null, to: null };
+      connectSourceId = null;
+      updateAll();
+    }
+
+    function selectedState() {
+      if (selected.type !== "state") return null;
+      return states.find((state) => state.id === selected.id) || null;
+    }
+
+    function normalizeRow(id) {
+      const sum = rowSum(id);
+      if (sum <= EPSILON) return;
+      const targets = getTargets(id);
+      for (const [to, probability] of targets.entries()) targets.set(to, probability / sum);
+      updateAll();
+    }
+
+    function makeAbsorbing(id) {
+      transitions.set(id, new Map([[id, 1]]));
+      updateAll();
+    }
+
+    function clearOutgoing(id) {
+      transitions.delete(id);
+      updateAll();
+    }
+
+    function clearIncoming(id) {
+      for (const [fromId, targets] of transitions.entries()) {
+        targets.delete(id);
+        if (targets.size === 0) transitions.delete(fromId);
+      }
+      if (selected.type === "transition" && selected.to === id) {
+        selected = { type: "state", id, from: null, to: null };
+      }
+      updateAll();
+    }
+
+    function addSelfLoopRemainder(id) {
+      const sum = rowSum(id);
+      if (sum >= 1 - EPSILON) return;
+      const targets = getTargets(id);
+      targets.set(id, clampProbability((targets.get(id) || 0) + (1 - sum)));
+      updateAll();
+    }
+
+    function makeAllZeroRowsAbsorbing() {
+      for (const state of states) {
+        if (rowSum(state.id) <= EPSILON) transitions.set(state.id, new Map([[state.id, 1]]));
+      }
+      updateAll();
+    }
+
+    function selectedSetIds() {
+      return [...selectedStateIds].filter((id) => states.some((state) => state.id === id)).sort((a, b) => a - b);
+    }
+
+    function makeSelectedSetAbsorbing(modeName) {
+      const ids = selectedSetIds();
+      if (ids.length === 0) return;
+      const idSet = new Set(ids);
+      for (const fromId of ids) {
+        if (modeName === "random") {
+          const weights = ids.map(() => Math.random() + 0.02);
+          const total = weights.reduce((sum, value) => sum + value, 0);
+          transitions.set(fromId, new Map(ids.map((toId, index) => [toId, weights[index] / total])));
+        } else {
+          const probability = 1 / ids.length;
+          transitions.set(fromId, new Map(ids.map((toId) => [toId, probability])));
+        }
+      }
+      absorbingGroups = absorbingGroups
+        .map((group) => group.filter((stateId) => !idSet.has(stateId)))
+        .filter((group) => group.length > 0);
+      absorbingGroups.push(ids);
+      rearrangeByAbsorbingGroups();
+      selected = { type: "state", id: ids[0], from: null, to: null };
+      selectedStateIds = new Set(ids);
+      updateAll();
+      setProjectMessage(`Made ${ids.length} states jointly absorbing with ${modeName} internal transitions.`, "good");
+    }
+
+    function rearrangeByAbsorbingGroups() {
+      const groupedIds = new Set(absorbingGroups.flat());
+      const groups = absorbingGroups.map((group) => group.map((id) => states.find((state) => state.id === id)).filter(Boolean));
+      const ungrouped = states.filter((state) => !groupedIds.has(state.id));
+      const allClusters = [...groups, ...(ungrouped.length > 0 ? [ungrouped] : [])].filter((cluster) => cluster.length > 0);
+      if (allClusters.length === 0) return;
+      const centerY = height / 2;
+      const bandWidth = width / (allClusters.length + 1);
+      allClusters.forEach((cluster, clusterIndex) => {
+        const cx = bandWidth * (clusterIndex + 1);
+        const cy = centerY + (clusterIndex % 2 === 0 ? -1 : 1) * Math.min(36, height * 0.05);
+        const radius = Math.max(42, Math.min(120, 22 + cluster.length * 3.2));
+        cluster.forEach((state, index) => {
+          const angle = -Math.PI / 2 + (index / cluster.length) * Math.PI * 2;
+          const ringScale = cluster.length <= 1 ? 0 : 1;
+          state.x = Math.max(NODE_RADIUS + 8, Math.min(width - NODE_RADIUS - 8, cx + Math.cos(angle) * radius * ringScale));
+          state.y = Math.max(NODE_RADIUS + 8, Math.min(height - NODE_RADIUS - 8, cy + Math.sin(angle) * radius * ringScale));
+        });
+      });
+    }
+
+    function hitState(point) {
+      for (let index = states.length - 1; index >= 0; index -= 1) {
+        const state = states[index];
+        const dx = point.x - state.x;
+        const dy = point.y - state.y;
+        if (Math.hypot(dx, dy) <= NODE_RADIUS + 3) return state;
+      }
+      return null;
+    }
+
+    function distanceToSegment(point, a, b) {
+      const dx = b.x - a.x;
+      const dy = b.y - a.y;
+      const lengthSquared = dx * dx + dy * dy;
+      if (lengthSquared === 0) return Math.hypot(point.x - a.x, point.y - a.y);
+      const t = Math.max(0, Math.min(1, ((point.x - a.x) * dx + (point.y - a.y) * dy) / lengthSquared));
+      return Math.hypot(point.x - (a.x + t * dx), point.y - (a.y + t * dy));
+    }
+
+    function hitTransition(point) {
+      const candidates = [];
+      for (const [fromId, targets] of transitions.entries()) {
+        const from = states.find((state) => state.id === fromId);
+        if (!from) continue;
+        for (const toId of targets.keys()) {
+          const to = states.find((state) => state.id === toId);
+          if (!to) continue;
+          if (fromId === toId) {
+            const loopCenter = { x: from.x + NODE_RADIUS * 0.92, y: from.y - NODE_RADIUS * 1.03 };
+            const distance = Math.abs(Math.hypot(point.x - loopCenter.x, point.y - loopCenter.y) - NODE_RADIUS * 0.72);
+            if (distance <= 9) candidates.push({ from: fromId, to: toId, distance });
+          } else {
+            const angle = Math.atan2(to.y - from.y, to.x - from.x);
+            const start = { x: from.x + Math.cos(angle) * NODE_RADIUS, y: from.y + Math.sin(angle) * NODE_RADIUS };
+            const end = { x: to.x - Math.cos(angle) * NODE_RADIUS, y: to.y - Math.sin(angle) * NODE_RADIUS };
+            const distance = distanceToSegment(point, start, end);
+            if (distance <= 8) candidates.push({ from: fromId, to: toId, distance });
+          }
+        }
+      }
+      candidates.sort((a, b) => a.distance - b.distance);
+      return candidates[0] || null;
+    }
+
+    function canvasPoint(event) {
+      const rect = canvas.getBoundingClientRect();
+      return {
+        x: event.clientX - rect.left,
+        y: event.clientY - rect.top
+      };
+    }
+
+    function rectFromPoints(a, b) {
+      return {
+        x: Math.min(a.x, b.x),
+        y: Math.min(a.y, b.y),
+        width: Math.abs(a.x - b.x),
+        height: Math.abs(a.y - b.y)
+      };
+    }
+
+    function stateInsideRect(state, rect) {
+      return state.x >= rect.x && state.x <= rect.x + rect.width && state.y >= rect.y && state.y <= rect.y + rect.height;
+    }
+
+    function updateSelectionMarquee() {
+      if (!selectionRect) {
+        selectionMarquee.classList.add("hidden");
+        return;
+      }
+      selectionMarquee.classList.remove("hidden");
+      selectionMarquee.style.left = `${selectionRect.x}px`;
+      selectionMarquee.style.top = `${selectionRect.y}px`;
+      selectionMarquee.style.width = `${selectionRect.width}px`;
+      selectionMarquee.style.height = `${selectionRect.height}px`;
+    }
+
+    function toggleStateInSelection(id) {
+      if (selectedStateIds.has(id)) selectedStateIds.delete(id);
+      else selectedStateIds.add(id);
+      selected = { type: "state", id, from: null, to: null };
+      updateAll();
+    }
+
+    function clampGroupDelta(groupStates, dx, dy) {
+      if (groupStates.length === 0) return { dx: 0, dy: 0 };
+      const minX = Math.min(...groupStates.map((state) => state.x));
+      const maxX = Math.max(...groupStates.map((state) => state.x));
+      const minY = Math.min(...groupStates.map((state) => state.y));
+      const maxY = Math.max(...groupStates.map((state) => state.y));
+      return {
+        dx: Math.max(NODE_RADIUS + 6 - minX, Math.min(width - NODE_RADIUS - 6 - maxX, dx)),
+        dy: Math.max(NODE_RADIUS + 6 - minY, Math.min(height - NODE_RADIUS - 6 - maxY, dy))
+      };
+    }
+
+    function drawArrow(start, end, probability, selectedEdge) {
+      const angle = Math.atan2(end.y - start.y, end.x - start.x);
+      ctx.lineWidth = 1.2 + probability * 7;
+      ctx.strokeStyle = selectedEdge ? "#ffd36a" : "rgba(121, 213, 255, 0.64)";
+      ctx.fillStyle = ctx.strokeStyle;
+      ctx.lineCap = "round";
+      ctx.beginPath();
+      ctx.moveTo(start.x, start.y);
+      ctx.lineTo(end.x, end.y);
+      ctx.stroke();
+
+      const arrowSize = 9 + probability * 5;
+      ctx.beginPath();
+      ctx.moveTo(end.x, end.y);
+      ctx.lineTo(end.x - Math.cos(angle - 0.45) * arrowSize, end.y - Math.sin(angle - 0.45) * arrowSize);
+      ctx.lineTo(end.x - Math.cos(angle + 0.45) * arrowSize, end.y - Math.sin(angle + 0.45) * arrowSize);
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    function drawEdgeLabel(x, y, probability, active = false) {
+      const text = formatProbability(probability);
+      ctx.font = "800 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace";
+      const metrics = ctx.measureText(text);
+      const pad = 6;
+      ctx.fillStyle = active ? "rgba(255, 211, 106, 0.18)" : "rgba(18, 24, 22, 0.86)";
+      ctx.strokeStyle = active ? "rgba(255, 211, 106, 0.52)" : "rgba(241,244,234,0.18)";
+      ctx.lineWidth = 1;
+      roundRect(x - metrics.width / 2 - pad, y - 11, metrics.width + pad * 2, 22, 6);
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = active ? "#fff0bd" : "#dff6ff";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText(text, x, y + 0.5);
+    }
+
+    function drawSelfLoop(state, probability, active) {
+      const cx = state.x + NODE_RADIUS * 0.92;
+      const cy = state.y - NODE_RADIUS * 1.03;
+      const radius = NODE_RADIUS * 0.72;
+      ctx.lineWidth = 1.2 + probability * 7;
+      ctx.strokeStyle = active ? "#ffd36a" : "rgba(121, 213, 255, 0.64)";
+      ctx.fillStyle = ctx.strokeStyle;
+      ctx.beginPath();
+      ctx.arc(cx, cy, radius, 0.35, Math.PI * 1.9);
+      ctx.stroke();
+      const endAngle = Math.PI * 1.9;
+      const end = { x: cx + Math.cos(endAngle) * radius, y: cy + Math.sin(endAngle) * radius };
+      const tangent = endAngle + Math.PI / 2;
+      const arrowSize = 9 + probability * 5;
+      ctx.beginPath();
+      ctx.moveTo(end.x, end.y);
+      ctx.lineTo(end.x - Math.cos(tangent - 0.45) * arrowSize, end.y - Math.sin(tangent - 0.45) * arrowSize);
+      ctx.lineTo(end.x - Math.cos(tangent + 0.45) * arrowSize, end.y - Math.sin(tangent + 0.45) * arrowSize);
+      ctx.closePath();
+      ctx.fill();
+      drawEdgeLabel(cx + radius * 0.8, cy - radius * 0.55, probability, active);
+    }
+
+    function drawTransitions() {
+      for (const [fromId, targets] of transitions.entries()) {
+        const from = states.find((state) => state.id === fromId);
+        if (!from) continue;
+        for (const [toId, probability] of targets.entries()) {
+          const to = states.find((state) => state.id === toId);
+          if (!to) continue;
+          const active = selected.type === "transition" && selected.from === fromId && selected.to === toId;
+          if (fromId === toId) {
+            drawSelfLoop(from, probability, active);
+            continue;
+          }
+          const angle = Math.atan2(to.y - from.y, to.x - from.x);
+          const normal = { x: -Math.sin(angle), y: Math.cos(angle) };
+          const offset = hasReverseEdge(fromId, toId) ? 12 : 0;
+          const start = {
+            x: from.x + Math.cos(angle) * NODE_RADIUS + normal.x * offset,
+            y: from.y + Math.sin(angle) * NODE_RADIUS + normal.y * offset
+          };
+          const end = {
+            x: to.x - Math.cos(angle) * NODE_RADIUS + normal.x * offset,
+            y: to.y - Math.sin(angle) * NODE_RADIUS + normal.y * offset
+          };
+          drawArrow(start, end, probability, active);
+          drawEdgeLabel((start.x + end.x) / 2 + normal.x * 8, (start.y + end.y) / 2 + normal.y * 8, probability, active);
+        }
+      }
+    }
+
+    function drawAbsorbingGroups() {
+      absorbingGroups.forEach((group, index) => {
+        const groupStates = group.map((id) => states.find((state) => state.id === id)).filter(Boolean);
+        if (groupStates.length === 0) return;
+        const minX = Math.min(...groupStates.map((state) => state.x)) - NODE_RADIUS * 2;
+        const maxX = Math.max(...groupStates.map((state) => state.x)) + NODE_RADIUS * 2;
+        const minY = Math.min(...groupStates.map((state) => state.y)) - NODE_RADIUS * 2;
+        const maxY = Math.max(...groupStates.map((state) => state.y)) + NODE_RADIUS * 2;
+        ctx.fillStyle = index % 2 === 0 ? "rgba(246, 198, 91, 0.08)" : "rgba(121, 213, 255, 0.08)";
+        ctx.strokeStyle = index % 2 === 0 ? "rgba(246, 198, 91, 0.42)" : "rgba(121, 213, 255, 0.34)";
+        ctx.lineWidth = 1.4;
+        roundRect(minX, minY, maxX - minX, maxY - minY, 16);
+        ctx.fill();
+        ctx.stroke();
+        ctx.fillStyle = "rgba(241, 244, 234, 0.62)";
+        ctx.font = "800 11px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace";
+        ctx.textAlign = "left";
+        ctx.textBaseline = "top";
+        ctx.fillText(`absorbing set ${index + 1}`, minX + 10, minY + 8);
+      });
+    }
+
+    function hasReverseEdge(fromId, toId) {
+      return transitions.get(toId)?.has(fromId) && fromId !== toId;
+    }
+
+    function drawStates() {
+      for (const state of states) {
+        const isSelected = selected.type === "state" && selected.id === state.id;
+        const isInSelectedSet = selectedStateIds.has(state.id);
+        const isConnectSource = connectSourceId === state.id;
+        ctx.beginPath();
+        ctx.arc(state.x, state.y, NODE_RADIUS, 0, Math.PI * 2);
+        ctx.fillStyle = isSelected || isConnectSource || isInSelectedSet ? "#123142" : "#202920";
+        ctx.strokeStyle = isConnectSource ? "#ffd36a" : isSelected ? "#79d5ff" : isInSelectedSet ? "#f6c65b" : "rgba(241,244,234,0.36)";
+        ctx.lineWidth = isSelected || isConnectSource || isInSelectedSet ? 3 : 1.5;
+        ctx.fill();
+        ctx.stroke();
+        ctx.fillStyle = "#f1f4ea";
+        ctx.font = "800 12px Inter, ui-sans-serif, system-ui";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(state.label, state.x, state.y + 0.5, NODE_RADIUS * 1.62);
+      }
+    }
+
+    function roundRect(x, y, w, h, r) {
+      const radius = Math.min(r, w / 2, h / 2);
+      ctx.beginPath();
+      ctx.moveTo(x + radius, y);
+      ctx.arcTo(x + w, y, x + w, y + h, radius);
+      ctx.arcTo(x + w, y + h, x, y + h, radius);
+      ctx.arcTo(x, y + h, x, y, radius);
+      ctx.arcTo(x, y, x + w, y, radius);
+      ctx.closePath();
+    }
+
+    function render() {
+      ctx.clearRect(0, 0, width, height);
+      drawAbsorbingGroups();
+      drawTransitions();
+      drawStates();
+      if (connectSourceId !== null) {
+        const source = states.find((state) => state.id === connectSourceId);
+        if (source) {
+          ctx.setLineDash([5, 5]);
+          ctx.strokeStyle = "rgba(215, 79, 52, 0.34)";
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.arc(source.x, source.y, NODE_RADIUS + 9, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.setLineDash([]);
+        }
+      }
+    }
+
+    function formatProbability(value) {
+      return Number(value).toFixed(4).replace(/0+$/, "").replace(/\.$/, "") || "0";
+    }
+
+    function updateSelects() {
+      const options = sortedStates().map((state) => `<option value="${state.id}">${escapeHtml(state.label)}</option>`).join("");
+      fromSelect.innerHTML = options;
+      toSelect.innerHTML = options;
+      const selectedStateId = selected.type === "state" ? selected.id : states[0]?.id;
+      if (selectedStateId !== undefined) {
+        fromSelect.value = String(selectedStateId);
+        toSelect.value = String(selectedStateId);
+      }
+    }
+
+    function updateInspector() {
+      const state = selectedState();
+      const hasState = Boolean(state);
+      updateSetInspector();
+      stateLabel.disabled = !hasState;
+      deleteStateButton.disabled = !hasState;
+      normalizeRowButton.disabled = !hasState || rowSum(state?.id) <= EPSILON;
+      makeAbsorbingButton.disabled = !hasState;
+      clearOutgoingButton.disabled = !hasState;
+      clearIncomingButton.disabled = !hasState;
+      addRemainderButton.disabled = !hasState || rowSum(state.id) >= 1 - EPSILON;
+
+      if (!state) {
+        stateLabel.value = "";
+        rowSumInput.value = "";
+        rowStatus.textContent = selected.type === "transition"
+          ? `${labelForId(selected.from)} -> ${labelForId(selected.to)} selected.`
+          : "Select a state to edit outgoing transitions.";
+        rowStatus.className = "status";
+        outgoingList.innerHTML = "";
+        deleteTransitionButton.disabled = selected.type !== "transition";
+        return;
+      }
+
+      const sum = rowSum(state.id);
+      stateLabel.value = state.label;
+      rowSumInput.value = sum.toFixed(10).replace(/0+$/, "").replace(/\.$/, "");
+      rowStatus.textContent = rowIsValid(state.id)
+        ? "This row is stochastic."
+        : `Row should sum to 1. Current difference: ${(1 - sum).toFixed(6)}.`;
+      rowStatus.className = rowIsValid(state.id) ? "status good" : "status warn";
+
+      const targets = transitions.get(state.id) || new Map();
+      outgoingList.innerHTML = Array.from(targets.entries())
+        .sort((a, b) => a[0] - b[0])
+        .map(([to, probability]) => `
+          <div class="transition-row" data-from="${state.id}" data-to="${to}">
+            <div class="transition-label">${escapeHtml(state.label)} -> ${escapeHtml(labelForId(to))}</div>
+            <input type="number" min="0" max="1" step="0.01" value="${probability}">
+            <button class="danger" type="button" title="Delete transition">x</button>
+          </div>
+        `).join("");
+      if (!outgoingList.innerHTML) outgoingList.innerHTML = '<p class="status">No outgoing transitions.</p>';
+      deleteTransitionButton.disabled = selected.type !== "transition";
+    }
+
+    function updateSetInspector() {
+      const ids = selectedSetIds();
+      selectedSetCount.textContent = String(ids.length);
+      makeSetAbsorbingButton.disabled = ids.length === 0;
+      clearSelectionButton.disabled = ids.length === 0;
+      setStatus.textContent = ids.length === 0
+        ? "Use Box Select or Ctrl-click states to build a set."
+        : `${ids.length} selected: ${ids.map(labelForId).join(", ")}`;
+      setStatus.className = ids.length === 0 ? "status" : "status good";
+    }
+
+    function updateDiagnostics() {
+      const invalid = states.filter((state) => !rowIsValid(state.id));
+      stateCount.textContent = String(states.length);
+      edgeCount.textContent = String(Array.from(transitions.values()).reduce((sum, targets) => sum + targets.size, 0));
+      invalidCount.textContent = String(invalid.length);
+      matrixState.textContent = states.length > 0 && invalid.length === 0 ? "Yes" : "No";
+      projectStatus.textContent = states.length === 0
+        ? "Add states to begin building a finite Markov chain."
+        : invalid.length === 0
+          ? "All rows sum to 1 within tolerance."
+          : `${invalid.length} row${invalid.length === 1 ? "" : "s"} need attention.`;
+      projectStatus.className = invalid.length === 0 && states.length > 0 ? "status good" : "status warn";
+      invalidRows.innerHTML = invalid.length === 0
+        ? '<div class="status good">No invalid rows.</div>'
+        : invalid.map((state) => `<button type="button" data-state="${state.id}">${escapeHtml(state.label)} sum = ${rowSum(state.id).toFixed(6)}</button>`).join("");
+    }
+
+    function updateMatrix() {
+      const ordered = sortedStates();
+      const matrix = denseMatrix();
+      heatmap.style.gridTemplateColumns = `repeat(${ordered.length + 1}, minmax(34px, 1fr))`;
+      heatmap.innerHTML = [
+        '<div class="axis-cell"></div>',
+        ...ordered.map((state) => `<div class="axis-cell" title="Column ${escapeHtml(state.label)}">${escapeHtml(state.label)}</div>`),
+        ...matrix.flatMap((row, rowIndex) => [
+          `<button class="axis-cell ${selectedStateIds.has(ordered[rowIndex].id) ? "selected" : ""}" data-row="${ordered[rowIndex].id}" type="button">${escapeHtml(ordered[rowIndex].label)}</button>`,
+          ...row.map((value) => `<div class="heat-cell" title="${formatProbability(value)}" style="background:${heatColor(value)};color:${value > 0.55 ? "#11130f" : "#f1f4ea"}">${value > 0 ? formatProbability(value) : ""}</div>`)
+        ])
+      ].join("");
+
+      tableWrap.innerHTML = `
+        <table>
+          <thead><tr><th></th>${ordered.map((state) => `<th>${escapeHtml(state.label)}</th>`).join("")}</tr></thead>
+          <tbody>
+            ${matrix.map((row, rowIndex) => `
+              <tr class="${selectedStateIds.has(ordered[rowIndex].id) ? "selected" : ""}">
+                <th class="row-head" data-row="${ordered[rowIndex].id}">${escapeHtml(ordered[rowIndex].label)}</th>
+                ${row.map((value) => `<td>${value.toFixed(6)}</td>`).join("")}
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+      `;
+    }
+
+    function heatColor(value) {
+      const alpha = 0.08 + value * 0.82;
+      const hue = 188 - value * 168;
+      return `hsla(${hue}, 65%, 42%, ${alpha})`;
+    }
+
+    function updateJsonPreview() {
+      jsonPreview.value = JSON.stringify(makeProject(), null, 2);
+    }
+
+    function updateModes() {
+      selectModeButton.classList.toggle("primary", mode === "select");
+      multiSelectModeButton.classList.toggle("primary", mode === "multi-select");
+      edgeModeButton.classList.toggle("primary", mode === "transition");
+      hint.textContent = mode === "multi-select"
+        ? "Box Select mode: drag a rectangle around states. Drag any selected state to move the selected set together."
+        : mode === "transition"
+        ? selectedSetIds().length === 0
+          ? "Transition mode: select one or more source states first, then click a target state."
+          : `Transition mode: ${selectedSetIds().map(labelForId).join(", ")} -> click a target state.`
+        : "Select nodes or transitions. Drag a selected state to move the whole selected set. Ctrl-click states to build a set, or use Box Select mode.";
+    }
+
+    function updateAll() {
+      updateSelects();
+      updateInspector();
+      updateDiagnostics();
+      updateMatrix();
+      updateJsonPreview();
+      updateModes();
+      render();
+    }
+
+    function resize() {
+      const rect = canvas.getBoundingClientRect();
+      dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+      width = rect.width;
+      height = rect.height;
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      render();
+    }
+
+    function selectState(id) {
+      selected = { type: "state", id, from: null, to: null };
+      selectedStateIds = new Set([id]);
+      updateAll();
+    }
+
+    function setProjectMessage(message, kind = "") {
+      projectStatus.textContent = message;
+      projectStatus.className = kind ? `status ${kind}` : "status";
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      })[char]);
+    }
+
+    function downloadText(filename, text, type) {
+      const blob = new Blob([text], { type });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function shouldContinueExport(exportName) {
+      const invalid = invalidRowSummaries();
+      if (invalid.length === 0) return true;
+      setProjectMessage(`Warning: ${exportName} includes ${invalid.length} non-normalized row${invalid.length === 1 ? "" : "s"}.`, "warn");
+      return window.confirm(
+        `${exportName} warning: this matrix is not row-stochastic.\n\n` +
+        `Invalid rows:\n${invalid.slice(0, 12).join("\n")}` +
+        `${invalid.length > 12 ? `\n...and ${invalid.length - 12} more` : ""}\n\n` +
+        "Export anyway?"
+      );
+    }
+
+    function exportCsvText() {
+      const ordered = sortedStates();
+      const matrix = denseMatrix();
+      const header = ["", ...ordered.map((state) => state.label)];
+      const rows = matrix.map((row, index) => [ordered[index].label, ...row.map((value) => value.toFixed(12))]);
+      return [header, ...rows].map((row) => row.map(csvCell).join(",")).join("\n");
+    }
+
+    function csvCell(value) {
+      const text = String(value);
+      return /[",\n]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
+    }
+
+    function numpyArrayText() {
+      return "[\n" + denseMatrix()
+        .map((row) => "  [" + row.map((value) => Number(value.toFixed(12))).join(", ") + "]")
+        .join(",\n") + "\n]";
+    }
+
+    function loadProject(project) {
+      if (!project || !Array.isArray(project.states) || !Array.isArray(project.transitions)) {
+        throw new Error("JSON must include states and transitions arrays.");
+      }
+      const loadedStates = project.states.slice(0, MAX_STATES).map((state, index) => ({
+        id: Number.isInteger(Number(state.id)) ? Number(state.id) : index,
+        label: String(state.label || `S${state.id ?? index}`).slice(0, 32),
+        x: Number.isFinite(Number(state.x)) ? Number(state.x) : width / 2,
+        y: Number.isFinite(Number(state.y)) ? Number(state.y) : height / 2
+      }));
+      const ids = new Set(loadedStates.map((state) => state.id));
+      const loadedTransitions = new Map();
+      for (const transition of project.transitions) {
+        const from = Number(transition.from);
+        const to = Number(transition.to);
+        if (!ids.has(from) || !ids.has(to)) continue;
+        const probability = clampProbability(transition.probability);
+        if (probability <= EPSILON) continue;
+        if (!loadedTransitions.has(from)) loadedTransitions.set(from, new Map());
+        loadedTransitions.get(from).set(to, probability);
+      }
+      states = loadedStates;
+      transitions = loadedTransitions;
+      absorbingGroups = Array.isArray(project.absorbingGroups)
+        ? project.absorbingGroups
+          .map((group) => Array.isArray(group) ? group.map(Number).filter((id) => ids.has(id)) : [])
+          .filter((group) => group.length > 0)
+        : [];
+      continuousNormalizeInput.checked = Boolean(project.settings?.continuousNormalization);
+      nextStateId = Math.max(-1, ...states.map((state) => state.id)) + 1;
+      selected = states[0] ? { type: "state", id: states[0].id, from: null, to: null } : { type: null, id: null, from: null, to: null };
+      selectedStateIds = states[0] ? new Set([states[0].id]) : new Set();
+      connectSourceId = null;
+      updateAll();
+    }
+
+    addStateButton.addEventListener("click", () => addState());
+    createBulkStatesButton.addEventListener("click", () => createStateSet(bulkStateCountInput.value, bulkTransitionModeInput.value));
+    bulkStateCountInput.addEventListener("change", () => {
+      bulkStateCountInput.value = String(Math.max(1, Math.min(MAX_STATES, Math.round(Number(bulkStateCountInput.value) || 1))));
+    });
+    downloadJsonButton.addEventListener("click", () => {
+      if (!shouldContinueExport("JSON export")) return;
+      downloadText("markov-chain-project.json", JSON.stringify(makeProject(), null, 2), "application/json");
+    });
+    exportCsvButton.addEventListener("click", () => {
+      if (!shouldContinueExport("CSV export")) return;
+      downloadText("markov-transition-matrix.csv", exportCsvText(), "text/csv");
+    });
+    exportNumpyButton.addEventListener("click", async () => {
+      if (!shouldContinueExport("NumPy export")) return;
+      const text = numpyArrayText();
+      try {
+        await navigator.clipboard.writeText(text);
+        setProjectMessage("NumPy-compatible nested array copied to clipboard.", "good");
+      } catch {
+        downloadText("markov-transition-matrix.py.txt", text, "text/plain");
+      }
+    });
+
+    loadJsonInput.addEventListener("change", async () => {
+      const file = loadJsonInput.files[0];
+      if (!file) return;
+      try {
+        loadProject(JSON.parse(await file.text()));
+        setProjectMessage(`Loaded ${file.name}.`, "good");
+      } catch (error) {
+        setProjectMessage(error.message, "bad");
+      } finally {
+        loadJsonInput.value = "";
+      }
+    });
+
+    selectModeButton.addEventListener("click", () => {
+      mode = "select";
+      connectSourceId = null;
+      selectionRect = null;
+      updateSelectionMarquee();
+      updateAll();
+    });
+
+    multiSelectModeButton.addEventListener("click", () => {
+      mode = "multi-select";
+      connectSourceId = null;
+      updateAll();
+    });
+
+    edgeModeButton.addEventListener("click", () => {
+      mode = "transition";
+      connectSourceId = null;
+      selectionRect = null;
+      updateSelectionMarquee();
+      updateAll();
+    });
+
+    canvas.addEventListener("pointerdown", (event) => {
+      const point = canvasPoint(event);
+      const state = hitState(point);
+      if (mode === "multi-select") {
+        if (state) {
+          selected = { type: "state", id: state.id, from: null, to: null };
+          if (!selectedStateIds.has(state.id)) {
+            selectedStateIds.add(state.id);
+            updateAll();
+            return;
+          }
+          dragStateId = state.id;
+          dragOffset = { x: point.x - state.x, y: point.y - state.y };
+          dragLastPoint = point;
+          dragGroupIds = selectedSetIds();
+          canvas.setPointerCapture(event.pointerId);
+          updateAll();
+          return;
+        }
+        selectionStart = point;
+        selectionRect = rectFromPoints(point, point);
+        canvas.setPointerCapture(event.pointerId);
+        updateSelectionMarquee();
+        return;
+      }
+
+      if (mode === "transition") {
+        if (!state) return;
+        const sourceIds = selectedSetIds();
+        if (sourceIds.length === 0) {
+          setProjectMessage("Select one or more source states before adding transitions.", "warn");
+          return;
+        }
+        for (const sourceId of sourceIds) addTransitionWithContinuousNormalization(sourceId, state.id, probabilityInput.value);
+        updateAll();
+        setProjectMessage(
+          `Added ${sourceIds.length} transition${sourceIds.length === 1 ? "" : "s"} to ${labelForId(state.id)}.`,
+          "good"
+        );
+        return;
+      }
+
+      if (state) {
+        selected = { type: "state", id: state.id, from: null, to: null };
+        if (event.ctrlKey || event.metaKey || event.shiftKey) {
+          if (selectedStateIds.has(state.id)) selectedStateIds.delete(state.id);
+          else selectedStateIds.add(state.id);
+        } else if (!(selectedStateIds.size > 1 && selectedStateIds.has(state.id))) {
+          selectedStateIds = new Set([state.id]);
+        } else {
+          selectedStateIds = new Set(selectedStateIds);
+        }
+        dragStateId = state.id;
+        dragOffset = { x: point.x - state.x, y: point.y - state.y };
+        dragLastPoint = point;
+        dragGroupIds = selectedStateIds.has(state.id) ? selectedSetIds() : [state.id];
+        canvas.setPointerCapture(event.pointerId);
+        updateAll();
+        return;
+      }
+
+      const edge = hitTransition(point);
+      selected = edge ? { type: "transition", id: null, from: edge.from, to: edge.to } : { type: null, id: null, from: null, to: null };
+      if (!edge) selectedStateIds = new Set();
+      updateAll();
+    });
+
+    canvas.addEventListener("pointermove", (event) => {
+      if (selectionStart) {
+        selectionRect = rectFromPoints(selectionStart, canvasPoint(event));
+        updateSelectionMarquee();
+        return;
+      }
+      if (dragStateId === null) return;
+      const point = canvasPoint(event);
+      const groupStates = dragGroupIds.map((id) => states.find((item) => item.id === id)).filter(Boolean);
+      if (groupStates.length <= 1) {
+        const state = states.find((item) => item.id === dragStateId);
+        if (!state) return;
+        state.x = Math.max(NODE_RADIUS + 6, Math.min(width - NODE_RADIUS - 6, point.x - dragOffset.x));
+        state.y = Math.max(NODE_RADIUS + 6, Math.min(height - NODE_RADIUS - 6, point.y - dragOffset.y));
+      } else {
+        const rawDx = point.x - dragLastPoint.x;
+        const rawDy = point.y - dragLastPoint.y;
+        const { dx, dy } = clampGroupDelta(groupStates, rawDx, rawDy);
+        for (const state of groupStates) {
+          state.x += dx;
+          state.y += dy;
+        }
+        dragLastPoint = { x: dragLastPoint.x + dx, y: dragLastPoint.y + dy };
+      }
+      render();
+      updateJsonPreview();
+    });
+
+    canvas.addEventListener("pointerup", (event) => {
+      if (selectionStart) {
+        const rect = selectionRect;
+        selectedStateIds = new Set(states.filter((state) => stateInsideRect(state, rect)).map((state) => state.id));
+        const ids = selectedSetIds();
+        selected = ids.length > 0 ? { type: "state", id: ids[0], from: null, to: null } : { type: null, id: null, from: null, to: null };
+        selectionStart = null;
+        selectionRect = null;
+        updateSelectionMarquee();
+        canvas.releasePointerCapture(event.pointerId);
+        updateAll();
+        return;
+      }
+      if (dragStateId !== null) canvas.releasePointerCapture(event.pointerId);
+      dragStateId = null;
+      dragLastPoint = null;
+      dragGroupIds = [];
+    });
+
+    stateLabel.addEventListener("input", () => {
+      const state = selectedState();
+      if (!state) return;
+      state.label = stateLabel.value.trim() || `S${state.id}`;
+      updateAll();
+    });
+
+    deleteStateButton.addEventListener("click", deleteSelectedState);
+    normalizeRowButton.addEventListener("click", () => selectedState() && normalizeRow(selectedState().id));
+    makeAbsorbingButton.addEventListener("click", () => selectedState() && makeAbsorbing(selectedState().id));
+    clearOutgoingButton.addEventListener("click", () => selectedState() && clearOutgoing(selectedState().id));
+    clearIncomingButton.addEventListener("click", () => selectedState() && clearIncoming(selectedState().id));
+    addRemainderButton.addEventListener("click", () => selectedState() && addSelfLoopRemainder(selectedState().id));
+    makeZeroAbsorbingButton.addEventListener("click", makeAllZeroRowsAbsorbing);
+    makeSetAbsorbingButton.addEventListener("click", () => makeSelectedSetAbsorbing(absorbingModeInput.value));
+    clearSelectionButton.addEventListener("click", () => {
+      selectedStateIds = new Set();
+      updateAll();
+    });
+    rearrangeGroupsButton.addEventListener("click", () => {
+      rearrangeByAbsorbingGroups();
+      updateAll();
+    });
+
+    upsertTransitionButton.addEventListener("click", () => {
+      if (!fromSelect.value || !toSelect.value) return;
+      const from = Number(fromSelect.value);
+      const to = Number(toSelect.value);
+      addTransitionWithContinuousNormalization(from, to, probabilityInput.value);
+      selected = { type: "transition", id: null, from, to };
+      updateAll();
+    });
+
+    deleteTransitionButton.addEventListener("click", () => {
+      if (selected.type !== "transition") return;
+      deleteTransition(selected.from, selected.to);
+      updateAll();
+    });
+
+    probabilityInput.addEventListener("change", () => {
+      probabilityInput.value = String(clampProbability(probabilityInput.value));
+    });
+
+    continuousNormalizeInput.addEventListener("change", updateJsonPreview);
+
+    outgoingList.addEventListener("change", (event) => {
+      if (!(event.target instanceof HTMLInputElement)) return;
+      const row = event.target.closest(".transition-row");
+      if (!row) return;
+      setTransition(Number(row.dataset.from), Number(row.dataset.to), event.target.value);
+      updateAll();
+    });
+
+    outgoingList.addEventListener("click", (event) => {
+      const button = event.target.closest("button");
+      if (!button) return;
+      const row = button.closest(".transition-row");
+      if (!row) return;
+      deleteTransition(Number(row.dataset.from), Number(row.dataset.to));
+      updateAll();
+    });
+
+    invalidRows.addEventListener("click", (event) => {
+      const button = event.target.closest("button[data-state]");
+      if (!button) return;
+      selectState(Number(button.dataset.state));
+    });
+
+    heatmap.addEventListener("click", (event) => {
+      const button = event.target.closest("button[data-row]");
+      if (!button) return;
+      selectState(Number(button.dataset.row));
+    });
+
+    tableWrap.addEventListener("click", (event) => {
+      const cell = event.target.closest("[data-row]");
+      if (!cell) return;
+      selectState(Number(cell.dataset.row));
+    });
+
+    heatmapTab.addEventListener("click", () => {
+      matrixView = "heatmap";
+      heatmap.classList.remove("hidden");
+      tableWrap.classList.add("hidden");
+      heatmapTab.classList.add("primary");
+      tableTab.classList.remove("primary");
+    });
+
+    tableTab.addEventListener("click", () => {
+      matrixView = "table";
+      tableWrap.classList.remove("hidden");
+      heatmap.classList.add("hidden");
+      tableTab.classList.add("primary");
+      heatmapTab.classList.remove("primary");
+    });
+
+    window.MarkovChainMaker = {
+      getProject: makeProject,
+      loadProject,
+      getDenseMatrix: denseMatrix,
+      getSparseTransitions: () => makeProject().transitions,
+      getAbsorbingGroups: () => absorbingGroups.map((group) => [...group]),
+      makeSelectedSetAbsorbing,
+      isRowStochastic: isRowStochasticMatrix
+    };
+
+    window.addEventListener("resize", resize);
+    resize();
+    addState(width * 0.34, height * 0.42);
+    addState(width * 0.56, height * 0.3);
+    addState(width * 0.62, height * 0.58);
+    setTransition(0, 1, 0.6);
+    setTransition(0, 2, 0.4);
+    setTransition(1, 1, 1);
+    selected = { type: "state", id: 0, from: null, to: null };
+    selectedStateIds = new Set([0]);
+    updateAll();
+  </script>
+</body>
+</html>
