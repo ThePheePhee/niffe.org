@@ -346,3 +346,16 @@ for (const level of LEVELS) {
     assert.ok(world.player.grounded);
   });
 }
+
+test('missing the highest bandage ledge cannot trap Ann between tall walls', () => {
+  const world=fixture('ann-garden',{bandage1:true,bandage2:true},{x:1065,y:0});
+  Object.assign(world.player,{x:1323,y:0,vy:0,grounded:true});
+  // This is the landing of a missed jump between the 100 and 152 high walls.
+  for(let i=0;i<150&&!world.falls;i++)tick(world);
+  assert.equal(world.falls,1);
+  assert.equal(world.player.x,1060);
+  assert.equal(world.player.y,0);
+  assert.equal(world.countBandages(),2);
+  travel(world,1420-17);
+  assert.equal(world.countBandages(),3,'The same climb is possible after retrying');
+});

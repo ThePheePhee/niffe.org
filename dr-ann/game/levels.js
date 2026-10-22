@@ -11,5 +11,8 @@ export const LEVELS=[
 ];
 // Lower ledges on the far side make every climb work in both directions.
 LEVELS[0].platforms.push(platform(1540,100,76),platform(3115,80,65));
+// Missing this high jump returns to the approach, rather than trapping Ann
+// on the ground between two walls taller than her standing jump.
+LEVELS[0].hazards.push({x:1320,w:40,kind:'mud'});
 LEVELS[1].platforms.push(platform(1840,110,60),platform(2960,110,44));
 export const levelById=id=>LEVELS.find(l=>l.id===id);
