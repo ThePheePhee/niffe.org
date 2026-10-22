@@ -108,11 +108,12 @@ $('start').addEventListener('click',()=>{
 });
 $('pause').addEventListener('click',()=>{if(mode==='playing')overlay('paused');else if(mode==='paused')$('start').click();});
 $('restart').addEventListener('click',()=>{world=new World(reduced.matches);overlay('intro');$('toast').hidden=true;localize();});
-$('language').addEventListener('click',()=>{lang=lang==='sv'?'en':'sv';localize();});
+$('language').addEventListener('click',()=>{lang=lang==='sv'?'en':'sv';localize();if(mode==='playing')$('game').focus({preventScroll:true});});
 $('sound').addEventListener('click',async()=>{
   sound=!sound;
   if(sound){try{audioContext??=new(window.AudioContext||window.webkitAudioContext)();await audioContext.resume();cue('heart');}catch{sound=false;}}
   $('sound').setAttribute('aria-pressed',sound);$('sound').setAttribute('aria-label',t(sound?'soundOff':'soundOn'));
+  if(mode==='playing')$('game').focus({preventScroll:true});
 });
 const keys={ArrowLeft:'left',a:'left',A:'left',ArrowRight:'right',d:'right',D:'right',' ':'jump',ArrowUp:'jump',w:'jump',W:'jump',x:'action',X:'action',e:'action',E:'action',ArrowDown:'action'};
 document.addEventListener('keydown',e=>{
