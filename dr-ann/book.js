@@ -7,7 +7,7 @@ const copy = {
   en:{original:'Original',colour:'Colour & motion',previous:'Back',next:'Next',begin:'Start reading',end:'Back to the cover',cover:'Cover',littleBook:'A LITTLE BOOK',choosePage:'Where shall we go?',reading:'Read at your own pace',textSize:'Text size',animations:'Gentle animations',fullscreen:'Read in full screen ↗',offline:'Save the book to read offline ↓',install:'On a phone, choose “Add to Home Screen” in your browser’s menu.',credits:'Words & drawings · J. Dvärby',editionNote:'The original Swedish words, carefully typeset. An English translation and a colour interpretation.',source:'See the photographed original book ↗',sourceTitle:'The handmade book',sourceNote:'The original photographs behind this spread. Tap a photograph to see it larger.',subtitle:'A little book about problems, great and small.',byline:'WORDS & DRAWINGS · J. DVÄRBY',coverLabel:'Ann and her friends',hint:'Swipe to turn the page · Your place is saved',tap:'Tap the picture and see what happens',sourceShort:'From the handmade book ↗',restart:'Read it once more ↻',page:'Spread',settings:'Reading settings',choose:'Choose a page',close:'Close',saved:'The book is saved. You can read it offline.',saving:'Saving the whole book…',offlineError:'The book could not be saved. Check your connection and try again.',notSupported:'This browser does not support offline reading.',fullError:'Use your browser’s full-screen mode on this device.',resume:'Continue reading',swipe:'Book navigation',backLabel:'Previous page',nextLabel:'Next page',sourcePhoto:'Photographed original page',act:'Play with the picture',reduced:'Your device has reduced motion enabled.',offlineDone:'Book saved offline ✓'}
 };
 const titles = [
- ['Omslag','Cover'],['Det här är Ann','This is Ann'],['Doktorssaker','Doctor-things'],['Mc Dinkelspiel','Mc Dinkelspiel'],['En borttappad fot','A missing foot'],['Zorbas','Zorbas'],['Det mjukaste handslaget','The gentlest handshake'],['Geggaöboy','Muck-o-boy'],['Vanlig människomat','Ordinary human food'],['En stadig frukost','A hearty breakfast'],['Den bästa medicinen','The best medicine']
+ ['Omslag','Cover'],['Det här är Ann','This is Ann'],['Doktorssaker','Doctor-things'],['Mc Dinkelspiel','Mc Dinkelspiel'],['En borttappad fot','A missing foot'],['Zorbas','Zorbas'],['Det mjukaste handslaget','The gentlest handshake'],["GeggaO'boy","MuckO'boy"],['Vanlig människomat','Ordinary human food'],['En stadig frukost','A hearty breakfast'],['Den bästa medicinen','The best medicine']
 ];
 const definitions = [
  {pages:[1],art:17,effect:'sun'}, {pages:[2],art:2,effect:'hello'}, {pages:[3],art:3,effect:'walk'}, {pages:[4],art:4,effect:'hello'}, {pages:[5],art:5,effect:'shake'}, {pages:[6,7],art:7,effect:'rocks'}, {pages:[8,9],art:9,effect:'shake'}, {pages:[10,11],art:11,effect:'muck'}, {pages:[12,13],art:13,effect:'steam'}, {pages:[14,15],art:15,effect:'steam'}, {pages:[16,17],art:17,effect:'sun'}
@@ -33,7 +33,7 @@ function save() {
 
 // Complete native-resolution masters, extracted once from the audited photographs.
 function inkSource(page) {
-  return `${BASE}${inkMetadata.get(page)?.delivery_file||`assets/ink/ink-${page}.webp`}?v=focus-2`;
+  return `${BASE}${inkMetadata.get(page)?.delivery_file||`assets/ink/ink-${page}.webp`}?v=focus-3`;
 }
 function faithfulArt(page,cls='') {
   const meta=inkMetadata.get(page)||{width:1000,height:1200};
@@ -70,10 +70,10 @@ function spread() {
   const paragraph=(p,i)=>{
     let html=escape(p).replace(/^[-–]\s*/,'— ');
     if(state.edition==='colour'){
-      const words={2:['doktor','doctor'],3:['doktorssaker','doctor-things'],4:['foten','foot'],5:['bandage','bandaged'],7:['stenar','stones'],9:['mjukaste handslag','gentlest handshake'],11:['geggaöboy','muck-o-boy','raketmugg','rocket mug','träd','tree'],13:['kaffe','coffee'],15:['slingerstek','wriggle-roast'],17:['solen','sun']};
+      const words={2:['doktor','doctor'],3:['doktorssaker','doctor-things'],4:['foten','foot'],5:['bandage','bandaged'],7:['stenar','stones'],9:['mjukaste handslag','gentlest handshake'],11:["geggaO'boy","muckO'boy",'raketmugg','rocket mug','träd','tree'],13:['kaffe','coffee'],15:['slingerstek','wriggle-roast'],17:['solen','sun']};
       for(const word of words[scene.art]||[])html=html.replace(new RegExp(`(?<![\\p{L}])${word}(?![\\p{L}])`,'iu'),match=>`<button class="story-word" data-illustration>${match}</button>`);
     }
-    if(p==='Slut.')html=`<span class="sr-only">Slut.</span><img class="ink-end" src="${BASE}assets/ink/ink-end.webp?v=focus-2" alt="" width="733" height="493">`;
+    if(p==='Slut.')html=`<span class="sr-only">Slut.</span><img class="ink-end" src="${BASE}assets/ink/ink-end.webp?v=focus-3" alt="" width="733" height="493">`;
     return `<p class="${/^\s*[-—–“‘]/.test(p)?'dialogue ':''}${/^(Slut\.|The End\.)$/.test(p)?'the-end':''}" data-paragraph="${i}">${html}</p>`;
   };
   const paras=scene[state.lang].map(paragraph);
@@ -207,7 +207,7 @@ async function offline(){
 }
 
 async function init(){
-  const [response,inkResponse,colourResponse]=await Promise.all([fetch(`${BASE}source/transcription.json`),fetch(`${BASE}assets/ink/manifest.json?v=focus-2`),fetch(`${BASE}assets/colour-v2.json?v=focus-2`)]);
+  const [response,inkResponse,colourResponse]=await Promise.all([fetch(`${BASE}source/transcription.json`),fetch(`${BASE}assets/ink/manifest.json?v=focus-3`),fetch(`${BASE}assets/colour-v2.json?v=focus-3`)]);
   if(!response.ok||!inkResponse.ok||!colourResponse.ok)throw new Error('The book could not be loaded.');
   const [raw,inkRows,colourRows]=await Promise.all([response.json(),inkResponse.json(),colourResponse.json()]);
   inkMetadata=new Map(inkRows.map(row=>[row.page,row]));
