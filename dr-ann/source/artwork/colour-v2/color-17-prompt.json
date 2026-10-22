@@ -1,0 +1,31 @@
+{
+  "page": 17,
+  "tool": "built-in image_gen",
+  "intent": "registered color underpaint, original ink overlaid separately",
+  "transparent_background": true,
+  "edit_target": "C:/Users/niffe/OneDrive/ドキュメント/ChatGPT/Creative/ink-review/ink-17-white.png",
+  "prompt": "Use case: precise-object-edit / compositing. Asset type: registered transparent watercolor UNDERPAINT layer for an original hand-drawn children's-book scan. The input image is an exact geometric registration guide, NOT a drawing to redesign. The application will overlay the precise original black ink pixels separately. Your output must therefore contain ONLY restrained translucent color washes and soft colored contact shadows, with NO black outlines, NO replacement pen drawing, NO black hatching, and NO black silhouettes. Treat all source ink as a guide that must be OMITTED from the output, not repainted. Keep precisely the complete original framing, aspect ratio, relative positions, sizes and spacing. Same canvas/composition and margins. Do not move, crop, simplify, enlarge, complete or embellish any object. Maintain the source's modest handmade pen-sketch feel with subtle irregular watercolor edges and the faintest shallow layered-paper depth. No generic 3D rendering, no photorealism, no cartoon redesign, no cuteness, no shiny plastic, no scenic invention, no typography or new objects. Restrained muted ochre, sage, slate, terracotta and plum only. Actual transparent alpha outside the softly painted object/scene areas; never a white or cream rectangle, paper page, checkerboard or opaque background. Where the source is empty, remain transparent. Exact source geometry has priority over decorative effect. Scene: the complete quiet sunset illustration exactly as scanned: very tall slender long-armed Zorbas seen from behind at left, TWO tiny companion silhouettes beside him, distant low islands, half sun with FIVE separate long rays, TWO original small clouds, all the finely scattered water ripples, the two crosshatched mountains and full jagged right shoreline, and the ENTIRE rising foreground bank beneath the three friends including its far-right tips. Preserve every original relative proportion and location, especially the extraordinary long thin arms and legs and small curled hands. A very pale ochre wash inside Zorbas with muted sage shorts, slate/soft plum distant mountains, a restrained ochre half-sun and faint terracotta reflection, a very light broken slate/sage wash over the lake and foreground terrain. The ray/cloud regions receive only pale watercolor hints, never replacement strokes. Do not add trees, rocks, grasses, new clouds or a background sky rectangle. Preserve the original scene's open blank sky as transparency. Underpainting only: NO black source ink, hatching or silhouettes; application overlays exact originals.",
+  "generated_source": "C:/Users/niffe/.codex/generated_images/01a16509-d4ea-70a3-9367-1fde726ea417/exec-28be2035-4576-432a-82c7-acc1969a71f1.png",
+  "saved_output": "color-17-underpaint.png",
+  "integration": "Generated color/shadow layer only. Align to source proof canvas, then overlay native exact original transparent ink. Do not use as replacement source drawing.",
+  "visual_review": "No replacement black pen outlines apparent; colored steam/ray marks and watercolor object edges remain. Original linework must be overlaid for exact original details.",
+  "file_validation": {
+    "dimensions": [
+      1572,
+      1001
+    ],
+    "mode": "RGBA",
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "zero_alpha_fraction": 0.5189,
+    "near_black_pixel_fraction_of_visible": 1.3e-05
+  }
+}

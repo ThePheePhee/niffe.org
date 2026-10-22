@@ -1,0 +1,811 @@
+{
+  "coordinate_system": "Fractions of the EXIF-transposed portrait photograph: 3060 pixels wide by 4080 pixels high. Boxes are [left, top, right, bottom]. All boxes include small clear-paper padding; do not use the previous tight lower polygons.",
+  "pages": [
+    {
+      "page": 8,
+      "art": [],
+      "occlusions": [
+        "This photograph is principally the handwritten text page. The lower-right and right-edge ink belongs to the facing illustration photographed fully on page 9. The photograph cuts that facing illustration off at its right and bottom edges."
+      ],
+      "missing_from_current": "No unique illustration to add from page 8. Prefer the full page 9 photograph; do not treat pencil handwriting, reverse-page show-through, or the upper background sheet as artwork. Page 8 can be retained as an alternate source reference for the small left rock."
+    },
+    {
+      "page": 9,
+      "art": [
+        {
+          "name": "complete-handshake-scene",
+          "box": [
+            0.097,
+            0.232,
+            0.864,
+            0.946
+          ],
+          "description": "Entire visible Zorbas hand and both long arm contours including their deliberately open ends at the top; Ann's hair, face, coat, arms, feet and hatching; the large rock beneath Ann including its front face and all visible cracks, contours and crosshatching; Mc Dinkelspiel and the complete visible smaller left rock; all lower-left stone fragments and every visible right/lower rock contour, even the short final outline near x=.63,y=.94. Preserve their relative arrangement as one scene. Faint reversed pencil text is show-through, not line art. No geometric polygon through the rock area.",
+          "polygon": [
+            [
+              0.6,
+              0.232
+            ],
+            [
+              0.864,
+              0.232
+            ],
+            [
+              0.864,
+              0.56
+            ],
+            [
+              0.815,
+              0.67
+            ],
+            [
+              0.65,
+              0.725
+            ],
+            [
+              0.65,
+              0.946
+            ],
+            [
+              0.097,
+              0.946
+            ],
+            [
+              0.097,
+              0.84
+            ],
+            [
+              0.11,
+              0.758
+            ],
+            [
+              0.205,
+              0.758
+            ],
+            [
+              0.27,
+              0.758
+            ],
+            [
+              0.27,
+              0.513
+            ],
+            [
+              0.325,
+              0.467
+            ],
+            [
+              0.55,
+              0.31
+            ]
+          ]
+        }
+      ],
+      "occlusions": [
+        {
+          "name": "middle-photographer-finger",
+          "approximate_box": [
+            0.247,
+            0.892,
+            0.398,
+            1.0
+          ],
+          "description": "Native-resolution skin boundary sampled from the warm chroma transition and visually checked. Main finger rounded top is x=.315–.325,y=.897. It conceals part of the bottom contour of Ann’s large rock, between approximately x=.264,y=.923 and x=.386,y=.918. Exclude finger and shadow; preserve every surviving ink pixel. Only a minimal rock-contour bridge is appropriate.",
+          "exclude_polygon": [
+            [
+              0.23,
+              0.965
+            ],
+            [
+              0.245,
+              0.944
+            ],
+            [
+              0.255,
+              0.934
+            ],
+            [
+              0.265,
+              0.924
+            ],
+            [
+              0.275,
+              0.919
+            ],
+            [
+              0.285,
+              0.909
+            ],
+            [
+              0.295,
+              0.9
+            ],
+            [
+              0.305,
+              0.897
+            ],
+            [
+              0.315,
+              0.8955000000000001
+            ],
+            [
+              0.325,
+              0.8953000000000001
+            ],
+            [
+              0.335,
+              0.8968
+            ],
+            [
+              0.345,
+              0.8968
+            ],
+            [
+              0.355,
+              0.9002
+            ],
+            [
+              0.365,
+              0.9036000000000001
+            ],
+            [
+              0.375,
+              0.9115000000000001
+            ],
+            [
+              0.385,
+              0.9223
+            ],
+            [
+              0.395,
+              0.9372
+            ],
+            [
+              0.405,
+              0.9625
+            ],
+            [
+              0.42,
+              1
+            ],
+            [
+              0.23,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "right-photographer-finger",
+          "approximate_box": [
+            0.486,
+            0.91,
+            0.642,
+            1.0
+          ],
+          "description": "Native-resolution skin boundary sampled from warm chroma transition. The finger starts at x=.565–.575,y=.906. It conceals part of the lowest right rock. Short actual ink contour remains visible to its right to x~.629,y~.943; do not discard this surviving line. Only conservative contour completion is justified.",
+          "exclude_polygon": [
+            [
+              0.485,
+              1
+            ],
+            [
+              0.495,
+              0.975
+            ],
+            [
+              0.505,
+              0.948
+            ],
+            [
+              0.515,
+              0.9319
+            ],
+            [
+              0.525,
+              0.9189
+            ],
+            [
+              0.535,
+              0.9103
+            ],
+            [
+              0.545,
+              0.9066000000000001
+            ],
+            [
+              0.555,
+              0.9054
+            ],
+            [
+              0.565,
+              0.9047000000000001
+            ],
+            [
+              0.575,
+              0.9047000000000001
+            ],
+            [
+              0.585,
+              0.9069
+            ],
+            [
+              0.595,
+              0.911
+            ],
+            [
+              0.605,
+              0.9162
+            ],
+            [
+              0.615,
+              0.9226
+            ],
+            [
+              0.625,
+              0.937
+            ],
+            [
+              0.635,
+              0.9632
+            ],
+            [
+              0.643,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "left-photographer-finger",
+          "approximate_box": [
+            0.0,
+            0.917,
+            0.213,
+            1.0
+          ],
+          "description": "Mostly covers blank margin under the small left rock. Its shadow must be excluded; do not remove the visible ink above it.",
+          "exclude_polygon": [
+            [
+              0.08,
+              1
+            ],
+            [
+              0.095,
+              0.9522
+            ],
+            [
+              0.105,
+              0.9355
+            ],
+            [
+              0.115,
+              0.9292
+            ],
+            [
+              0.125,
+              0.9243
+            ],
+            [
+              0.135,
+              0.9198
+            ],
+            [
+              0.145,
+              0.9176
+            ],
+            [
+              0.155,
+              0.9167
+            ],
+            [
+              0.165,
+              0.9184
+            ],
+            [
+              0.175,
+              0.9211
+            ],
+            [
+              0.185,
+              0.9257
+            ],
+            [
+              0.195,
+              0.9333
+            ],
+            [
+              0.203,
+              0.946
+            ],
+            [
+              0.208,
+              0.963
+            ],
+            [
+              0.21,
+              1
+            ]
+          ]
+        },
+        "Small breaks in Zorbas's hand and forearm outlines are present in the original pen drawing. The two arm ends at the top are open in the source. These are not scan gaps and should not be connected or extrapolated.",
+        {
+          "name": "photographic-bottom-page-rule",
+          "exclude_polygon": [
+            [
+              0,
+              0.946
+            ],
+            [
+              1,
+              0.946
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "description": "Thin grey book-page edge/rule at the bottom is photographic structure, not drawing. This exclusion starts below the last actual ink of the right rock (~.943), and should not remove that final surviving contour."
+        },
+        {
+          "name": "left-finger-shadow-blank-margin",
+          "exclude_polygon": [
+            [
+              0.097,
+              0.909
+            ],
+            [
+              0.218,
+              0.909
+            ],
+            [
+              0.218,
+              0.946
+            ],
+            [
+              0.097,
+              0.946
+            ]
+          ],
+          "description": "Photographic finger edge and shadow below the small left rock. No drawn ink lies inside this blank margin."
+        },
+        {
+          "name": "middle-finger-shadow-wedge",
+          "exclude_polygon": [
+            [
+              0.18,
+              0.946
+            ],
+            [
+              0.262,
+              0.9235
+            ],
+            [
+              0.268,
+              0.924
+            ],
+            [
+              0.27,
+              0.928
+            ],
+            [
+              0.25,
+              0.946
+            ]
+          ],
+          "description": "Dark photographic shadow on blank paper to the lower-left of the middle finger. Ends immediately below the surviving rock endpoint; preserve ink at y<=.924."
+        },
+        {
+          "name": "right-finger-shadow-wedge",
+          "exclude_polygon": [
+            [
+              0.485,
+              0.946
+            ],
+            [
+              0.508,
+              0.929
+            ],
+            [
+              0.529,
+              0.917
+            ],
+            [
+              0.545,
+              0.912
+            ],
+            [
+              0.55,
+              0.919
+            ],
+            [
+              0.515,
+              0.946
+            ]
+          ],
+          "description": "Dark photographic shadow on otherwise blank paper left of right finger. This does not cover the surviving right rock contour."
+        },
+        {
+          "name": "middle-finger-left-shadow-residue",
+          "exclude_polygon": [
+            [
+              0.232,
+              0.946
+            ],
+            [
+              0.251,
+              0.928
+            ],
+            [
+              0.263,
+              0.9247
+            ],
+            [
+              0.279,
+              0.914
+            ],
+            [
+              0.283,
+              0.913
+            ],
+            [
+              0.283,
+              0.921
+            ],
+            [
+              0.268,
+              0.93
+            ],
+            [
+              0.244,
+              0.946
+            ]
+          ],
+          "note": "Only the grey paper/finger shadow taper below the large rock's diagonal corner. Do not extend upward/leftward through the pen corner; retain original ink around x=.260â€“.264,y=.920â€“.924."
+        },
+        {
+          "name": "right-finger-left-shadow-residue",
+          "exclude_polygon": [
+            [
+              0.495,
+              0.946
+            ],
+            [
+              0.508,
+              0.93
+            ],
+            [
+              0.529,
+              0.916
+            ],
+            [
+              0.546,
+              0.909
+            ],
+            [
+              0.554,
+              0.91
+            ],
+            [
+              0.555,
+              0.924
+            ],
+            [
+              0.524,
+              0.946
+            ]
+          ],
+          "note": "This grey diagonal taper lies in blank space below the right rock and left of the finger. No visible original contour crosses this polygon. Preserve right rock endpoint near x=.629,y=.943."
+        },
+        {
+          "name": "middle-finger-right-edge-hairline",
+          "exclude_polygon": [
+            [
+              0.393,
+              0.931
+            ],
+            [
+              0.402,
+              0.938
+            ],
+            [
+              0.411,
+              0.946
+            ],
+            [
+              0.405,
+              0.946
+            ],
+            [
+              0.395,
+              0.937
+            ]
+          ],
+          "note": "Tiny pale diagonal photographic finger edge to the lower-right of the main gap, below the surviving rock line. This is not a crack or hatch."
+        },
+        {
+          "description": "Final checked photographic shadow taper in blank paper, preserving surviving pen corner and right outline.",
+          "exclude_polygon": [
+            [
+              0.23,
+              0.951
+            ],
+            [
+              0.256,
+              0.927
+            ],
+            [
+              0.265,
+              0.9245
+            ],
+            [
+              0.282,
+              0.912
+            ],
+            [
+              0.288,
+              0.911
+            ],
+            [
+              0.288,
+              0.92
+            ],
+            [
+              0.27,
+              0.936
+            ],
+            [
+              0.246,
+              0.954
+            ],
+            [
+              0.23,
+              0.954
+            ]
+          ]
+        },
+        {
+          "description": "Final checked photographic shadow taper in blank paper, preserving surviving pen corner and right outline.",
+          "exclude_polygon": [
+            [
+              0.47,
+              0.908
+            ],
+            [
+              0.555,
+              0.908
+            ],
+            [
+              0.555,
+              0.954
+            ],
+            [
+              0.47,
+              0.954
+            ]
+          ]
+        },
+        {
+          "description": "Final checked photographic shadow taper in blank paper, preserving surviving pen corner and right outline.",
+          "exclude_polygon": [
+            [
+              0.39,
+              0.925
+            ],
+            [
+              0.412,
+              0.925
+            ],
+            [
+              0.412,
+              0.95
+            ],
+            [
+              0.39,
+              0.95
+            ]
+          ]
+        }
+      ],
+      "missing_from_current": "The existing lower zigzag polygon substantially clips Ann's large rock, its front cracks/hatching, the lower-left stones, and right-hand rocks. In addition, the old bottom box limit .905 omits visible contours extending to about .944. The upper hand/arm is generally present; preserve every open-ended stroke. Re-extract at original resolution."
+    },
+    {
+      "page": 10,
+      "art": [],
+      "occlusions": [
+        "Principally a handwritten text page. The rocket mug and tree visible at the right are a partial view of the facing illustration, captured fully in page 11. The photograph's right edge cuts through the mug."
+      ],
+      "missing_from_current": "No unique new illustration. The tree branches are an alternate reference, but do not duplicate the mug or substitute this incomplete photograph for the page 11 scene."
+    },
+    {
+      "page": 11,
+      "art": [
+        {
+          "name": "complete-rocket-mug-and-tree",
+          "box": [
+            0.119,
+            0.322,
+            0.451,
+            0.881
+          ],
+          "description": "Every tree twig and trunk bark mark down to the submerged dark base; the entire mug rim and dripping muck; all three fins, including the slim left fin and full right fin; vertical seams, rivets, crosshatching and the full curved bottom edge with all low hatching. A rectangle is safe inside these bounds. The lowest original line is around y=.875, so retain padding to .881.",
+          "polygon": [
+            [
+              0.119,
+              0.322
+            ],
+            [
+              0.217,
+              0.322
+            ],
+            [
+              0.233,
+              0.48
+            ],
+            [
+              0.441,
+              0.48
+            ],
+            [
+              0.456,
+              0.535
+            ],
+            [
+              0.451,
+              0.652
+            ],
+            [
+              0.425,
+              0.68
+            ],
+            [
+              0.425,
+              0.881
+            ],
+            [
+              0.19,
+              0.881
+            ],
+            [
+              0.165,
+              0.74
+            ],
+            [
+              0.145,
+              0.65
+            ],
+            [
+              0.141,
+              0.545
+            ],
+            [
+              0.155,
+              0.514
+            ],
+            [
+              0.137,
+              0.466
+            ],
+            [
+              0.119,
+              0.425
+            ]
+          ]
+        },
+        {
+          "name": "complete-lake-muck-pile",
+          "box": [
+            0.535,
+            0.719,
+            0.921,
+            0.887
+          ],
+          "description": "Entire mound with all its little side twigs, surface scribbles and open shapes; left puddle contour, dangling central string/tail, and long right puddle line. The right puddle contour extends to approximately x=.916 just inside the page's outer edge. All are intentional ink.",
+          "polygon": [
+            [
+              0.535,
+              0.719
+            ],
+            [
+              0.921,
+              0.719
+            ],
+            [
+              0.921,
+              0.887
+            ],
+            [
+              0.535,
+              0.887
+            ]
+          ]
+        }
+      ],
+      "occlusions": [
+        "The leftmost tree branches sit near the book crease and are slightly softened by photographic focus/curvature; visible ink remains and should be extracted conservatively without redrawing branches.",
+        "Fingers begin below the mug's bottom edge, about y=.877 at left and y=.889 under the centre. Carefully exclude fingers and shadows while keeping every bottom hatching stroke. No definite missing ink is visible on the mug or muck.",
+        {
+          "name": "far-right-book-page-edge",
+          "exclude_polygon": [
+            [
+              0.911,
+              0.719
+            ],
+            [
+              0.93,
+              0.719
+            ],
+            [
+              0.93,
+              0.8
+            ],
+            [
+              0.917,
+              0.8
+            ]
+          ],
+          "description": "Isolated dark photographic page-edge bar above/right of the muck. True twig and puddle ink remains to its left and below."
+        },
+        {
+          "name": "finger-below-left-mug",
+          "exclude_polygon": [
+            [
+              0.119,
+              0.877
+            ],
+            [
+              0.182,
+              0.877
+            ],
+            [
+              0.19,
+              0.887
+            ],
+            [
+              0.19,
+              0.94
+            ],
+            [
+              0.119,
+              0.94
+            ]
+          ],
+          "description": "Finger and photographic shadow below left mug. Mug lower pen hatching is right of x=.19 in this band; preserve the complete curved bottom at x>.19."
+        },
+        {
+          "name": "remaining-left-finger-tip",
+          "exclude_polygon": [
+            [
+              0.18,
+              0.8755
+            ],
+            [
+              0.2,
+              0.8755
+            ],
+            [
+              0.2,
+              0.89
+            ],
+            [
+              0.18,
+              0.89
+            ]
+          ],
+          "description": "Small remaining finger-colour edge below/left of mug. Original bottom outline begins right of x=.20 in this y band."
+        }
+      ],
+      "missing_from_current": "Current rocket box/polygon is very tight at the tree's left edge and bottom; old b=.874 can clip the very lowest bottom ink. Add safe padding. The muck's old r=.915 is tight enough to trim the end of the long right puddle line. Existing source webp is downsampled, so return to 3060x4080 EXIF portrait pixels for both. Do not fill the original open puddle contours or small sketch gaps."
+    },
+    {
+      "page": 12,
+      "art": [],
+      "occlusions": [
+        "Handwritten text page, with a partial view of the facing coffee illustration at the extreme right. Coffee mug/steam are photographed fully on page 13."
+      ],
+      "missing_from_current": "No unique illustration to add from this photograph. Keep page 13 as the full source for coffee, toast and tomatoes."
+    }
+  ]
+}

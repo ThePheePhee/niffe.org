@@ -25,67 +25,52 @@ state.sound=false;
 if(hashPage && Number(hashPage[1])>0)state.resume=state.page;
 const title = (n) => titles[n][state.lang === 'sv' ? 0 : 1];
 let scenes = [], spriteId = 0, turnTimer, toastTimer, interactionTimer, workerReady;
+let inkMetadata = new Map(), colourMetadata = new Map();
 
 function save() {
   try { localStorage.setItem('dr-ann-reader-v1',JSON.stringify({...state,page:state.page || state.resume})); } catch {}
 }
 
-// SVG viewports show only the original ink. The source photograph itself is never redrawn.
-function sprite(page,box,description,cls='',polygon=null) {
-  const [l,top,r,b] = box;
-  const id = `ink-${++spriteId}`;
-  const points = polygon?.map(([x,y]) => `${x*1000},${y*4000/3}`).join(' ');
-  const clip=points?`<polygon points="${points}"/>`:`<rect x="${l*1000}" y="${top*4000/3}" width="${(r-l)*1000}" height="${(b-top)*4000/3}"/>`;
-  return `<svg class="ink-sprite ${cls}" viewBox="${l*1000} ${top*4000/3} ${(r-l)*1000} ${(b-top)*4000/3}" role="img" aria-label="${escape(description)}" preserveAspectRatio="xMidYMid meet"><defs><clipPath id="${id}">${clip}</clipPath></defs><image href="${BASE}assets/page-${page}.webp" width="1000" height="1333.3333" clip-path="url(#${id})"/></svg>`;
-}
+// Complete native-resolution masters, extracted once from the audited photographs.
 function faithfulArt(page,cls='') {
-  const sv = state.lang === 'sv';
-  switch(page) {
-    case 2:return sprite(2,[.18,.445,.48,.91],sv?'Ann med händerna i rockfickorna':'Ann with her hands in her coat pockets',cls,[[.18,.445],[.47,.445],[.48,.86],[.455,.905],[.335,.905],[.33,.87],[.28,.855],[.19,.87]]);
-    case 3:return `<div class="art-group ${cls}">${sprite(3,[.121,.545,.375,.836],sv?'Anns hus':'Ann’s house','house',[[.121,.55],[.16,.545],[.34,.62],[.34,.77],[.375,.81],[.375,.836],[.121,.836]])}${sprite(3,[.46,.73,.537,.812],sv?'Ann går ut':'Ann walks out','walker')}${sprite(3,[.35,.813,.889,.834],'','ground')}</div>`;
-    case 4:return `<div class="art-group ${cls}">${sprite(4,[.14,.145,.502,.51],sv?'Ann tittar på Mc Dinkelspiel':'Ann looks at Mc Dinkelspiel','mc-ann',[[.15,.35],[.19,.22],[.3,.145],[.43,.15],[.502,.225],[.477,.275],[.46,.33],[.425,.385],[.385,.421],[.335,.423],[.235,.402],[.22,.47],[.14,.51]])}${sprite(4,[.486,.471,.774,.827],sv?'Mc Dinkelspiel och hans borttappade fot':'Mc Dinkelspiel and his missing foot','mc-acorn')}</div>`;
-    case 5:return sprite(5,[.378,.586,.691,.873],sv?'En fot med bandage runt benet':'A foot with a bandaged ankle',cls,[[.47,.586],[.558,.586],[.542,.714],[.493,.79],[.607,.79],[.676,.813],[.691,.873],[.378,.873],[.378,.826],[.416,.782],[.452,.7]]);
-    case 7:return sprite(7,[.142,.365,.817,.85],sv?'Den ledsne Zorbas bland krossade stenar':'Sad Zorbas among crushed stones',cls);
-    case 9:return sprite(9,[.105,.23,.86,.905],sv?'Ann tar Zorbas jättelika hand medan Mc Dinkelspiel ser på':'Ann shakes Zorbas’s enormous hand while Mc Dinkelspiel watches',cls,[[.105,.765],[.282,.765],[.282,.52],[.34,.48],[.35,.23],[.86,.23],[.86,.905],[.64,.905],[.56,.86],[.45,.865],[.36,.89],[.27,.86],[.18,.905],[.105,.905]]);
-    case 11:return `<div class="art-group ${cls}">${sprite(11,[.124,.32,.45,.874],sv?'Raketmuggen med ett träd som sked':'The rocket mug with a tree as a spoon','rocket',[[.124,.32],[.45,.32],[.45,.874],[.21,.874],[.195,.85],[.17,.72],[.15,.56],[.124,.45]])}${sprite(11,[.535,.718,.915,.89],sv?'En hög med sjögegga':'A heap of lake-bottom muck','muck')}</div>`;
-    case 13:return sprite(13,[.111,.46,.784,.853],sv?'Kaffe, ostmacka och körsbärstomater':'Coffee, a cheese sandwich and cherry tomatoes',cls);
-    case 15:return `<div class="art-group ${cls}">${sprite(15,[.27,.735,.39,.903],sv?'Ett ekollon':'An acorn','acorn')}${sprite(15,[.438,.671,.853,.891],sv?'Slingerstek på spett':'Wriggle-roast on a skewer','skewer')}${sprite(15,[.191,.856,.25,.908],'','tiny')}</div>`;
-    case 17:return sprite(17,[.163,.24,.869,.577],sv?'De tre vännerna ser solen gå ner över sjön':'The three friends watch the sun set over the lake',cls,[[.163,.24],[.78,.24],[.85,.35],[.869,.53],[.869,.577],[.163,.577]]);
-    default:return '';
-  }
+  const meta=inkMetadata.get(page)||{width:1000,height:1200};
+  const index=page===17?10:definitions.findIndex(s=>s.art===page);
+  const description=page===1?(state.lang==='sv'?'Bokens handritade omslag':'The handmade original cover'):title(index<0?0:index);
+  return `<img class="ink-master ${cls}" src="${BASE}assets/ink/ink-${page}.webp?v=fidelity-4" width="${meta.width}" height="${meta.height}" alt="${escape(description)}" decoding="async">`;
 }
 
 function effects(effect) {
-  if(effect === 'steam' || effect === 'muck') return `<div class="scene-effects"><svg class="steam" viewBox="0 0 70 130"><path d="M28 124C0 93 59 79 29 53S42 20 31 4"/></svg><svg class="steam" viewBox="0 0 70 130"><path d="M28 124C0 93 59 79 29 53S42 20 31 4"/></svg>${effect === 'muck' ? '<i class="bubble"></i><i class="bubble"></i>' : ''}</div>`;
-  if(effect === 'rocks') return '<div class="scene-effects"><i class="scene-rock"></i><i class="scene-rock"></i><i class="scene-rock"></i></div>';
+  if(effect === 'muck') return '<div class="scene-effects"><i class="bubble"></i><i class="bubble"></i></div>';
   if(effect === 'sun') return '<div class="scene-effects"><i class="sun-glow"></i></div>';
   return '';
 }
 function colouredArt(scene,cover=false) {
   const desc = title(cover ? 10 : state.page);
-  const dimensions={2:[1120,1024],3:[1600,900],4:[1024,1536],5:[1024,1024],7:[1232,1280],9:[1088,1448],11:[1254,1254],13:[1536,1024],15:[1600,901],17:[1536,1024]};
-  const [w,h]=dimensions[scene.art];
-  const parts={3:[[.418,.626],[.459,.625],[.484,.65],[.485,.711],[.5,.766],[.485,.79],[.458,.766],[.427,.79],[.415,.774],[.431,.727],[.425,.682]],11:[[.071,.04],[.182,.04],[.198,.189],[.202,.28],[.239,.386],[.166,.395],[.13,.276],[.09,.218]],7:[[.789,.751],[.816,.733],[.848,.749],[.869,.795],[.846,.823],[.802,.806]],9:[[.6,.36],[.9,.36],[.91,.52],[.84,.62],[.68,.65],[.51,.61],[.43,.57],[.41,.50],[.46,.44]]};
-  const part=parts[scene.art];
+  const metadata=colourMetadata.get(scene.art);
+  const {width:w,height:h,file,moving_part_polygon:part,foreground_polygon:foreground}=metadata;
+  const artwork=`${BASE}${file}`;
   let art;
   if(part){
     const id=`part-${++spriteId}`,points=part.map(([x,y])=>`${x*w},${y*h}`).join(' ');
-    art=`<svg class="art-plane coloured-svg" viewBox="0 0 ${w} ${h}" role="img" aria-label="${escape(desc)}"><defs><clipPath id="${id}"><polygon points="${points}"/></clipPath><mask id="${id}-base" maskUnits="userSpaceOnUse" x="0" y="0" width="${w}" height="${h}"><rect width="${w}" height="${h}" fill="white"/><polygon points="${points}" fill="black"/></mask></defs><image href="${BASE}assets/color-${scene.art}.webp" width="${w}" height="${h}" mask="url(#${id}-base)"/><g class="moving-part part-${scene.art}"><image href="${BASE}assets/color-${scene.art}.webp" width="${w}" height="${h}" clip-path="url(#${id})"/></g></svg>`;
-  }else art=`<img class="art-plane" src="${BASE}assets/color-${scene.art}.webp" alt="${escape(desc)}" width="${w}" height="${h}" decoding="async" fetchpriority="high">`;
-  return `<button class="art-trigger" data-effect="${scene.effect}" data-art="${scene.art}" aria-label="${escape(t('act')+': '+desc)}"><span class="scene-wash"></span>${art}${effects(scene.effect)}${scene.art===5?'<span class="bandage-glow"></span>':''}</button>`;
+    const fixed=foreground?`<clipPath id="${id}-front"><polygon points="${foreground.map(([x,y])=>`${x*w},${y*h}`).join(' ')}"/></clipPath>`:'';
+    art=`<svg class="art-plane coloured-svg" viewBox="0 0 ${w} ${h}" role="img" aria-label="${escape(desc)}"><defs><clipPath id="${id}"><polygon points="${points}"/></clipPath>${fixed}<mask id="${id}-base" maskUnits="userSpaceOnUse" x="0" y="0" width="${w}" height="${h}"><rect width="${w}" height="${h}" fill="white"/><polygon points="${points}" fill="black"/></mask></defs><image href="${artwork}" width="${w}" height="${h}" mask="url(#${id}-base)"/><g class="moving-part part-${scene.art}"><image href="${artwork}" width="${w}" height="${h}" clip-path="url(#${id})"/></g>${foreground?`<image href="${artwork}" width="${w}" height="${h}" clip-path="url(#${id}-front)"/>`:''}</svg>`;
+  }else art=`<img class="art-plane" src="${artwork}" alt="${escape(desc)}" width="${w}" height="${h}" decoding="async" fetchpriority="high">`;
+  return `<button class="art-trigger" data-effect="${scene.effect}" data-art="${scene.art}" aria-label="${escape(t('act')+': '+desc)}"><span class="scene-wash"></span>${art}${effects(scene.effect)}${scene.art===5?'<span class="bandage-glow"></span>':''}${scene.art===9?'<span class="handshake-glow"></span>':''}</button>`;
 }
 function cover() {
-  return `<section class="cover" aria-label="${t('cover')}"><div class="cover-copy"><p class="eyebrow">${state.lang==='sv'?'EN BERÄTTELSE AV J. DVÄRBY':'A STORY BY J. DVÄRBY'}</p><h1>Dr. Ann</h1><span class="cover-rule" aria-hidden="true"></span><p class="cover-subtitle">${t('subtitle')}</p><p class="byline">${state.lang==='sv'?'EN HANDGJORD BOK, ATT LÄSA TILLSAMMANS':'A HANDMADE BOOK, TO READ TOGETHER'}</p></div><div class="cover-visual">${state.edition === 'colour' ? colouredArt(definitions[0],true) : `<div class="cover-characters"><span class="cover-sun" aria-hidden="true"></span>${faithfulArt(2,'cover-ann')}${faithfulArt(7,'cover-zorbas')}${sprite(4,[.486,.471,.774,.827],state.lang==='sv'?'Mc Dinkelspiel':'Mc Dinkelspiel','cover-mc')}</div>`}<span class="cover-label">${t('coverLabel')}</span></div><button class="start-reading" data-start><span>${t(state.resume>0?'resume':'begin')}</span><span aria-hidden="true">→</span></button><p class="cover-footnote">${t('hint')}</p></section>`;
+  return `<section class="cover" aria-label="${t('cover')}"><div class="cover-copy"><p class="eyebrow">${state.lang==='sv'?'EN BERÄTTELSE AV J. DVÄRBY':'A STORY BY J. DVÄRBY'}</p><h1>Dr. Ann</h1><span class="cover-rule" aria-hidden="true"></span><p class="cover-subtitle">${t('subtitle')}</p><p class="byline">${state.lang==='sv'?'EN HANDGJORD BOK, ATT LÄSA TILLSAMMANS':'A HANDMADE BOOK, TO READ TOGETHER'}</p></div><div class="cover-visual">${state.edition === 'colour' ? colouredArt(definitions[0],true) : faithfulArt(1,'original-cover')}${state.edition==='colour'?`<span class="cover-label">${t('coverLabel')}</span>`:''}</div><button class="start-reading" data-start><span>${t(state.resume>0?'resume':'begin')}</span><span aria-hidden="true">→</span></button><p class="cover-footnote">${t('hint')}</p></section>`;
 }
 function spread() {
   const scene = scenes[state.page];
-  const picture=`<figure class="illustration"><div class="art-stage">${state.edition==='colour'?colouredArt(scene):faithfulArt(scene.art)}</div>${state.edition==='colour'?`<figcaption class="scene-tip">${t('tap')}</figcaption>`:''}</figure>`;
+  const dimensions=inkMetadata.get(scene.art);
+  const picture=`<figure class="illustration"><div class="art-stage" style="--art-ratio:${dimensions.width}/${dimensions.height}">${state.edition==='colour'?colouredArt(scene):faithfulArt(scene.art)}</div>${state.edition==='colour'?`<figcaption class="scene-tip">${t('tap')}</figcaption>`:''}</figure>`;
   const paragraph=(p,i)=>{
     let html=escape(p).replace(/^[-–]\s*/,'— ');
     if(state.edition==='colour'){
       const words={2:['doktor','doctor'],3:['doktorssaker','doctor-things'],4:['foten','foot'],5:['bandage','bandaged'],7:['stenar','stones'],9:['mjukaste handslag','gentlest handshake'],11:['geggaöboy','muck-o-boy','raketmugg','rocket mug','träd','tree'],13:['kaffe','coffee'],15:['slingerstek','wriggle-roast'],17:['solen','sun']};
       for(const word of words[scene.art]||[])html=html.replace(new RegExp(`(?<![\\p{L}])${word}(?![\\p{L}])`,'iu'),match=>`<button class="story-word" data-illustration>${match}</button>`);
     }
+    if(p==='Slut.')html=`<span class="sr-only">Slut.</span><img class="ink-end" src="${BASE}assets/ink/ink-end.webp?v=fidelity-4" alt="" width="733" height="493">`;
     return `<p class="${/^\s*[-—–“‘]/.test(p)?'dialogue ':''}${/^(Slut\.|The End\.)$/.test(p)?'the-end':''}" data-paragraph="${i}">${html}</p>`;
   };
   const paras=scene[state.lang].map(paragraph);
@@ -188,10 +173,10 @@ function wireArt() {
 }
 function preloadNext(){
   const next=scenes[Math.min(state.page+1,10)];
-  const img=new Image();img.src=`${BASE}assets/${state.edition==='colour'?'color-'+next.art:'page-'+next.art}.webp`;
+  const img=new Image();img.src=state.edition==='colour'?`${BASE}${colourMetadata.get(next.art)?.file||'assets/color-'+next.art+'-v2.webp'}`:`${BASE}assets/ink/ink-${next.art}.webp?v=fidelity-4`;
 }
 function chapters() {
-  $('chapter-grid').innerHTML=scenes.map((s,i)=>`<button class="chapter" data-page="${i}" ${i===state.page?'aria-current="page"':''}><span class="chapter-thumb">${state.edition==='colour'?`<img src="${BASE}assets/color-${s.art}.webp" loading="lazy" alt="">`:faithfulArt(s.art)}</span><span class="chapter-num">${i?String(i).padStart(2,'0'):t('cover')}</span><span class="chapter-name">${escape(title(i))}</span></button>`).join('');
+  $('chapter-grid').innerHTML=scenes.map((s,i)=>`<button class="chapter" data-page="${i}" ${i===state.page?'aria-current="page"':''}><span class="chapter-thumb" aria-hidden="true">${state.edition==='colour'?`<img src="${BASE}${colourMetadata.get(s.art)?.file||'assets/color-'+s.art+'-v2.webp'}" loading="lazy" alt="">`:faithfulArt(i===0?1:s.art)}</span><span class="chapter-num">${i?String(i).padStart(2,'0'):t('cover')}</span><span class="chapter-name">${escape(title(i))}</span></button>`).join('');
   $('chapters-dialog').showModal();
 }
 function source(){
@@ -219,9 +204,11 @@ async function offline(){
 }
 
 async function init(){
-  const response=await fetch(`${BASE}source/transcription.json`);
-  if(!response.ok)throw new Error('The story could not be loaded.');
-  const raw=await response.json();
+  const [response,inkResponse,colourResponse]=await Promise.all([fetch(`${BASE}source/transcription.json`),fetch(`${BASE}assets/ink/manifest.json?v=fidelity-4`),fetch(`${BASE}assets/colour-v2.json?v=fidelity-4`)]);
+  if(!response.ok||!inkResponse.ok||!colourResponse.ok)throw new Error('The book could not be loaded.');
+  const [raw,inkRows,colourRows]=await Promise.all([response.json(),inkResponse.json(),colourResponse.json()]);
+  inkMetadata=new Map(inkRows.map(row=>[row.page,row]));
+  colourMetadata=new Map(colourRows.map(row=>[row.page,row]));
   const byPage=new Map(raw.map(p=>[p.page,p]));
   scenes=definitions.map((def,i)=>({...def,sv:def.pages.flatMap(p=>byPage.get(p)?.sv||[]),en:def.pages.flatMap(p=>byPage.get(p)?.en||[])}));
   // Join sentences that originally continue across a photographed page turn.

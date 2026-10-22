@@ -1,0 +1,22 @@
+{
+  "mode": "built-in edit",
+  "use_case": "precise-object-edit",
+  "transparent_background": true,
+  "edit_target": "C:/Users/niffe/OneDrive/ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆ/ChatGPT/Creative/ink-review/ink-4-white.png",
+  "architecture": "Generated underpainting only; final application overlays exact original transparent ink master.",
+  "prompt": "Use case: precise-object-edit.\nAsset type: registered translucent watercolour UNDERPAINTING layer for a handmade children's book.\nInput image: the supplied clean white line drawing is the exact geometry and composition registration guide, not an invitation to redraw.\nPrimary request: Create ONLY restrained colour washes and soft pigment shadows beneath the exact original drawing. The final application overlays the unaltered original black pen artwork on top of this generated underpaint, so do NOT output replacement black outlines, dark drawn contours, or any restyled line drawing. Use the reference outlines to register the colour shapes precisely but omit those black lines from the output. Keep every source feature, silhouette, anatomy, proportion, spacing, tiny mark and original irregularity in the same place; do not fix anatomy or simplify shapes.\nStyle/medium: very thin translucent hand-painted watercolour on gently textured paper, modest pigment pooling and subtle paper-cut depth from soft pigment shadows, quiet ochre/sage/slate/terracotta/plum palette, no glossy 3D, no plastic, no digital cartoon polish.\nComposition/framing: EXACT same canvas aspect ratio, framing, margins, scale and relative coordinates as the input. Include the complete composition with ZERO cropping. Keep the empty areas spacious.\nBackground: genuinely transparent alpha outside the watercolour shapes and their delicate soft shadows. No white or cream rectangle, no photographic paper, no entire page background. Empty space stays transparent. No text, captions, typography or new objects.\nSpecific source composition: TWO separate original drawings in exactly their original positions: Ann's LARGE PROFILE at upper left, INCLUDING her complete curved hair silhouette, every loose curl, her very long original nose, lips, chin, full neck hatching and long shoulder boundary; and little Mc Dinkelspiel at lower right INCLUDING his curled acorn-cap stem, cap bands, wild eyebrows, moustache, both hands, striped acorn body, attached foot, short missing-foot stump AND separate detached foot at lower right. Do not combine their sizes or rearrange them. Delicate warm peach skin wash for Ann, ochre hair with a hint of soft warm gray shade, very sparse pale sage clothing where original shoulder exists; for Mc gentle terracotta/ochre acorn body, muted plum/slate cap accents, gray-ochre moustache and warm pale hands/feet. Keep every odd and funny original proportion exactly. Do not complete additional body or introduce new anatomical features. Gentle tiny shadows stay close to these original drawn shapes; empty gap between figures remains transparent.",
+  "output_file": "color-4-underpaint.png",
+  "output_size": [
+    1055,
+    1491
+  ],
+  "output_mode": "RGBA",
+  "corner_alpha": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "fully_transparent_fraction": 0.742755426715109,
+  "inspection_note": "True transparency present. Some brown/slate pigment contours follow the original guide; preserve exact original black ink overlay. Source proportions/composition visually retained."
+}

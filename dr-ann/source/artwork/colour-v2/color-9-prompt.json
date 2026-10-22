@@ -1,0 +1,30 @@
+{
+  "page": 9,
+  "use_case": "precise-object-edit",
+  "mode": "built-in image_gen edit",
+  "transparent_background": true,
+  "input": "C:/Users/niffe/OneDrive/ドキュメント/ChatGPT/Creative/ink-review/ink-9-white.png",
+  "input_size": [
+    2378,
+    2985
+  ],
+  "prompt": "Use case: precise-object-edit.\nAsset type: transparent colour UNDERPAINTING for an original handmade children's-book pen illustration.\nInput: this exact repaired black ink proof is the registration guide. Its canvas is 2378×2985. The original ink will be overlaid unchanged by the application.\nPrimary request: produce ONLY restrained translucent watercolour pigment and very subtle washed interior shadows for the existing shapes. No black lines, no replacement contours, no replacement hatching. Existing features are positional guides only, not strokes to repaint. The finished drawing must remain the author's exact funny irregular pen drawing when the original ink is put back on top.\nScene: Ann stands on her large rock and shakes the giant Zorbas's huge hand. Small Mc Dinkelspiel sits on the little rock at lower left. Include the complete original hand and two long forearm contours, Ann's original hair/face/coat/hands/shoes, Mc Dinkelspiel, every rock, all visible foreground contours and the freshly repaired lower central rock edge.\nPaint: a very pale warm ochre/terracotta wash inside the enormous hand, with minimal muted slate shadow beneath its fingers; a light muted slate-blue wash in Ann's coat, diluted warm-brown hair, a hint of ochre in her existing face and hands; sparse sage/plum/ochre in tiny Mc Dinkelspiel; light slate/sage and diluted ochre patches in the original rocks. Leave plenty of pigment-free light areas. No dark coloured replacement outlines; pigment is a quiet flat wash with a little pooling, not shaded anatomical modelling.\nCritical geometry: preserve the EXACT canvas aspect, framing, position, scale, pose, silhouette and deliberate anatomical distortions. Preserve the exact enormous finger shapes and Ann's tiny size. Do not smooth, beautify, naturalize, redraw or recompose. Keep the two forearm contours OPEN at their existing top endpoints: do not cap the arm, connect the open ends, add a wrist cuff, sleeve, elbow, giant body or anything beyond the visible original. Do not close intentional hand-line gaps. Do not add nails, wrinkles, cracks or extra stones. Keep the uncertain lower-right foreground outline open; no invented ground or terrain extension.\nTransparency: true transparent exterior, all blank spaces around and between the existing objects transparent. No paper rectangle, white background, tint, tabletop, source photographic shadows, scenery, grass, border, text, decorative effect or cast shadow on the blank exterior. Ignore faint grey photographic marks in the guide.\nStyle: spare handmade watercolour, soft ochre/sage/slate/terracotta/plum, modest depth confined within existing shapes. No CGI, 3D plastic, glossy rendering, anime, cartoon redesign or cute new character treatment.\nRegistration: same composition and margins as the single reference; no crop, zoom, rotation, stretching, recentering or rescaling any individual object. The output is the colour layer only. Omit all black linework; exact source ink will be restored above it.",
+  "integration": "Colour/shadows only. Overlay unchanged original ink; output draft cannot replace any master strokes.",
+  "output": {
+    "size": [
+      1120,
+      1405
+    ],
+    "mode": "RGBA",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "transparent_pixel_fraction": 0.6665652008134214,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "notes": "No black replacement contours. All figures/rocks included; open arm ends unconnected, with interior upper paint fading/cutaway to transparency. Generated colour anatomy has small drift and stronger modelling than original; use reduced pigment opacity beneath exact source ink."
+  }
+}

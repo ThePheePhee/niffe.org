@@ -1,0 +1,31 @@
+{
+  "page": 15,
+  "tool": "built-in image_gen",
+  "intent": "registered color underpaint, original ink overlaid separately",
+  "transparent_background": true,
+  "edit_target": "C:/Users/niffe/OneDrive/ドキュメント/ChatGPT/Creative/ink-review/ink-15-white.png",
+  "prompt": "Use case: precise-object-edit / compositing. Asset type: registered transparent watercolor UNDERPAINT layer for an original hand-drawn children's-book scan. The input image is an exact geometric registration guide, NOT a drawing to redesign. The application will overlay the precise original black ink pixels separately. Your output must therefore contain ONLY restrained translucent color washes and soft colored contact shadows, with NO black outlines, NO replacement pen drawing, NO black hatching, and NO black silhouettes. Treat all source ink as a guide that must be OMITTED from the output, not repainted. Keep precisely the complete original framing, aspect ratio, relative positions, sizes and spacing. Same canvas/composition and margins. Do not move, crop, simplify, enlarge, complete or embellish any object. Maintain the source's modest handmade pen-sketch feel with subtle irregular watercolor edges and the faintest shallow layered-paper depth. No generic 3D rendering, no photorealism, no cartoon redesign, no cuteness, no shiny plastic, no scenic invention, no typography or new objects. Restrained muted ochre, sage, slate, terracotta and plum only. Actual transparent alpha outside the softly painted object/scene areas; never a white or cream rectangle, paper page, checkerboard or opaque background. Where the source is empty, remain transparent. Exact source geometry has priority over decorative effect. Scene: the exact original small breakfast still life: upright oval acorn at left, a tiny separate round-face doodle at the extreme lower left, and the striped coiled worm threaded on the long horizontal skewer to the right. Preserve ALL FIVE worm coils, all skewer points and long right-end strokes. There are SIX separate original wavering steam strokes at different heights above the worm: keep all six fully framed in exactly their original positions, with barely visible translucent slate/plum washes beneath them. Color underpaint only: pale warm ochre acorn, muted terracotta/plum worm, subtle ochre skewer, tiny pale sage/ochre wash inside the original tiny face. Keep the authentic short diagonal ground-hatch area under the acorn as a very pale slate shadow without replacement hatching. No extra legs, eyes, faces, leaves, bowls or food. No outline drawing. Transparent gaps and exterior.",
+  "generated_source": "C:/Users/niffe/.codex/generated_images/01a16509-d4ea-70a3-9367-1fde726ea417/exec-c2fecb50-e236-4ad1-9bcc-3456c52fe376.png",
+  "saved_output": "color-15-underpaint.png",
+  "integration": "Generated color/shadow layer only. Align to source proof canvas, then overlay native exact original transparent ink. Do not use as replacement source drawing.",
+  "visual_review": "No replacement black pen outlines apparent; colored steam/ray marks and watercolor object edges remain. Original linework must be overlaid for exact original details.",
+  "file_validation": {
+    "dimensions": [
+      1800,
+      874
+    ],
+    "mode": "RGBA",
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "zero_alpha_fraction": 0.7756,
+    "near_black_pixel_fraction_of_visible": 0.000113
+  }
+}

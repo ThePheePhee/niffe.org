@@ -1,0 +1,25 @@
+{
+  "page": 9,
+  "use_case": "precise-object-edit",
+  "mode": "built-in image_gen edit",
+  "transparent_background": true,
+  "edit_target": "color-9-underpaint.png",
+  "registration_guide": "C:/Users/niffe/OneDrive/ドキュメント/ChatGPT/Creative/ink-review/ink-9-white.png",
+  "prompt": "Use case: precise-object-edit.\nInput images: Image 1 is the EDIT TARGET, an existing transparent watercolour UNDERPAINTING, 1120×1405 pixels. Image 2 is a REGISTRATION GUIDE ONLY: the exact source ink drawing. Do not add its black lines to the output.\nMake ONE LOCAL CORRECTION ONLY: fill the awkward hard-edged U-shaped transparent hole INSIDE THE UPPER FOREARM in Image 1, between the two long existing open arm contours shown in Image 2. This is continuous forearm skin, not a cutout or window. Continue the existing VERY PALE warm skin watercolour wash across that missing interior. Blend seamlessly with the existing wash below it. Make the pigment progressively lighter and lower in opacity toward the two open upper contour ends, with a wide soft feathered fade into transparency near the upper edge; avoid a visible connecting edge between the ends. The upper forearm must have a quiet continuous skin wash, never a U-shaped white hole, cap, border or solid opaque top.\nPreserve EXACTLY the current image canvas, dimensions, aspect ratio, margins, framing, composition and registration. Keep the enormous hand, fingers, Ann, tiny Mc Dinkelspiel, every rock and ALL their existing colours/texture/positions unchanged. Alter only the missing upper-forearm wash and the feathered transition touching that missing patch. No redraw or reinterpretation elsewhere.\nOutput ONLY the transparent colour layer, without black ink, hatching or replacement outlines. Do NOT connect or close the open arm ends with a drawn line. No wrist cuff, sleeve, elbow, giant body or object beyond the visible contours. No added anatomical detail, wrinkles, shadow, scenery, ground, lettering, paper or background. Exterior and all unrelated gaps remain truly transparent.\nMatch the existing subdued ochre/terracotta skin wash with sparse handmade watercolour texture; this repair should be PALER than the lower hand. No new dark shading. This is pigment continuity, not an illustration redesign.",
+  "integration": "Sibling correction only. Canonical underpaint must remain unchanged until root review. Prefer clipping corrected upper-forearm pigment onto existing underpaint to preserve all unaffected pixels.",
+  "output": {
+    "size": [
+      1120,
+      1405
+    ],
+    "mode": "RGBA",
+    "transparent_pixel_fraction": 0.651258896797153,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "selection_note": "Not sufficient: soft U curve remains."
+  }
+}

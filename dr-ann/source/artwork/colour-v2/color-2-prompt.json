@@ -1,0 +1,7 @@
+{
+  "page": 2,
+  "tool": "built-in image_gen",
+  "input": "clean repaired ink-2-white.png",
+  "transparent_background": true,
+  "prompt": "Use case: precise-object-edit / illustration-story. Asset: a registered transparent watercolour UNDERPAINT layer for the attached complete original ink drawing. Edit target image1 is the authoritative cleaned drawing of Dr Ann, including all three grass tufts and both shoes. Keep the exact canvas aspect ratio, framing and every object's position. The website places the exact original black pen image on top afterwards, so produce coloured wash and shallow dimensional watercolour shadows ONLY; omit replacement black outlines. Reference lines guide registration but must not be redrawn or beautified. Preserve quirky proportions and unpolished handmade character; no realistic 3D, no plastic, no anime, no generic cute illustration. Warm ochre hair, very pale slate doctor coat, soft peach face, sage grass, subtle muted terracotta trousers and ochre shoes. Leave coat mainly luminous/white with paper thin shadows. Soft local watercolour shading, no wide ground cloud, no new objects. True transparent exterior background, no white or cream rectangular paper, no text. Include full left grass, middle-right grass, far-right grass and every source feature. Colour shapes must match the exact source positions and silhouette."
+}

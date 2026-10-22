@@ -1,0 +1,428 @@
+[
+  {
+    "page": 2,
+    "file": "assets/color-2-v2.webp",
+    "width": 1614,
+    "height": 1971,
+    "source_ink": "assets/ink/ink-2.png",
+    "source_ink_retained": true,
+    "underpaint_opacity": 0.73,
+    "moving_part_polygon": null,
+    "lossless_delivery": true,
+    "foreground_polygon": null
+  },
+  {
+    "page": 3,
+    "file": "assets/color-3-v2.webp",
+    "width": 2428,
+    "height": 1293,
+    "source_ink": "assets/ink/ink-3.png",
+    "source_ink_retained": true,
+    "underpaint_opacity": 0.6,
+    "moving_part_polygon": [
+      [
+        0.448929,
+        0.696056
+      ],
+      [
+        0.465404,
+        0.641918
+      ],
+      [
+        0.488056,
+        0.614849
+      ],
+      [
+        0.511532,
+        0.613302
+      ],
+      [
+        0.516063,
+        0.653519
+      ],
+      [
+        0.525124,
+        0.684455
+      ],
+      [
+        0.523888,
+        0.746326
+      ],
+      [
+        0.516886,
+        0.759474
+      ],
+      [
+        0.519769,
+        0.798917
+      ],
+      [
+        0.525124,
+        0.810518
+      ],
+      [
+        0.53089,
+        0.800464
+      ],
+      [
+        0.539539,
+        0.799691
+      ],
+      [
+        0.545717,
+        0.814385
+      ],
+      [
+        0.540774,
+        0.839134
+      ],
+      [
+        0.534185,
+        0.854602
+      ],
+      [
+        0.521417,
+        0.849188
+      ],
+      [
+        0.505354,
+        0.83604
+      ],
+      [
+        0.490115,
+        0.853828
+      ],
+      [
+        0.471582,
+        0.857695
+      ],
+      [
+        0.452224,
+        0.853828
+      ],
+      [
+        0.452224,
+        0.865429
+      ],
+      [
+        0.441928,
+        0.865429
+      ],
+      [
+        0.441104,
+        0.8314
+      ],
+      [
+        0.445222,
+        0.817479
+      ],
+      [
+        0.455931,
+        0.815159
+      ],
+      [
+        0.462109,
+        0.79041
+      ],
+      [
+        0.457578,
+        0.774169
+      ],
+      [
+        0.464168,
+        0.746326
+      ],
+      [
+        0.467463,
+        0.733179
+      ],
+      [
+        0.457578,
+        0.730085
+      ],
+      [
+        0.450988,
+        0.733952
+      ],
+      [
+        0.446046,
+        0.720031
+      ]
+    ],
+    "lossless_delivery": true,
+    "foreground_polygon": null
+  },
+  {
+    "page": 4,
+    "file": "assets/color-4-v2.webp",
+    "width": 2020,
+    "height": 2855,
+    "source_ink": "assets/ink/ink-4.png",
+    "source_ink_retained": true,
+    "underpaint_opacity": 0.69,
+    "moving_part_polygon": null,
+    "lossless_delivery": true,
+    "foreground_polygon": null
+  },
+  {
+    "page": 5,
+    "file": "assets/color-5-v2.webp",
+    "width": 1027,
+    "height": 1248,
+    "source_ink": "assets/ink/ink-5.png",
+    "source_ink_retained": true,
+    "underpaint_opacity": 0.68,
+    "moving_part_polygon": null,
+    "lossless_delivery": true,
+    "foreground_polygon": null
+  },
+  {
+    "page": 7,
+    "file": "assets/color-7-v2.webp",
+    "width": 2113,
+    "height": 2218,
+    "source_ink": "assets/ink/ink-7.png",
+    "source_ink_retained": true,
+    "underpaint_opacity": 0.64,
+    "moving_part_polygon": [
+      [
+        0.1277804,
+        0.7191163
+      ],
+      [
+        0.1481306,
+        0.7218215
+      ],
+      [
+        0.1575958,
+        0.7330929
+      ],
+      [
+        0.1594889,
+        0.7457169
+      ],
+      [
+        0.1514434,
+        0.7574391
+      ],
+      [
+        0.1490771,
+        0.7700631
+      ],
+      [
+        0.1391387,
+        0.7709648
+      ],
+      [
+        0.132513,
+        0.7646528
+      ],
+      [
+        0.1230478,
+        0.7709648
+      ],
+      [
+        0.1064837,
+        0.7700631
+      ],
+      [
+        0.1064837,
+        0.7583408
+      ],
+      [
+        0.1116895,
+        0.7385032
+      ],
+      [
+        0.1187885,
+        0.7267809
+      ]
+    ],
+    "lossless_delivery": true,
+    "foreground_polygon": null
+  },
+  {
+    "page": 9,
+    "file": "assets/color-9-v2.webp",
+    "width": 2378,
+    "height": 2985,
+    "source_ink": "assets/ink/ink-9.png",
+    "source_ink_retained": true,
+    "underpaint_opacity": 0.64,
+    "moving_part_polygon": null,
+    "foreground_polygon": null,
+    "lossless_delivery": true
+  },
+  {
+    "page": 11,
+    "file": "assets/color-11-v2.webp",
+    "width": 2511,
+    "height": 2369,
+    "source_ink": "assets/ink/ink-11.png",
+    "source_ink_retained": true,
+    "underpaint_opacity": 0.67,
+    "moving_part_polygon": [
+      [
+        0.007965,
+        0.017729
+      ],
+      [
+        0.1230585,
+        0.017729
+      ],
+      [
+        0.1258463,
+        0.1232588
+      ],
+      [
+        0.1035444,
+        0.1540734
+      ],
+      [
+        0.090004,
+        0.1764458
+      ],
+      [
+        0.0943847,
+        0.2017729
+      ],
+      [
+        0.1369972,
+        0.3313634
+      ],
+      [
+        0.1581043,
+        0.3820177
+      ],
+      [
+        0.1640781,
+        0.3925707
+      ],
+      [
+        0.1569096,
+        0.3980583
+      ],
+      [
+        0.1131023,
+        0.3993246
+      ],
+      [
+        0.0963759,
+        0.3896159
+      ],
+      [
+        0.0816408,
+        0.3592233
+      ],
+      [
+        0.0442055,
+        0.2456733
+      ],
+      [
+        0.0187176,
+        0.2017729
+      ],
+      [
+        0.007965,
+        0.1789785
+      ],
+      [
+        0.0103544,
+        0.1426762
+      ],
+      [
+        0.007965,
+        0.120726
+      ]
+    ],
+    "foreground_polygon": [
+      [
+        0.105,
+        0.385
+      ],
+      [
+        0.17,
+        0.385
+      ],
+      [
+        0.17,
+        0.415
+      ],
+      [
+        0.105,
+        0.415
+      ]
+    ],
+    "lossless_delivery": true
+  },
+  {
+    "page": 13,
+    "file": "assets/color-13-v2.webp",
+    "width": 2123,
+    "height": 1667,
+    "source_ink": "assets/ink/ink-13.png",
+    "source_ink_retained": true,
+    "underpaint_opacity": 0.72,
+    "moving_part_polygon": [
+      [
+        0.035,
+        0.015
+      ],
+      [
+        0.267,
+        0.015
+      ],
+      [
+        0.267,
+        0.575
+      ],
+      [
+        0.035,
+        0.575
+      ]
+    ],
+    "foreground_polygon": null,
+    "lossless_delivery": true
+  },
+  {
+    "page": 15,
+    "file": "assets/color-15-v2.webp",
+    "width": 2096,
+    "height": 1017,
+    "source_ink": "assets/ink/ink-15.png",
+    "source_ink_retained": true,
+    "underpaint_opacity": 0.69,
+    "moving_part_polygon": [
+      [
+        0.427,
+        0.017
+      ],
+      [
+        0.82,
+        0.017
+      ],
+      [
+        0.82,
+        0.568
+      ],
+      [
+        0.427,
+        0.568
+      ]
+    ],
+    "foreground_polygon": null,
+    "lossless_delivery": true
+  },
+  {
+    "page": 17,
+    "file": "assets/color-17-v2.webp",
+    "width": 2257,
+    "height": 1437,
+    "source_ink": "assets/ink/ink-17.png",
+    "source_ink_retained": true,
+    "underpaint_opacity": 0.66,
+    "moving_part_polygon": null,
+    "foreground_polygon": null,
+    "lossless_delivery": true
+  }
+]

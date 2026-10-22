@@ -1,0 +1,18 @@
+{
+  "use_case": "precise-object-edit",
+  "mode": "built-in image_gen edit",
+  "edit_target": "C:/Users/niffe/OneDrive/ドキュメント/ChatGPT/Creative/ink-review/ink-9-white.png",
+  "supporting_reference": "C:/Users/niffe/Documents/miscallaneous/drAnn/DrAnn/page9.jpg",
+  "original_target_size": [
+    2378,
+    2985
+  ],
+  "prompt": "Use case: precise-object-edit.\nAsset type: archival restoration draft for a children's book line drawing.\nInput images: Image 1 is the EDIT TARGET: a cleaned black ink drawing on white paper, 2378 pixels wide by 2985 pixels high. Image 2 is a SUPPORTING REFERENCE ONLY: the original photographed page showing the photographer's fingers obscuring the lowest rock contours. Do not reproduce the photograph, paper tint, handwriting, fingers, book edges or tabletop.\nPrimary request: restore only the two small portions of lowest rock outline hidden by the photographer's fingers, near the bottom centre and bottom right of Image 1. Make the lightest possible repair: a few short simple irregular black pen contour bridges, matching the original artist's line weight and tentative hand-drawn feel. Use the shortest plausible continuation between the surviving boundary ends. Keep the composition and scale identical. Remove the tiny grey photographic finger-shadow tapers within those two small missing areas.\nPrecise repair locations within Image 1: the missing lower front edge of the large rock beneath Ann is approximately between normalized image coordinates (0.225, 0.956) and (0.384, 0.949); the hidden lowest contour at the right is approximately in x=0.55 to 0.70, y=0.95 to 0.99. These are the only editable regions.\nStyle and medium: the same original monochrome rough felt-tip/pen drawing, slightly varying hand pressure, sparse contour, original crosshatching. White background.\nConstraints: KEEP EVERY OTHER EXISTING PEN STROKE AND EVERY OBJECT EXACTLY AS IN IMAGE 1. Preserve the full enormous hand and both long open-ended arm contours, all intentional gaps in the hand outline, Ann's face, hair, coat, hands and feet, Mc Dinkelspiel, every visible rock, every crack and every hatch mark. Do not improve anatomy, smooth, retrace, vectorize, sharpen or reinterpret the drawing. The open ends at the top of the giant arm are intentional and must remain open.\nComposition and canvas: preserve the exact portrait canvas, all margins, object positions, line alignment, scale and crop of Image 1. Do not zoom, reframe or add border. Keep the new rock contour within the existing image canvas. No extra rocks, no added terrain, no scenery, no grass, no shadows, no new texture, no colour, no letters, no decorative details. This is a tiny conservative repair, not a redrawing.",
+  "output_file": "ink-9-repair-draft.png",
+  "output_size": [
+    1120,
+    1405
+  ],
+  "generated_source": "C:/Users/niffe/.codex/generated_images/01a1650e-a679-7d82-b274-5e3bed5005f6/exec-901a5f4d-74aa-46eb-b856-526e091d0fde.png",
+  "integration_note": "Draft only. Align to 2378x2985 source canvas and clip strictly to genuinely finger-obscured contour regions. Preserve every other master pixel."
+}

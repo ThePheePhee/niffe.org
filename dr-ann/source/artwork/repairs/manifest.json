@@ -1,0 +1,50 @@
+[
+  {
+    "page": 1,
+    "description": "Only the finger-hidden span of the lowest horizontal cover rule; the upper-left flap gap remains unreconstructed.",
+    "source_box": [
+      0.385,
+      0.925,
+      0.642,
+      0.938
+    ],
+    "changed_pixels": 15995,
+    "total_pixels": 6906714,
+    "draft": "ink-1-repair-draft.png",
+    "before": "ink-1-before.png",
+    "mask": "ink-1-repair-mask.png",
+    "outside_mask_pixel_equality": true
+  },
+  {
+    "page": 2,
+    "description": "Only the finger-hidden lower-left coat hem and left shoe outline; visible original strokes and all three grass tufts retained.",
+    "source_box": [
+      0.18,
+      0.854,
+      0.337,
+      0.914
+    ],
+    "changed_pixels": 12815,
+    "total_pixels": 3181194,
+    "draft": "ink-2-repair-draft.png",
+    "before": "ink-2-before.png",
+    "mask": "ink-2-repair-mask.png",
+    "outside_mask_pixel_equality": true
+  },
+  {
+    "page": 9,
+    "description": "Only the middle-finger-hidden lower contour of Ann’s supporting rock; intentional hand gaps and uncertain right foreground remain open.",
+    "source_box": [
+      0.264,
+      0.916,
+      0.402,
+      0.949
+    ],
+    "changed_pixels": 6533,
+    "total_pixels": 7098330,
+    "draft": "ink-9-repair-draft.png",
+    "before": "ink-9-before.png",
+    "mask": "ink-9-repair-mask.png",
+    "outside_mask_pixel_equality": true
+  }
+]

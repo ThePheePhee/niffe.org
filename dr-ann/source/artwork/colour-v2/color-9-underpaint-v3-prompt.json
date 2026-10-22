@@ -1,0 +1,23 @@
+{
+  "page": 9,
+  "mode": "built-in image_gen edit",
+  "transparent_background": true,
+  "edit_target": "color-9-underpaint.png",
+  "prompt": "Use case: precise-object-edit. Repair ONLY a missing colour wash in the attached transparent underpainting. Keep every existing pixel outside the upper forearm area unchanged.\nThe transparent U-shaped notch in the upper forearm is an ERROR. FILL THE ENTIRE NOTCH with VERY PALE peach/ochre watercolour. The whole broad forearm is continuous skin and continues out of view beyond the upper-right edge. It has NO HOLE, NO U-SHAPED EDGE, NO SCOOP, NO GAP, NO CRESCENT, NO NOTCH.\nSpecifically, fill the missing area approximately bounded by normalized canvas points [(0.683,0.018),(0.99,0.113),(0.958,0.237),(0.904,0.304),(0.812,0.290),(0.724,0.260),(0.640,0.210)]. This area currently contains empty alpha and must become a CONTINUOUS skin wash. Blend with the lower forearm. Continue the wash upward to the diagonal between the existing upper endpoints, then fade its opacity across a BROAD STRAIGHT DIAGONAL BAND oriented from upper left (0.68,0.02) toward upper right (0.99,0.11), so it disappears gently toward the top/right canvas edge. The fade should NOT follow a U curve. No visible joining stroke or line. Think of a very pale skin wash continuing off the top-right of the page, with no closure drawn across the open arm.\nLeave the enormous hand, fingers, all lower hand modelling, Ann, Mc Dinkelspiel, all rocks and every existing colour/texture and object location IDENTICAL. Same 1120×1405 canvas, margins, positions, framing and scale. Do not redraw, recompose or shift anything.\nOutput transparent pigment layer only: no black ink, no contours, no hatching, no white background, no source paper, no scene additions, no sleeve/cuff/body, no new anatomical details. Maintain true transparent exterior outside the original forearm and all other existing objects. Only the missing upper-forearm interior wash should be filled; unrelated transparent areas stay transparent. Match the existing quiet watercolor texture, paler toward the open upper ends.",
+  "integration": "Sibling candidate; canonical unchanged. Clip only corrected forearm colour area if selected.",
+  "output": {
+    "size": [
+      1120,
+      1405
+    ],
+    "mode": "RGBA",
+    "transparent_pixel_fraction": 0.6144382308083376,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "selection_note": "Preferred correction: upper forearm interior filled continuously to top-right edge. Clip corrected upper region onto canonical underpaint; use broad alpha feather toward open upper ends if needed. Rest of image may have slight generator drift."
+  }
+}

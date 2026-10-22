@@ -1,0 +1,320 @@
+[
+  {
+    "page": 1,
+    "file": "assets/ink/ink-1.png",
+    "width": 2157,
+    "height": 3202,
+    "source_size": [
+      3060,
+      4080
+    ],
+    "source_crop_pixels": [
+      466,
+      658,
+      2623,
+      3860
+    ],
+    "source_crop_normalized": [
+      0.1522875816993464,
+      0.16127450980392158,
+      0.8571895424836601,
+      0.946078431372549
+    ],
+    "paper_noise_floor": 6,
+    "repairs": [
+      {
+        "page": 1,
+        "description": "Only the finger-hidden span of the lowest horizontal cover rule; the upper-left flap gap remains unreconstructed.",
+        "source_box": [
+          0.385,
+          0.925,
+          0.642,
+          0.938
+        ],
+        "changed_pixels": 15995,
+        "total_pixels": 6906714,
+        "draft": "ink-1-repair-draft.png",
+        "before": "ink-1-before.png",
+        "mask": "ink-1-repair-mask.png",
+        "outside_mask_pixel_equality": true
+      }
+    ]
+  },
+  {
+    "page": 2,
+    "file": "assets/ink/ink-2.png",
+    "width": 1614,
+    "height": 1971,
+    "source_size": [
+      3060,
+      4080
+    ],
+    "source_crop_pixels": [
+      332,
+      1767,
+      1946,
+      3738
+    ],
+    "source_crop_normalized": [
+      0.1084967320261438,
+      0.43308823529411766,
+      0.6359477124183006,
+      0.9161764705882353
+    ],
+    "paper_noise_floor": 11,
+    "repairs": [
+      {
+        "page": 2,
+        "description": "Only the finger-hidden lower-left coat hem and left shoe outline; visible original strokes and all three grass tufts retained.",
+        "source_box": [
+          0.18,
+          0.854,
+          0.337,
+          0.914
+        ],
+        "changed_pixels": 12277,
+        "total_pixels": 3181194,
+        "draft": "ink-2-repair-draft.png",
+        "before": "ink-2-before.png",
+        "mask": "ink-2-repair-mask.png",
+        "outside_mask_pixel_equality": true
+      }
+    ]
+  },
+  {
+    "page": 3,
+    "file": "assets/ink/ink-3.png",
+    "width": 2428,
+    "height": 1293,
+    "source_size": [
+      3060,
+      4080
+    ],
+    "source_crop_pixels": [
+      325,
+      2175,
+      2753,
+      3468
+    ],
+    "source_crop_normalized": [
+      0.10620915032679738,
+      0.5330882352941176,
+      0.8996732026143791,
+      0.85
+    ],
+    "paper_noise_floor": 13,
+    "repairs": []
+  },
+  {
+    "page": 4,
+    "file": "assets/ink/ink-4.png",
+    "width": 2020,
+    "height": 2855,
+    "source_size": [
+      3060,
+      4080
+    ],
+    "source_crop_pixels": [
+      384,
+      556,
+      2404,
+      3411
+    ],
+    "source_crop_normalized": [
+      0.12549019607843137,
+      0.13627450980392156,
+      0.7856209150326797,
+      0.8360294117647059
+    ],
+    "paper_noise_floor": 8,
+    "repairs": []
+  },
+  {
+    "page": 5,
+    "file": "assets/ink/ink-5.png",
+    "width": 1027,
+    "height": 1248,
+    "source_size": [
+      3060,
+      4080
+    ],
+    "source_crop_pixels": [
+      1112,
+      2351,
+      2139,
+      3599
+    ],
+    "source_crop_normalized": [
+      0.3633986928104575,
+      0.5762254901960784,
+      0.6990196078431372,
+      0.8821078431372549
+    ],
+    "paper_noise_floor": 6,
+    "repairs": []
+  },
+  {
+    "page": 7,
+    "file": "assets/ink/ink-7.png",
+    "width": 2113,
+    "height": 2218,
+    "source_size": [
+      3060,
+      4080
+    ],
+    "source_crop_pixels": [
+      415,
+      1421,
+      2528,
+      3639
+    ],
+    "source_crop_normalized": [
+      0.13562091503267973,
+      0.3482843137254902,
+      0.8261437908496732,
+      0.8919117647058824
+    ],
+    "paper_noise_floor": 13,
+    "repairs": []
+  },
+  {
+    "page": 9,
+    "file": "assets/ink/ink-9.png",
+    "width": 2378,
+    "height": 2985,
+    "source_size": [
+      3060,
+      4080
+    ],
+    "source_crop_pixels": [
+      272,
+      911,
+      2650,
+      3896
+    ],
+    "source_crop_normalized": [
+      0.08888888888888889,
+      0.2232843137254902,
+      0.8660130718954249,
+      0.9549019607843138
+    ],
+    "paper_noise_floor": 18,
+    "repairs": [
+      {
+        "page": 9,
+        "description": "Only the middle-finger-hidden lower contour of Ann’s supporting rock; intentional hand gaps and uncertain right foreground remain open.",
+        "source_box": [
+          0.264,
+          0.916,
+          0.402,
+          0.949
+        ],
+        "changed_pixels": 6533,
+        "total_pixels": 7098330,
+        "draft": "ink-9-repair-draft.png",
+        "before": "ink-9-before.png",
+        "mask": "ink-9-repair-mask.png",
+        "outside_mask_pixel_equality": true
+      }
+    ]
+  },
+  {
+    "page": 11,
+    "file": "assets/ink/ink-11.png",
+    "width": 2511,
+    "height": 2369,
+    "source_size": [
+      3060,
+      4080
+    ],
+    "source_crop_pixels": [
+      344,
+      1278,
+      2855,
+      3647
+    ],
+    "source_crop_normalized": [
+      0.11241830065359477,
+      0.31323529411764706,
+      0.9330065359477124,
+      0.8938725490196079
+    ],
+    "paper_noise_floor": 18,
+    "repairs": []
+  },
+  {
+    "page": 13,
+    "file": "assets/ink/ink-13.png",
+    "width": 2123,
+    "height": 1667,
+    "source_size": [
+      3060,
+      4080
+    ],
+    "source_crop_pixels": [
+      298,
+      1839,
+      2421,
+      3506
+    ],
+    "source_crop_normalized": [
+      0.09738562091503268,
+      0.45073529411764707,
+      0.7911764705882353,
+      0.859313725490196
+    ],
+    "paper_noise_floor": 18,
+    "local_paper_fit": null,
+    "repairs": []
+  },
+  {
+    "page": 15,
+    "file": "assets/ink/ink-15.png",
+    "width": 2096,
+    "height": 1017,
+    "source_size": [
+      3060,
+      4080
+    ],
+    "source_crop_pixels": [
+      557,
+      2716,
+      2653,
+      3733
+    ],
+    "source_crop_normalized": [
+      0.18202614379084966,
+      0.6656862745098039,
+      0.8669934640522876,
+      0.9149509803921568
+    ],
+    "paper_noise_floor": 17,
+    "local_paper_fit": null,
+    "repairs": []
+  },
+  {
+    "page": 17,
+    "file": "assets/ink/ink-17.png",
+    "width": 2257,
+    "height": 1437,
+    "source_size": [
+      3060,
+      4080
+    ],
+    "source_crop_pixels": [
+      432,
+      954,
+      2689,
+      2391
+    ],
+    "source_crop_normalized": [
+      0.1411764705882353,
+      0.2338235294117647,
+      0.8787581699346405,
+      0.5860294117647059
+    ],
+    "paper_noise_floor": 15,
+    "local_paper_fit": null,
+    "repairs": []
+  }
+]

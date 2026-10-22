@@ -1,0 +1,27 @@
+{
+  "page": 7,
+  "use_case": "precise-object-edit",
+  "mode": "built-in image_gen edit",
+  "transparent_background": true,
+  "input": "C:/Users/niffe/OneDrive/ドキュメント/ChatGPT/Creative/ink-review/ink-7-white.png",
+  "prompt": "Use case: precise-object-edit.\nAsset type: transparent watercolour UNDERPAINTING for an original hand-drawn children's book illustration.\nInput image: the attached black pen drawing is a precise REGISTRATION GUIDE and composition reference, not linework to redraw.\nPrimary request: paint restrained translucent colour washes and a little soft pigment shadow INSIDE the exact existing illustrated shapes. Output the colour/shadow layer ONLY. OMIT ALL BLACK INK CONTOURS, BLACK HATCHING, black outlines and drawn replacement details: the application will place the untouched original ink layer on top of this colour layer. Do not reproduce the pen marks in your output. Keep a genuinely transparent exterior and transparent blank gaps between shapes. Ignore faint grey photographic paper texture and the pale paper rectangle around the tree; these are absent from the art. No white rectangle or paper background.\nVisual style: modest hand-applied watercolour with softly pooled pigment, spare irregular edges aligned exactly to the author's wobbling contours, muted ochre, sage, slate blue-grey, terracotta and plum. A tiny amount of washed shadow may suggest volume within shapes; preserve the very flat, funny homemade drawing. No polished rendering, no plastic material, no CGI, no photorealism, no anime, no cute redesign, no glow, no decorative flourishes.\nRegistration invariants: keep the reference canvas aspect ratio and exact composition, object positions, scale, margins, pose, anatomy, silhouette, every exaggerated shape, and every deliberate oddity. No crop, zoom, rotation, recentering, stretching or rearranging. No added props, background, scenery, terrain, grass, text, letters, border or shadows outside the drawn objects. Keep all reference extremities and scattered fragments. The faint source linework is a positional guide only and must not be redrawn. Output true RGBA transparency around and between the coloured objects.\nScene: the sorrowful seated giant Zorbas, with the exact huge ears, low drooping face, tear, sparse spiky head hair, bare chest and belly, bent knees, extremely long arms, large feet, and the entire spread of crushed rocks including ALL four scattered rubble trails at the far left, far right and lower corners.\nColour assignment: very pale warm ochre/terracotta skin wash, keeping a largely light face and belly; soft sage/slate and a hint of plum in shaded limb folds; the tiny existing tear has one pale slate-blue wash at its exact location; the existing small loincloth gets muted plum; every stone fragment gets sparse cool slate, grey sage or diluted ochre, with several mostly unpainted. Keep stones separated by transparent gaps and keep all their original tiny irregular silhouettes. Sparse hair is left for the later original-ink overlay; add no hair shapes. Do not give Zorbas clothes, change his face, repair his expression, beautify his body or invent new stones. Keep all far-flung rubble fragments inside the full reference framing.\nCanvas: reference 2113 by 2218 pixels, almost square portrait. Preserve exactly the same relative layout and margins. Colour layer only; NO BLACK REPLACEMENT STROKES.",
+  "integration": "Generated colour/shadow underpainting only. App overlays untouched source ink; if tool includes black linework use chroma extraction for underpainting.",
+  "output": {
+    "size": [
+      1224,
+      1285
+    ],
+    "mode": "RGBA",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "transparent_pixel_fraction": 0.5898578367793291,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "has_black_replacement_outlines": false,
+    "notes": "No black contours, but coloured feature/shadow accents are present. Reduce pigment opacity and overlay exact source ink to retain original pen dominance."
+  }
+}

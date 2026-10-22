@@ -1,0 +1,1020 @@
+{
+  "coordinate_system": "Normalized x/y of EXIF-oriented portrait source photographs, 3060 Ãƒâ€” 4080. Boxes are [left, top, right, bottom]. All boxes include a small whitespace safety margin. Polygons select drawing regions only; they are deliberately broader than the ink. Use the source JPEGs, not the downsampled WebP photographs.",
+  "pages": [
+    {
+      "page": 2,
+      "art": [
+        {
+          "name": "Ann and all three grass tufts",
+          "box": [
+            0.116,
+            0.442,
+            0.624,
+            0.907
+          ],
+          "polygon": [
+            [
+              0.18,
+              0.442
+            ],
+            [
+              0.478,
+              0.442
+            ],
+            [
+              0.48,
+              0.779
+            ],
+            [
+              0.529,
+              0.779
+            ],
+            [
+              0.529,
+              0.809
+            ],
+            [
+              0.624,
+              0.809
+            ],
+            [
+              0.624,
+              0.907
+            ],
+            [
+              0.116,
+              0.907
+            ],
+            [
+              0.116,
+              0.823
+            ],
+            [
+              0.18,
+              0.823
+            ]
+          ],
+          "description": "One coherent source composition. Include complete hair, face, collar, pocket hands, coat, trouser/leg strokes, visible portions of both shoes, and three separate grass tufts: left, middle-right, far-right. The finger must be masked separately; the broad polygon is an outer selection, not a finished mask."
+        },
+        {
+          "name": "left grass",
+          "box": [
+            0.116,
+            0.823,
+            0.181,
+            0.9
+          ],
+          "description": "Full small tuft to Ann's left, visible in full; should not be treated as noise or finger."
+        },
+        {
+          "name": "middle grass",
+          "box": [
+            0.442,
+            0.785,
+            0.526,
+            0.857
+          ],
+          "description": "Swept triangular tuft immediately right of Ann's lower coat."
+        },
+        {
+          "name": "right grass",
+          "box": [
+            0.53,
+            0.811,
+            0.624,
+            0.894
+          ],
+          "description": "Full far-right upright tuft."
+        }
+      ],
+      "occlusions": [
+        {
+          "type": "finger",
+          "box": [
+            0.126,
+            0.858,
+            0.327,
+            0.966
+          ],
+          "description": "Photographer's fingertip conceals the lower-left coat/left shoe region. Preserve all visible outline immediately above/left/right of finger. Only a very small lower contour continuation is justified; avoid redrawing the coat, legs, or right shoe. Fingertip is a curved obstruction; do not erase the whole rectangular box. Refined exclusion follows the OUTSIDE of the photographed skin/shadow boundary. Apply this instead of the provisional hardcoded finger polygon in extract-ink.py.",
+          "exclude_polygon": [
+            [
+              0.102,
+              0.95
+            ],
+            [
+              0.115,
+              0.926
+            ],
+            [
+              0.137,
+              0.912
+            ],
+            [
+              0.163,
+              0.899
+            ],
+            [
+              0.184,
+              0.887
+            ],
+            [
+              0.198,
+              0.879
+            ],
+            [
+              0.209,
+              0.872
+            ],
+            [
+              0.222,
+              0.866
+            ],
+            [
+              0.237,
+              0.86
+            ],
+            [
+              0.252,
+              0.858
+            ],
+            [
+              0.266,
+              0.858
+            ],
+            [
+              0.281,
+              0.861
+            ],
+            [
+              0.297,
+              0.866
+            ],
+            [
+              0.311,
+              0.874
+            ],
+            [
+              0.322,
+              0.885
+            ],
+            [
+              0.33,
+              0.898
+            ],
+            [
+              0.335,
+              0.916
+            ],
+            [
+              0.34,
+              0.97
+            ],
+            [
+              0.102,
+              0.97
+            ]
+          ]
+        },
+        {
+          "type": "finger outside ink",
+          "box": [
+            0.387,
+            0.91,
+            0.548,
+            1.0
+          ],
+          "description": "Bottom-right fingertip does not hide drawing."
+        }
+      ],
+      "missing_from_current": [
+        "Entire left grass tuft",
+        "Most of middle grass tuft (existing region cuts through it)",
+        "Entire far-right grass tuft",
+        "Finger-masked lower-left garment/shoe remains an incomplete photographed contour"
+      ]
+    },
+    {
+      "page": 3,
+      "art": [
+        {
+          "name": "House, steps, walker, ground and both small grass tufts",
+          "box": [
+            0.118,
+            0.542,
+            0.892,
+            0.841
+          ],
+          "polygon": [
+            [
+              0.118,
+              0.549
+            ],
+            [
+              0.166,
+              0.542
+            ],
+            [
+              0.344,
+              0.621
+            ],
+            [
+              0.344,
+              0.773
+            ],
+            [
+              0.373,
+              0.792
+            ],
+            [
+              0.447,
+              0.792
+            ],
+            [
+              0.454,
+              0.728
+            ],
+            [
+              0.54,
+              0.728
+            ],
+            [
+              0.54,
+              0.801
+            ],
+            [
+              0.585,
+              0.801
+            ],
+            [
+              0.585,
+              0.791
+            ],
+            [
+              0.611,
+              0.791
+            ],
+            [
+              0.615,
+              0.801
+            ],
+            [
+              0.892,
+              0.801
+            ],
+            [
+              0.892,
+              0.841
+            ],
+            [
+              0.118,
+              0.841
+            ]
+          ],
+          "description": "Continuous, almost solid black silhouette scene. Preserve the hand-hatched texture of the tall house and the uneven bottom edges. Ground runs from house steps all the way to the right paper edge. Two very small grass tufts rise above the baseline, one between house and walker, another right of the walker. No gap repair needed. Keep the word problemet and its first p descender above the right-hand ground out of the mask."
+        }
+      ],
+      "occlusions": [
+        {
+          "description": "Foreign pencil prose or photographed page-edge residue; verified separate from illustration ink.",
+          "exclude_polygon": [
+            [
+              0.88791,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0.88791,
+              1
+            ]
+          ]
+        },
+        {
+          "description": "Foreign pencil prose or photographed page-edge residue; verified separate from illustration ink.",
+          "exclude_polygon": [
+            [
+              0.167,
+              0.832
+            ],
+            [
+              0.191,
+              0.832
+            ],
+            [
+              0.191,
+              0.85
+            ],
+            [
+              0.167,
+              0.85
+            ]
+          ]
+        },
+        {
+          "description": "Foreign pencil prose or photographed page-edge residue; verified separate from illustration ink.",
+          "exclude_polygon": [
+            [
+              0.194,
+              0.831
+            ],
+            [
+              0.21,
+              0.831
+            ],
+            [
+              0.21,
+              0.85
+            ],
+            [
+              0.194,
+              0.85
+            ]
+          ]
+        },
+        {
+          "description": "Foreign pencil prose or photographed page-edge residue; verified separate from illustration ink.",
+          "exclude_polygon": [
+            [
+              0.274,
+              0.835
+            ],
+            [
+              0.374,
+              0.835
+            ],
+            [
+              0.374,
+              0.85
+            ],
+            [
+              0.274,
+              0.85
+            ]
+          ]
+        },
+        {
+          "description": "Foreign pencil prose or photographed page-edge residue; verified separate from illustration ink.",
+          "exclude_polygon": [
+            [
+              0.376,
+              0.831
+            ],
+            [
+              0.8879,
+              0.831
+            ],
+            [
+              0.8879,
+              0.85
+            ],
+            [
+              0.376,
+              0.85
+            ]
+          ]
+        }
+      ],
+      "missing_from_current": [
+        "Both grass tufts above ground",
+        "Upper band of continuous ground baseline where current separate ground crop starts too low",
+        "Possibly last few bottom tips of house hatching at existing 0.836 crop boundary"
+      ]
+    },
+    {
+      "page": 4,
+      "art": [
+        {
+          "name": "Ann profile with full neck and shoulder contour",
+          "box": [
+            0.136,
+            0.145,
+            0.509,
+            0.513
+          ],
+          "polygon": [
+            [
+              0.136,
+              0.513
+            ],
+            [
+              0.141,
+              0.342
+            ],
+            [
+              0.168,
+              0.31
+            ],
+            [
+              0.181,
+              0.26
+            ],
+            [
+              0.183,
+              0.221
+            ],
+            [
+              0.209,
+              0.187
+            ],
+            [
+              0.25,
+              0.161
+            ],
+            [
+              0.292,
+              0.145
+            ],
+            [
+              0.435,
+              0.145
+            ],
+            [
+              0.507,
+              0.211
+            ],
+            [
+              0.507,
+              0.225
+            ],
+            [
+              0.501,
+              0.238
+            ],
+            [
+              0.491,
+              0.255
+            ],
+            [
+              0.469,
+              0.258
+            ],
+            [
+              0.467,
+              0.285
+            ],
+            [
+              0.458,
+              0.308
+            ],
+            [
+              0.447,
+              0.318
+            ],
+            [
+              0.432,
+              0.328
+            ],
+            [
+              0.433,
+              0.36
+            ],
+            [
+              0.437,
+              0.37
+            ],
+            [
+              0.412,
+              0.381
+            ],
+            [
+              0.409,
+              0.394
+            ],
+            [
+              0.394,
+              0.407
+            ],
+            [
+              0.375,
+              0.425
+            ],
+            [
+              0.328,
+              0.431
+            ],
+            [
+              0.237,
+              0.414
+            ],
+            [
+              0.247,
+              0.458
+            ],
+            [
+              0.205,
+              0.493
+            ]
+          ],
+          "description": "Hair tips and loose curls, face contours and small facial marks, neck hatching, inner collar/neck contour and long curved shoulder boundary. Shoulder/neck strokes are lighter than much of the head; do not threshold them away. The short horizontal dash beside the shoulder belongs to dialogue text, not illustration. Revised outer hair arc preserves original curve that the earlier chord cut; right-side mask now follows face with whitespace margin to exclude nearby prose."
+        },
+        {
+          "name": "Mc Dinkelspiel and detached foot",
+          "box": [
+            0.487,
+            0.469,
+            0.772,
+            0.826
+          ],
+          "description": "Full figure plus the separate small foot on the lower right. Preserve cap stem, eyebrows/moustache, all body bands, both hands, attached leg/foot, stump, and the detached foot. Source contains complete uninterrupted strokes, so no repair is needed.",
+          "polygon": [
+            [
+              0.702,
+              0.471
+            ],
+            [
+              0.725,
+              0.48
+            ],
+            [
+              0.725,
+              0.502
+            ],
+            [
+              0.688,
+              0.525
+            ],
+            [
+              0.672,
+              0.532
+            ],
+            [
+              0.68,
+              0.561
+            ],
+            [
+              0.716,
+              0.556
+            ],
+            [
+              0.729,
+              0.569
+            ],
+            [
+              0.717,
+              0.589
+            ],
+            [
+              0.735,
+              0.609
+            ],
+            [
+              0.72,
+              0.616
+            ],
+            [
+              0.755,
+              0.636
+            ],
+            [
+              0.774,
+              0.659
+            ],
+            [
+              0.752,
+              0.681
+            ],
+            [
+              0.75,
+              0.723
+            ],
+            [
+              0.749,
+              0.755
+            ],
+            [
+              0.728,
+              0.761
+            ],
+            [
+              0.725,
+              0.785
+            ],
+            [
+              0.775,
+              0.793
+            ],
+            [
+              0.775,
+              0.827
+            ],
+            [
+              0.58,
+              0.827
+            ],
+            [
+              0.578,
+              0.807
+            ],
+            [
+              0.61,
+              0.8
+            ],
+            [
+              0.585,
+              0.758
+            ],
+            [
+              0.555,
+              0.755
+            ],
+            [
+              0.513,
+              0.75
+            ],
+            [
+              0.509,
+              0.725
+            ],
+            [
+              0.519,
+              0.707
+            ],
+            [
+              0.491,
+              0.68
+            ],
+            [
+              0.484,
+              0.655
+            ],
+            [
+              0.493,
+              0.638
+            ],
+            [
+              0.521,
+              0.616
+            ],
+            [
+              0.51,
+              0.617
+            ],
+            [
+              0.508,
+              0.601
+            ],
+            [
+              0.519,
+              0.584
+            ],
+            [
+              0.51,
+              0.575
+            ],
+            [
+              0.516,
+              0.56
+            ],
+            [
+              0.567,
+              0.56
+            ],
+            [
+              0.567,
+              0.539
+            ],
+            [
+              0.58,
+              0.531
+            ],
+            [
+              0.612,
+              0.53
+            ],
+            [
+              0.633,
+              0.511
+            ],
+            [
+              0.677,
+              0.503
+            ],
+            [
+              0.681,
+              0.483
+            ]
+          ]
+        }
+      ],
+      "occlusions": [
+        {
+          "type": "blank paper lighting outside neck",
+          "exclude_polygon": [
+            [
+              0.246,
+              0.443
+            ],
+            [
+              0.244,
+              0.454
+            ],
+            [
+              0.223,
+              0.473
+            ],
+            [
+              0.205,
+              0.492
+            ],
+            [
+              0.214,
+              0.504
+            ],
+            [
+              0.265,
+              0.465
+            ],
+            [
+              0.265,
+              0.443
+            ]
+          ],
+          "description": "Photographic grey paper wedge outside (to the right of) the inner neck/shoulder contour. Boundary stays a few pixels clear of visible fine neck hatching and the long inner curve; no source ink lies in this narrow blank wedge."
+        }
+      ],
+      "missing_from_current": [
+        "A little of Ann's lower curved neck/shoulder detail may be clipped by the tight polygon",
+        "Ends of the outer right hair curls are vulnerable to current diagonal clipping",
+        "Mc Dinkelspiel's detached foot IS included by existing crop and must stay included"
+      ]
+    },
+    {
+      "page": 5,
+      "art": [
+        {
+          "name": "Bandaged leg and complete foot",
+          "box": [
+            0.375,
+            0.585,
+            0.687,
+            0.873
+          ],
+          "polygon": [
+            [
+              0.468,
+              0.585
+            ],
+            [
+              0.56,
+              0.585
+            ],
+            [
+              0.548,
+              0.713
+            ],
+            [
+              0.5,
+              0.787
+            ],
+            [
+              0.606,
+              0.787
+            ],
+            [
+              0.675,
+              0.811
+            ],
+            [
+              0.687,
+              0.873
+            ],
+            [
+              0.375,
+              0.873
+            ],
+            [
+              0.375,
+              0.826
+            ],
+            [
+              0.411,
+              0.781
+            ],
+            [
+              0.446,
+              0.701
+            ]
+          ],
+          "description": "Include BOTH pale upright leg extensions above the dark bandage top, the bandage's fine crosshatching and zigzag outline, full ankle/heel curve, toe, and fine diagonal sole hatching. Upper extensions are part of the drawing despite being pale like graphite. Overall photograph is softly focused; preserve its actual strokes without inventing sharper geometry."
+        }
+      ],
+      "occlusions": [
+        {
+          "description": "Foreign pencil prose or photographed page-edge residue; verified separate from illustration ink.",
+          "exclude_polygon": [
+            [
+              0.373,
+              0.868
+            ],
+            [
+              0.432,
+              0.868
+            ],
+            [
+              0.432,
+              0.89
+            ],
+            [
+              0.373,
+              0.89
+            ]
+          ]
+        }
+      ],
+      "missing_from_current": [
+        "Pale upright leg extensions and several pale contour/hatching strokes are likely erased by alpha=clamp(2.25-6.475*luma), whose effective white cutoff is about 0.347",
+        "No photographic gap or finger touches this drawing; no generative repair justified"
+      ]
+    },
+    {
+      "page": 6,
+      "art": [],
+      "occlusions": [],
+      "missing_from_current": [],
+      "note": "This source page contains story text. The cropped drawing at the photograph's right is the facing page 7, not an extra illustration on page 6. Use page 7's complete photograph for Zorbas."
+    },
+    {
+      "page": 7,
+      "art": [
+        {
+          "name": "Zorbas with complete rubble field and long rock trails",
+          "box": [
+            0.143,
+            0.359,
+            0.818,
+            0.879
+          ],
+          "description": "Preserve the entire figure, all fine hairs and hatching, small teardrop, all rubble between and behind limbs, the upper right trail to xÃ¢â€°Ë†0.813, and BOTH foreground diagonal rock trails. Right foreground trail reaches yÃ¢â€°Ë†0.875; left foreground trail reaches yÃ¢â€°Ë†0.862. A rectangular crop is safe after background removal because no intentional text crosses this area. Added generous outer polygon excludes blank bleed-through regions while including complete figure and foreground rubble trails. Lower rubble region deliberately uses broad rectangle to preserve every disconnected rock; retain the existing finger exclusion below the drawing.",
+          "polygon": [
+            [
+              0.47,
+              0.357
+            ],
+            [
+              0.56,
+              0.357
+            ],
+            [
+              0.574,
+              0.389
+            ],
+            [
+              0.595,
+              0.392
+            ],
+            [
+              0.601,
+              0.419
+            ],
+            [
+              0.585,
+              0.437
+            ],
+            [
+              0.62,
+              0.437
+            ],
+            [
+              0.65,
+              0.484
+            ],
+            [
+              0.707,
+              0.496
+            ],
+            [
+              0.744,
+              0.53
+            ],
+            [
+              0.755,
+              0.574
+            ],
+            [
+              0.746,
+              0.625
+            ],
+            [
+              0.789,
+              0.627
+            ],
+            [
+              0.819,
+              0.645
+            ],
+            [
+              0.819,
+              0.683
+            ],
+            [
+              0.819,
+              0.883
+            ],
+            [
+              0.14,
+              0.883
+            ],
+            [
+              0.14,
+              0.712
+            ],
+            [
+              0.21,
+              0.693
+            ],
+            [
+              0.245,
+              0.686
+            ],
+            [
+              0.24,
+              0.654
+            ],
+            [
+              0.226,
+              0.619
+            ],
+            [
+              0.212,
+              0.577
+            ],
+            [
+              0.212,
+              0.54
+            ],
+            [
+              0.237,
+              0.51
+            ],
+            [
+              0.279,
+              0.496
+            ],
+            [
+              0.332,
+              0.476
+            ],
+            [
+              0.376,
+              0.431
+            ],
+            [
+              0.403,
+              0.434
+            ],
+            [
+              0.415,
+              0.426
+            ],
+            [
+              0.399,
+              0.419
+            ],
+            [
+              0.399,
+              0.395
+            ],
+            [
+              0.438,
+              0.389
+            ],
+            [
+              0.447,
+              0.372
+            ]
+          ]
+        }
+      ],
+      "occlusions": [
+        {
+          "type": "fingers outside ink",
+          "box": [
+            0.29,
+            0.852,
+            0.68,
+            1.0
+          ],
+          "description": "Two fingertip tips below the foreground trails. They do not obscure any visible drawing and need no illustration reconstruction. Use paper/skin mask below the lowest rocks rather than cropping off trails."
+        }
+      ],
+      "missing_from_current": [
+        "Bottom of both foreground rock trails: existing bottom=0.85 clips several whole rocks",
+        "Possibly highest hair tip at existing top=0.365; extend to 0.359 for safe margin"
+      ]
+    }
+  ],
+  "general_extraction_notes": [
+    "Flatten local paper illumination before deriving alpha. A single absolute luminance threshold removes pale authentic strokes while retaining dark photographic shadows.",
+    "Inspect output on white and contrasting backgrounds at source scale. Keep authentic ink edge softness and pen-pressure variation.",
+    "Pencil story text, reverse-page bleed-through, table grain, skin and margin specks are not illustration marks.",
+    "Use a few pixels of transparent whitespace safety margin. Existing tight polygons frequently cut original small marks that sit outside the main silhouette.",
+    "No early-page source has a true scan break in the line drawing. Only p2's photographer finger conceals a small part of Ann's lower-left outline."
+  ]
+}

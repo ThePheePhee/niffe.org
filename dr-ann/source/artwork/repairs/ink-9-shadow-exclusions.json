@@ -1,0 +1,105 @@
+{
+  "coordinate_system": "EXIF-transposed original page9.jpg, 3060x4080; each point [x_fraction,y_fraction]. Separate additional photographic-shadow exclusions after current audited masks. Preserve surviving pen stroke endpoints above the masks.",
+  "page": 9,
+  "shadow_exclusions": [
+    {
+      "name": "middle-finger-left-shadow-residue",
+      "exclude_polygon": [
+        [
+          0.232,
+          0.946
+        ],
+        [
+          0.251,
+          0.928
+        ],
+        [
+          0.263,
+          0.9247
+        ],
+        [
+          0.279,
+          0.914
+        ],
+        [
+          0.283,
+          0.913
+        ],
+        [
+          0.283,
+          0.921
+        ],
+        [
+          0.268,
+          0.93
+        ],
+        [
+          0.244,
+          0.946
+        ]
+      ],
+      "note": "Only the grey paper/finger shadow taper below the large rock's diagonal corner. Do not extend upward/leftward through the pen corner; retain original ink around x=.260–.264,y=.920–.924."
+    },
+    {
+      "name": "right-finger-left-shadow-residue",
+      "exclude_polygon": [
+        [
+          0.495,
+          0.946
+        ],
+        [
+          0.508,
+          0.93
+        ],
+        [
+          0.529,
+          0.916
+        ],
+        [
+          0.546,
+          0.909
+        ],
+        [
+          0.554,
+          0.91
+        ],
+        [
+          0.555,
+          0.924
+        ],
+        [
+          0.524,
+          0.946
+        ]
+      ],
+      "note": "This grey diagonal taper lies in blank space below the right rock and left of the finger. No visible original contour crosses this polygon. Preserve right rock endpoint near x=.629,y=.943."
+    },
+    {
+      "name": "middle-finger-right-edge-hairline",
+      "exclude_polygon": [
+        [
+          0.393,
+          0.931
+        ],
+        [
+          0.402,
+          0.938
+        ],
+        [
+          0.411,
+          0.946
+        ],
+        [
+          0.405,
+          0.946
+        ],
+        [
+          0.395,
+          0.937
+        ]
+      ],
+      "note": "Tiny pale diagonal photographic finger edge to the lower-right of the main gap, below the surviving rock line. This is not a crack or hatch."
+    }
+  ],
+  "integration_note": "Use these as local exclusions on the source ink master before adding the aligned minimal repair. Review against the original; root owns final integration. Main rock repair may close only the genuinely occluded bottom contour. Rightmost gap should remain open because original hidden contour is unknown."
+}

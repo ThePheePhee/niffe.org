@@ -1,0 +1,21 @@
+{
+  "mode": "built-in edit",
+  "transparent_background": true,
+  "edit_target": "color-5-underpaint-before-top-correction.png",
+  "supporting_registration_reference": "C:/Users/niffe/OneDrive/Ã£Æ’â€°Ã£â€šÂ­Ã£Æ’Â¥Ã£Æ’Â¡Ã£Æ’Â³Ã£Æ’Ë†/ChatGPT/Creative/ink-review/ink-5-white.png",
+  "prompt": "Use case: precise-object-edit. Image 1 is the edit target, a transparent watercolour underpainting; Image 2 is the original black-and-white registration reference.\nMake ONE tiny correction at the very top of Image 1. The two pale upright source strokes above the bandage in Image 2 are the LEFT and RIGHT outer contour EDGES of ONE SINGLE CONTINUOUS LOWER LEG. The colour between them must therefore be one continuous very pale peach wash. They must NOT appear as two separate narrow fingers, wooden sticks, rods, or prongs. Remove the erroneous narrow skin strip/prong look at the top and fill the space BETWEEN the original left and right outer edge coordinates with a single flat translucent peach wash, connecting seamlessly to the original bandage opening below. The open upper end may have a quiet straight/very gently sloped pale wash edge near the two existing stroke ends; add no new black line.\nPreserve EVERYTHING ELSE in Image 1 exactly: foot, entire bandage, pigment texture, colour, proportions, shadows, exact canvas/framing, and transparent margins. Preserve the original top outer contour coordinates and faint original slant; do not move or crop anything. No new body or other objects, no black ink outlines. This is an underpainting only; the unaltered original pen artwork will be overlaid afterward. Output genuinely transparent outside the drawing, retaining existing transparency.",
+  "output_file": "color-5-underpaint.png",
+  "output_size": [
+    1138,
+    1382
+  ],
+  "output_mode": "RGBA",
+  "corner_alpha": [
+    0,
+    0,
+    0,
+    2
+  ],
+  "fully_transparent_fraction": 0.6037091248515307,
+  "inspection_note": "Both original pale top edges now bound one continuous pale skin wash. Entire foot/bandage composition included, no black replacement outlines, genuine transparent background. Subtle shadow reaches right canvas edge; top-left/top-right/bottom-left corner alpha 0, bottom-right corner alpha 2/255."
+}

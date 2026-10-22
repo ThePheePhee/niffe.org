@@ -1,0 +1,17 @@
+{
+  "mode": "built-in edit",
+  "use_case": "precise-object-edit",
+  "edit_target": "C:/Users/niffe/OneDrive/ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆ/ChatGPT/Creative/ink-review/ink-2-white.png",
+  "supporting_obstruction_reference": "C:/Users/niffe/Documents/miscallaneous/drAnn/DrAnn/page2.jpg",
+  "prompt": "Use case: precise-object-edit.\nAsset type: extremely conservative conservation repair of an original hand-drawn children's book illustration.\nInput images: Image 1 is the ONLY edit target, a cleaned black-line drawing on a white canvas. Image 2 is a supporting photograph of the same original page, showing the photographer's fingertip that concealed a small part of the illustration; do not use its paper, text, colors, or framing in the output.\nPrimary request: On Image 1 only, complete the small missing lower-left contour of Ann's long coat hem and her LEFT shoe, exactly where the fingertip concealed them. The missing area is near the bottom left of Ann's body, between the left grass tuft and the already complete right shoe. Add only the few short pen strokes needed for a quiet, plausible continuation of the existing outer coat line, hem, and left shoe. Keep the original simple, slightly wobbly black pen style and the same line thickness and soft pixel edges. The new left shoe should sit naturally beside the existing right shoe, modest in size, with no extra details.\nComposition/framing: Match Image 1's portrait canvas, original margins and exact subject coordinates. Preserve the shape, position, proportions and scale of EVERY existing ink mark. Preserve all three grass tufts completely and exactly. Preserve Ann's complete face, hair, hands, coat, legs and existing right shoe exactly. Never move, resize or reframe the drawing.\nScene/backdrop: Plain pure white background. No paper texture, cream tone, shadows, gradients, added setting or text.\nConstraints: Change ONLY the small white gap left by the photographer's fingertip at the lower-left hem/shoe. All original visible lines are locked and must remain unchanged. No restyling, smoothing, improvement, redrawing, new objects, new hatching or decorative details. Do not repair any naturally open line elsewhere. This is a tiny missing-contour completion, not a new illustration.",
+  "output_file": "ink-2-repair-draft.png",
+  "output_size": [
+    1135,
+    1386
+  ],
+  "source_target_size": [
+    1614,
+    1971
+  ],
+  "output_note": "Generated repair draft only. Register/rescale to original target canvas and composite exclusively inside the source finger-occluded polygon. Preserve all original visible source pixels outside that patch."
+}

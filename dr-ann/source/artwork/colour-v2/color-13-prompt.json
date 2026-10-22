@@ -1,0 +1,31 @@
+{
+  "page": 13,
+  "tool": "built-in image_gen",
+  "intent": "registered color underpaint, original ink overlaid separately",
+  "transparent_background": true,
+  "edit_target": "C:/Users/niffe/OneDrive/ドキュメント/ChatGPT/Creative/ink-review/ink-13-white.png",
+  "prompt": "Use case: precise-object-edit / compositing. Asset type: registered transparent watercolor UNDERPAINT layer for an original hand-drawn children's-book scan. The input image is an exact geometric registration guide, NOT a drawing to redesign. The application will overlay the precise original black ink pixels separately. Your output must therefore contain ONLY restrained translucent color washes and soft colored contact shadows, with NO black outlines, NO replacement pen drawing, NO black hatching, and NO black silhouettes. Treat all source ink as a guide that must be OMITTED from the output, not repainted. Keep precisely the complete original framing, aspect ratio, relative positions, sizes and spacing. Same canvas/composition and margins. Do not move, crop, simplify, enlarge, complete or embellish any object. Maintain the source's modest handmade pen-sketch feel with subtle irregular watercolor edges and the faintest shallow layered-paper depth. No generic 3D rendering, no photorealism, no cartoon redesign, no cuteness, no shiny plastic, no scenic invention, no typography or new objects. Restrained muted ochre, sage, slate, terracotta and plum only. Actual transparent alpha outside the softly painted object/scene areas; never a white or cream rectangle, paper page, checkerboard or opaque background. Where the source is empty, remain transparent. Exact source geometry has priority over decorative effect. Scene: the exact illustrated breakfast: a large coffee mug at lower left with its full handle and dark liquid, TWO cherry tomatoes near the bottom center, and the long flat cheese sandwich at lower right. Above the mug are FOUR original steam marks: two long wavering outer strokes and two teardrop curls. Preserve their complete height, all shapes and positions as extremely faint translucent slate watercolor halos beneath the original steam ink. Underpaint the mug a pale sage glaze with a tiny muted ochre reflection, coffee a restrained translucent warm brown/plum, tomatoes muted terracotta with sage stems, bread soft ochre and cheese pale ochre. Respect the entire sandwich crust and right edge; do not crop. Keep all original spaces around and between objects transparent. Omit the original black linework from this output because it will be overlaid exactly by the application.",
+  "generated_source": "C:/Users/niffe/.codex/generated_images/01a16509-d4ea-70a3-9367-1fde726ea417/exec-b975c9b5-4bdb-460d-9e61-7967540d2b80.png",
+  "saved_output": "color-13-underpaint.png",
+  "integration": "Generated color/shadow layer only. Align to source proof canvas, then overlay native exact original transparent ink. Do not use as replacement source drawing.",
+  "visual_review": "No replacement black pen outlines apparent; colored steam/ray marks and watercolor object edges remain. Original linework must be overlaid for exact original details.",
+  "file_validation": {
+    "dimensions": [
+      1416,
+      1111
+    ],
+    "mode": "RGBA",
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "zero_alpha_fraction": 0.8009,
+    "near_black_pixel_fraction_of_visible": 0.0003
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "page": 11,
+  "use_case": "precise-object-edit",
+  "mode": "built-in image_gen edit",
+  "transparent_background": true,
+  "input": "C:/Users/niffe/OneDrive/ドキュメント/ChatGPT/Creative/ink-review/ink-11-white.png",
+  "prompt": "Use case: precise-object-edit.\nAsset type: transparent watercolour UNDERPAINTING for an original hand-drawn children's book illustration.\nInput image: the attached black pen drawing is a precise REGISTRATION GUIDE and composition reference, not linework to redraw.\nPrimary request: paint restrained translucent colour washes and a little soft pigment shadow INSIDE the exact existing illustrated shapes. Output the colour/shadow layer ONLY. OMIT ALL BLACK INK CONTOURS, BLACK HATCHING, black outlines and drawn replacement details: the application will place the untouched original ink layer on top of this colour layer. Do not reproduce the pen marks in your output. Keep a genuinely transparent exterior and transparent blank gaps between shapes. Ignore faint grey photographic paper texture and the pale paper rectangle around the tree; these are absent from the art. No white rectangle or paper background.\nVisual style: modest hand-applied watercolour with softly pooled pigment, spare irregular edges aligned exactly to the author's wobbling contours, muted ochre, sage, slate blue-grey, terracotta and plum. A tiny amount of washed shadow may suggest volume within shapes; preserve the very flat, funny homemade drawing. No polished rendering, no plastic material, no CGI, no photorealism, no anime, no cute redesign, no glow, no decorative flourishes.\nRegistration invariants: keep the reference canvas aspect ratio and exact composition, object positions, scale, margins, pose, anatomy, silhouette, every exaggerated shape, and every deliberate oddity. No crop, zoom, rotation, recentering, stretching or rearranging. No added props, background, scenery, terrain, grass, text, letters, border or shadows outside the drawn objects. Keep all reference extremities and scattered fragments. The faint source linework is a positional guide only and must not be redrawn. Output true RGBA transparency around and between the coloured objects.\nScene: the exact tall rocket mug on the left with three peculiar fins, the full bare branchy tree used as a spoon with its complete trunk and twigs, dripping dark drink at the rim, and the separate mound of lake muck on the lower right with all little twigs, the dangling central string/tail, and the complete long puddle contour.\nColour assignment: mug a very diluted ochre wash with sparse terracotta and cool slate shading within its body and fin shapes; bare tree bark washed muted warm umber/terracotta, no leaves; drink and drips muted plum with mossy sage; muck mostly sage and slate with small diluted plum/ochre pools; puddle and dangling tail a transparent thin cool sage/slate wash. The huge blank area between the mug, tree and muck must remain fully transparent. Keep the uneven mug silhouette, original fin shapes, and every small twig/tail footprint exactly registered. No extra rocket parts, no rocket exhaust, no cup handle, no leaves, no steam, no extra bubbles, no background.\nCanvas: reference 2511 by 2369 pixels, slightly wide square. Preserve exactly the same relative layout and margins. Colour layer only; NO BLACK REPLACEMENT STROKES.",
+  "integration": "Generated colour/shadow underpainting only. App overlays untouched source ink; if tool includes black linework use chroma extraction for underpainting.",
+  "output": {
+    "size": [
+      1291,
+      1218
+    ],
+    "mode": "RGBA",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "transparent_pixel_fraction": 0.7062904864929491,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "has_black_replacement_outlines": false,
+    "notes": "No black contours, but coloured feature/shadow accents are present. Reduce pigment opacity and overlay exact source ink to retain original pen dominance."
+  }
+}

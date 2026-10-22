@@ -1,0 +1,22 @@
+{
+  "mode": "built-in edit",
+  "use_case": "precise-object-edit",
+  "transparent_background": true,
+  "edit_target": "C:/Users/niffe/OneDrive/ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆ/ChatGPT/Creative/ink-review/ink-3-white.png",
+  "architecture": "Generated underpainting only; final application overlays exact original transparent ink master.",
+  "prompt": "Use case: precise-object-edit.\nAsset type: registered translucent watercolour UNDERPAINTING layer for a handmade children's book.\nInput image: the supplied clean white line drawing is the exact geometry and composition registration guide, not an invitation to redraw.\nPrimary request: Create ONLY restrained colour washes and soft pigment shadows beneath the exact original drawing. The final application overlays the unaltered original black pen artwork on top of this generated underpaint, so do NOT output replacement black outlines, dark drawn contours, or any restyled line drawing. Use the reference outlines to register the colour shapes precisely but omit those black lines from the output. Keep every source feature, silhouette, anatomy, proportion, spacing, tiny mark and original irregularity in the same place; do not fix anatomy or simplify shapes.\nStyle/medium: very thin translucent hand-painted watercolour on gently textured paper, modest pigment pooling and subtle paper-cut depth from soft pigment shadows, quiet ochre/sage/slate/terracotta/plum palette, no glossy 3D, no plastic, no digital cartoon polish.\nComposition/framing: EXACT same canvas aspect ratio, framing, margins, scale and relative coordinates as the input. Include the complete composition with ZERO cropping. Keep the empty areas spacious.\nBackground: genuinely transparent alpha outside the watercolour shapes and their delicate soft shadows. No white or cream rectangle, no photographic paper, no entire page background. Empty space stays transparent. No text, captions, typography or new objects.\nSpecific source scene: retain the black silhouette composition precisely: the full tall sloped-roof house and steps at the far left; tiny walking Ann near the middle; two tiny grass tufts; and the complete long irregular ground line running to the right. Do not invent windows, door, faces, roof tiles or structural details hidden inside the original solid black shapes. Underpaint muted ochre/slate wash associated with the house's original silhouette and very soft sage/ochre pigment along the existing ground, with a little translucent warm backlight just outside existing silhouette edges to give paper depth when the exact black silhouette overlays it. Use subdued coloured washes, never new solid black shapes. Ignore tiny photographic/pencil fragments below the ground and the narrow page-edge strip at the far right; these are extraction residue and not illustration. Preserve the house/walker/ground's full original extent.",
+  "output_file": "color-3-underpaint.png",
+  "output_size": [
+    1724,
+    912
+  ],
+  "output_mode": "RGBA",
+  "corner_alpha": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "fully_transparent_fraction": 0.6560146741563887,
+  "inspection_note": "True transparency present. Some brown/slate pigment contours follow the original guide; preserve exact original black ink overlay. Source proportions/composition visually retained."
+}
