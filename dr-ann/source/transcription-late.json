@@ -1,0 +1,80 @@
+[
+  {
+    "page": 13,
+    "sv": [],
+    "en": [],
+    "art": [
+      {
+        "box": [0.111, 0.460, 0.784, 0.853],
+        "description": "Black pen drawing of a steaming mug, two small berries or cherries, and a slice of bread with cheese or butter."
+      }
+    ],
+    "notes": "No foreground text on this page. Pale reversed marks are bleed-through; the visible text at the extreme left belongs to page12. Boxes refer to the EXIF-oriented portrait image (3060 by 4080)."
+  },
+  {
+    "page": 14,
+    "sv": [
+      "Mc Dinkelspiel åt alltid en stadig frukost av ekollon, slingerstek och dagg. Slingerstek var något slingrigt, oftast mask, som Mc Dinkelspiel grillat på spett. Han åt mycket för han var faktiskt störst i sin familj. Han ville därför inte bli kallad varken liten eller något som tillhörde hans frukost. Det kändes missvisande och världen behöver inte mer förvirring ansåg han."
+    ],
+    "en": [
+      "Mc Dinkelspiel always ate a hearty breakfast of acorns, wriggle-roast and dew. Wriggle-roast was something wriggly, usually a worm, that Mc Dinkelspiel had grilled on a skewer. He ate a lot, because he was actually the biggest in his family. So he did not want to be called either little or anything that belonged to his breakfast. It felt misleading, and the world needs no more confusion, he thought."
+    ],
+    "art": [],
+    "notes": "The word 'mask' and 'på' near the gutter are confirmed by the overlapping left edge of page15.jpg. 'Slingerstek' is an invented compound, translated as 'wriggle-roast'. The small doodle at the far right is on the facing page15, not page14. Preserve the original shift from past-tense narration to 'behöver'."
+  },
+  {
+    "page": 15,
+    "sv": [],
+    "en": [],
+    "art": [
+      {
+        "box": [0.270, 0.735, 0.390, 0.903],
+        "description": "Crosshatched upright egg or acorn shape."
+      },
+      {
+        "box": [0.438, 0.671, 0.853, 0.891],
+        "description": "Steaming wriggly worm threaded around a long skewer, drawn in black pen."
+      },
+      {
+        "box": [0.191, 0.856, 0.250, 0.908],
+        "description": "Tiny round-faced doodle at the bottom near the gutter."
+      }
+    ],
+    "notes": "No foreground text on this page. Pale text is bleed-through. The partial paragraph at the left belongs to page14. Boxes refer to EXIF-oriented portrait image. The egg/acorn drawing's extreme lower right is partly occluded by a fingertip."
+  },
+  {
+    "page": 16,
+    "sv": [
+      "När dagen tog slut stod de tre kamraterna tyst och såg solen gick ner.",
+      "– Vi har ju inte löst några av dina problem idag Ann, sa Mc Dinkelspiel.",
+      "– Njo, jag tycker det är ett problem att vara ensam och för det är ni den bästa medicinen.",
+      "Ingen sa något mer, dom tittade inte ens på varandra, dom bara log och tittade på solen och"
+    ],
+    "en": [
+      "When the day came to an end, the three friends stood quietly and watched the sun go down.",
+      "‘We haven’t solved any of your problems today, Ann,’ said Mc Dinkelspiel.",
+      "‘Well-yes, I think being lonely is a problem, and you are the very best medicine for that.’",
+      "Nobody said anything more. They did not even look at one another. They just smiled and watched the sun and"
+    ],
+    "art": [],
+    "notes": "Final sentence continues on page17. Original appears to say 'såg solen gick ner' (grammatically unusual); it is retained verbatim. 'Njo' is written with a round final letter and seems intentional; medium confidence, worth author confirmation if exact transcription is critical. Preserve colloquial 'dom' and original 'idag'. Dialogue hyphens rendered as typographic dashes; terminal punctuation at gutter partly obscured. Artwork visible to the right is on facing page17."
+  },
+  {
+    "page": 17,
+    "sv": [
+      "hoppades på att få nya problem imorgon att få hjälp med.",
+      "Slut."
+    ],
+    "en": [
+      "hoped for new problems tomorrow to get help with.",
+      "The End."
+    ],
+    "art": [
+      {
+        "box": [0.163, 0.240, 0.869, 0.577],
+        "description": "Three friends seen from behind on a shore: very tall long-armed figure, small round figure, and tiny figure, watching a setting sun over water and crosshatched mountains."
+      }
+    ],
+    "notes": "Opening text continues the final sentence from page16. The exact wording 'hoppades på att få nya problem imorgon att få hjälp med' is intentionally kept; English can join this directly to page16. The original ending is warm and gently absurd. Boxes refer to EXIF-oriented portrait image."
+  }
+]

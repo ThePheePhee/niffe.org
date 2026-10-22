@@ -1,0 +1,405 @@
+[
+  {
+    "page": 2,
+    "sv": [
+      "Det här är Ann. Ann är doktor. Hon bor faktiskt i ett vanligt hus. Inget doktorshus eller så.",
+      "Hon äter heller ingen speciell doktorsmat. Bara vanlig mat."
+    ],
+    "en": [
+      "This is Ann. Ann is a doctor. She actually lives in an ordinary house. No doctor-house or anything like that.",
+      "She doesn't eat any special doctor-food either. Just ordinary food."
+    ],
+    "art": [
+      {
+        "box": [
+          0.18,
+          0.445,
+          0.48,
+          0.91
+        ],
+        "description": "Smiling Ann standing with her hands in the pockets of a long doctor's coat."
+      },
+      {
+        "box": [
+          0.117,
+          0.82,
+          0.184,
+          0.9
+        ],
+        "description": "Small grass tuft to Ann's left."
+      },
+      {
+        "box": [
+          0.445,
+          0.78,
+          0.527,
+          0.86
+        ],
+        "description": "Grass tuft immediately to Ann's right."
+      },
+      {
+        "box": [
+          0.53,
+          0.815,
+          0.625,
+          0.895
+        ],
+        "description": "Second grass tuft on the right."
+      }
+    ],
+    "notes": "Text is clear. Bounding boxes use the portrait image as displayed with EXIF orientation applied. A photographed finger partly covers the bottom-left of Ann's coat/foot; preserve the visible drawing and do not infer hidden strokes for the faithful version."
+  },
+  {
+    "page": 3,
+    "sv": [
+      "Men hon var trots det en doktor och då och då gick hon ut för att göra doktorssaker.",
+      "Ja, ni vet. Hjälpa dom som hade problem. För det är så att om man har ett problem så löser man det. Men om problemet är mitt på en person så är det inte lätt för den personen att lösa det problemet för den har ju problem med den som annars löser problemet."
+    ],
+    "en": [
+      "But she was still a doctor, and now and then she went out to do doctor-things.",
+      "Yes, you know. Help people who had problems. Because when you have a problem, you solve it. But if the problem is right on a person, it isn't easy for that person to solve that problem, because they're having a problem with the one who would otherwise solve the problem."
+    ],
+    "art": [
+      {
+        "box": [
+          0.121,
+          0.545,
+          0.375,
+          0.836
+        ],
+        "description": "Black silhouette of Ann's house, with steps and the start of the ground line."
+      },
+      {
+        "box": [
+          0.46,
+          0.73,
+          0.537,
+          0.812
+        ],
+        "description": "Tiny black silhouette of Ann walking away from the house."
+      },
+      {
+        "box": [
+          0.35,
+          0.801,
+          0.889,
+          0.834
+        ],
+        "description": "Horizontal black ground line with a few small grass tufts."
+      }
+    ],
+    "notes": "Exact colloquial 'dom' and the unusual phrase 'mitt på en person' are retained. The illustration sits between text lines; crop the house, walking figure, and ground separately to avoid carrying handwritten words into the artwork."
+  },
+  {
+    "page": 4,
+    "sv": [
+      "Efter att Ann gått ut träffade hon Mc Dinkelspiel! Nå, många kallade honom för det lille ekollonet men han hette faktiskt Mc Dinkelspiel.",
+      "– Har du problem sa Ann,",
+      "– Nej här är det inga problem sa Mc Dinkelspiel, det är bara det att jag tappat foten."
+    ],
+    "en": [
+      "After Ann went out, she met Mc Dinkelspiel! Well, lots of people called him the Little Acorn, but his name really was Mc Dinkelspiel.",
+      "“Have you got a problem?” said Ann.",
+      "“No, no problems here,” said Mc Dinkelspiel. “It's just that I've lost my foot.”"
+    ],
+    "art": [
+      {
+        "box": [
+          0.14,
+          0.145,
+          0.502,
+          0.51
+        ],
+        "description": "Ann's large profile, looking down and right toward Mc Dinkelspiel."
+      },
+      {
+        "box": [
+          0.486,
+          0.471,
+          0.774,
+          0.827
+        ],
+        "description": "Mc Dinkelspiel, a little striped acorn character with a curly stalk, bushy eyebrows and huge moustache, raising a leg beside his detached foot."
+      }
+    ],
+    "notes": "Words are clear; terminal punctuation after the first 'Mc Dinkelspiel' looks like an exclamation mark, though it could be an unusually doubled final stroke. 'det lille ekollonet' is retained as handwritten. The Ann portrait rectangle overlaps some text near its lower right; use a polygon/alpha mask around the actual ink rather than the whole rectangle. Exact Swedish dialogue lacks question punctuation after 'Har du problem'; retained."
+  },
+  {
+    "page": 5,
+    "sv": [
+      "– Men är det inte problem att du bara har en fot då? frågade Ann.",
+      "– Jo, men jag tappar den hela tiden. Den växer aldrig fast sa Mc Dinkelspiel",
+      "– Bara för ett problem hänt flera gånger gör det inte att det slutar att vara ett problem sa Ann och la bandage på benet. Låt det nu växa fast igen. Det tar 5 dagar."
+    ],
+    "en": [
+      "“But isn't it a problem that you've only got one foot, then?” asked Ann.",
+      "“Yes, but I lose it all the time. It never grows back on,” said Mc Dinkelspiel.",
+      "“Just because a problem has happened several times doesn't mean it stops being a problem,” said Ann, and she bandaged his leg. “Now let it grow back on again. It takes 5 days.”"
+    ],
+    "art": [
+      {
+        "box": [
+          0.378,
+          0.586,
+          0.691,
+          0.873
+        ],
+        "description": "Large close-up of Mc Dinkelspiel's foot and ankle, with a bandage wrapped around the lower leg."
+      }
+    ],
+    "notes": "The first response reads 'Jo'. The handwritten third paragraph says 'Bara för ett problem hänt' without 'att'; retain this wording. The source uses 'la' rather than 'lade'. A rectangular foot crop catches the ends of nearby text on the left; use an ink mask/polygon around the foot."
+  },
+  {
+    "page": 6,
+    "sv": [
+      "Ann och Mc Dinkelspiel provade bandaget under en promenad och stötte snart på Zorbas som var en jättelik bamse. Han såg ledsen ut.",
+      "– Har du problem? Frågade Ann.",
+      "– Nej jag har inga problem sa Zorbas men jag är ledsen. Dom säger att ”Zorbas är så stark att han kan pressa vattnet ur en sten, men i huvudet är han inte stark utan riktigt klen!” Jag har provat att pressa vattnet ur alla stenar jag"
+    ],
+    "en": [
+      "Ann and Mc Dinkelspiel tried out the bandage on a walk and soon came upon Zorbas, a great big bear of a fellow. He looked sad.",
+      "“Have you got a problem?” asked Ann.",
+      "“No, I haven't got any problems,” said Zorbas, “but I'm sad. They say, ‘Zorbas is so strong he can squeeze water out of a stone, but strong in the head? He's feeble instead!’ I've tried to squeeze the water out of every stone I've"
+    ],
+    "art": [],
+    "notes": "This page is text only; the photographed giant to the right belongs to page 7. The last sentence continues onto page 7, starting 'hittat'. Prefer presenting pages 6 and 7 as one reading scene, or clearly continue the sentence across the page turn. Capital 'Frågade' and colloquial 'Dom' retained. The English quoted insult uses 'head/instead' to preserve the source's 'sten/klen' rhyme while retaining its meaning."
+  },
+  {
+    "page": 7,
+    "sv": [
+      "hittat men dom går bara sönder till grus. Jag verkar vara både klen i händerna och i huvudet..."
+    ],
+    "en": [
+      "found, but they just crumble into gravel. I seem to be feeble in my hands and in my head…"
+    ],
+    "art": [
+      {
+        "box": [
+          0.142,
+          0.362,
+          0.817,
+          0.881
+        ],
+        "description": "The enormous, sad Zorbas crouching among heaps of crushed stones. He has a little tuft of hair, pointed ears, huge forearms, long legs, and a single falling tear."
+      }
+    ],
+    "notes": "Sentence and dialogue continue directly from page 6; the printed text starts with lowercase 'hittat'. The three trailing dots are in the source, and there is no closing speech mark. No uncertain words. Artwork box excludes the main text and almost all fingers."
+  },
+  {
+    "page": 8,
+    "sv": [
+      "- Dom har fel! ropar Ann. I sten finns inget vatten så om det är fel varför skulle dom ha rätt om ditt huvud?",
+      "Zorbas satt tyst och funderade.",
+      "- Förresten, fortsatte Ann, så är det inte hur hårt man kan klämma som räknas utan att kunna klämma hårt men när det behövs klämma mjukt.",
+      "Zorbas tittade upp, sträckte fram sin jättelika hand och gav Ann det mjukaste handslag hon känt.",
+      "- Tack, sa han."
+    ],
+    "en": [
+      "— They’re wrong! Ann cries. There isn’t any water in stone, so if they’re wrong about that, why should they be right about your head?",
+      "Zorbas sat quietly, thinking.",
+      "— Besides, Ann went on, it’s not how hard you can squeeze that counts, but being able to squeeze hard and then, when you need to, squeeze gently.",
+      "Zorbas looked up, held out his gigantic hand and gave Ann the gentlest handshake she had ever felt.",
+      "— Thank you, he said."
+    ],
+    "art": [],
+    "notes": "Text-only left page; its illustration is page9. Preserve the colloquial Dom/dom, tense shift ropar, and original grammar. Bounding boxes elsewhere use the portrait orientation displayed after EXIF rotation. No uncertain words."
+  },
+  {
+    "page": 9,
+    "sv": [],
+    "en": [],
+    "art": [
+      {
+        "box": [
+          0.105,
+          0.23,
+          0.86,
+          0.905
+        ],
+        "description": "Full illustration: smiling Ann standing on a rock and shaking Zorbas’s enormous hand; small pointed-hat companion at the lower left. Hand extends from the upper right. Black ink with crosshatching on cream paper."
+      },
+      {
+        "box": [
+          0.282,
+          0.23,
+          0.86,
+          0.807
+        ],
+        "description": "Main isolated region: Ann and the enormous gently cupped hand. Excludes most foreground stones and the small companion."
+      },
+      {
+        "box": [
+          0.108,
+          0.765,
+          0.23,
+          0.897
+        ],
+        "description": "Small seated pointed-hat companion on lower-left rocks, useful as a separate decorative crop."
+      }
+    ],
+    "notes": "Illustration for page8 handshake. The photograph includes human fingers across the bottom edge, slightly obscuring foreground rocks; stop a combined crop around 0.90 height. No printed text on this page; faint writing is bleed-through. Boxes are in EXIF-corrected portrait orientation."
+  },
+  {
+    "page": 10,
+    "sv": [
+      "Här måste vi ta en paus i historien för att inte era tankar ska vandra iväg.",
+      "Det ni säkert undrar är vad alla äter.",
+      "Zorbas åt helst geggaöboy i sin raketmugg som han blandade med ett träd.",
+      "Han gillade också det som ligger i bottnen av sjöar. Sån gucka som jag inte vet vad det är men som tydligen smakar gott för jättelika bamsar,"
+    ],
+    "en": [
+      "Here we must pause the story so your thoughts don’t go wandering off.",
+      "What you’re surely wondering is what everybody eats.",
+      "Zorbas liked muck-o-boy best, out of his rocket mug, stirred with a tree.",
+      "He also liked the stuff that lies at the bottom of lakes. The sort of gunk I don’t know what it is, but which apparently tastes good to gigantic great galumphs,"
+    ],
+    "art": [],
+    "notes": "Text-only left page; its illustration is page11. The coined word reads geggaöboy (geg-ga-ö-boy), kept exactly in Swedish and translated as muck-o-boy to retain the playful cocoa-drink pun. Raketmugg is rocket mug. Bamsar literally evokes great big bears / hulking creatures, rendered great galumphs to retain affectionate childish tone. The final punctuation on the photographed page is a comma. No uncertain words."
+  },
+  {
+    "page": 11,
+    "sv": [],
+    "en": [],
+    "art": [
+      {
+        "box": [
+          0.124,
+          0.32,
+          0.45,
+          0.878
+        ],
+        "description": "Tall rocket-shaped mug with fins and a dotted vertical seam, overflowing with black muck, a bare tree sticking up as a stirrer. Black ink crosshatching on cream paper."
+      },
+      {
+        "box": [
+          0.535,
+          0.718,
+          0.922,
+          0.89
+        ],
+        "description": "Small heap of squishy lake-bottom gunk with twigs and irregular black patches, in a shallow puddle."
+      }
+    ],
+    "notes": "Illustration for page10 food aside. No text; faint marks are bleed-through. Photograph fingers lie just below these crop bounds. Boxes are in EXIF-corrected portrait orientation."
+  },
+  {
+    "page": 12,
+    "sv": [
+      "Doktor Ann åt som sagt vanlig människomat. Hon gillade kaffe, ostmacka och körsbärstomater.",
+      "Zorbas solade ofta mycket för att klara av sin diet. Var det ingen sol så somnade Zorbas.",
+      "”Kaffe verkar vara för mig det som sol är för Zorbas” brukade Ann tänka.",
+      "Men det spelar nog ingen roll hur mycket kaffe jag får, gegga kan jag inte äta."
+    ],
+    "en": [
+      "Doctor Ann ate ordinary human food, as we said. She liked coffee, a cheese sandwich and cherry tomatoes.",
+      "Zorbas did a lot of sunbathing to keep up with his diet. If there was no sun, Zorbas fell asleep.",
+      "“Coffee seems to do for me what sunshine does for Zorbas,” Ann used to think.",
+      "But however much coffee I have, I don’t think I could eat muck."
+    ],
+    "art": [],
+    "notes": "Text-only left page; illustration continues on page13. Preserve singular ostmacka, solade, and the move to first-person thought in the final paragraph without adding Swedish quotation marks. No uncertain words."
+  },
+  {
+    "page": 13,
+    "sv": [],
+    "en": [],
+    "art": [
+      {
+        "box": [
+          0.111,
+          0.46,
+          0.784,
+          0.853
+        ],
+        "description": "Black pen drawing of a steaming mug, two small berries or cherries, and a slice of bread with cheese or butter."
+      }
+    ],
+    "notes": "No foreground text on this page. Pale reversed marks are bleed-through; the visible text at the extreme left belongs to page12. Boxes refer to the EXIF-oriented portrait image (3060 by 4080)."
+  },
+  {
+    "page": 14,
+    "sv": [
+      "Mc Dinkelspiel åt alltid en stadig frukost av ekollon, slingerstek och dagg. Slingerstek var något slingrigt, oftast mask, som Mc Dinkelspiel grillat på spett. Han åt mycket för han var faktiskt störst i sin familj. Han ville därför inte bli kallad varken liten eller något som tillhörde hans frukost. Det kändes missvisande och världen behöver inte mer förvirring ansåg han."
+    ],
+    "en": [
+      "Mc Dinkelspiel always ate a hearty breakfast of acorns, wriggle-roast and dew. Wriggle-roast was something wriggly, usually a worm, that Mc Dinkelspiel had grilled on a skewer. He ate a lot, because he was actually the biggest in his family. So he did not want to be called either little or anything that belonged to his breakfast. It felt misleading, and the world needs no more confusion, he thought."
+    ],
+    "art": [],
+    "notes": "The word 'mask' and 'på' near the gutter are confirmed by the overlapping left edge of page15.jpg. 'Slingerstek' is an invented compound, translated as 'wriggle-roast'. The small doodle at the far right is on the facing page15, not page14. Preserve the original shift from past-tense narration to 'behöver'."
+  },
+  {
+    "page": 15,
+    "sv": [],
+    "en": [],
+    "art": [
+      {
+        "box": [
+          0.27,
+          0.735,
+          0.39,
+          0.903
+        ],
+        "description": "Crosshatched upright egg or acorn shape."
+      },
+      {
+        "box": [
+          0.438,
+          0.671,
+          0.853,
+          0.891
+        ],
+        "description": "Steaming wriggly worm threaded around a long skewer, drawn in black pen."
+      },
+      {
+        "box": [
+          0.191,
+          0.856,
+          0.25,
+          0.908
+        ],
+        "description": "Tiny round-faced doodle at the bottom near the gutter."
+      }
+    ],
+    "notes": "No foreground text on this page. Pale text is bleed-through. The partial paragraph at the left belongs to page14. Boxes refer to EXIF-oriented portrait image. The egg/acorn drawing's extreme lower right is partly occluded by a fingertip."
+  },
+  {
+    "page": 16,
+    "sv": [
+      "När dagen tog slut stod de tre kamraterna tyst och såg solen gick ner.",
+      "– Vi har ju inte löst några av dina problem idag Ann, sa Mc Dinkelspiel.",
+      "– Njo, jag tycker det är ett problem att vara ensam och för det är ni den bästa medicinen.",
+      "Ingen sa något mer, dom tittade inte ens på varandra, dom bara log och tittade på solen och"
+    ],
+    "en": [
+      "When the day came to an end, the three friends stood quietly and watched the sun go down.",
+      "‘We haven’t solved any of your problems today, Ann,’ said Mc Dinkelspiel.",
+      "‘Well-yes, I think being lonely is a problem, and you are the very best medicine for that.’",
+      "Nobody said anything more. They did not even look at one another. They just smiled and watched the sun and"
+    ],
+    "art": [],
+    "notes": "Final sentence continues on page17. Original appears to say 'såg solen gick ner' (grammatically unusual); it is retained verbatim. 'Njo' is written with a round final letter and seems intentional; medium confidence, worth author confirmation if exact transcription is critical. Preserve colloquial 'dom' and original 'idag'. Dialogue hyphens rendered as typographic dashes; terminal punctuation at gutter partly obscured. Artwork visible to the right is on facing page17."
+  },
+  {
+    "page": 17,
+    "sv": [
+      "hoppades på att få nya problem imorgon att få hjälp med.",
+      "Slut."
+    ],
+    "en": [
+      "hoped for new problems tomorrow to get help with.",
+      "The End."
+    ],
+    "art": [
+      {
+        "box": [
+          0.163,
+          0.24,
+          0.869,
+          0.577
+        ],
+        "description": "Three friends seen from behind on a shore: very tall long-armed figure, small round figure, and tiny figure, watching a setting sun over water and crosshatched mountains."
+      }
+    ],
+    "notes": "Opening text continues the final sentence from page16. The exact wording 'hoppades på att få nya problem imorgon att få hjälp med' is intentionally kept; English can join this directly to page16. The original ending is warm and gently absurd. Boxes refer to EXIF-oriented portrait image."
+  }
+]

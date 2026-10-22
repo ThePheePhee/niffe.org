@@ -1,0 +1,100 @@
+[
+  {
+    "page": 2,
+    "sv": [
+      "Det här är Ann. Ann är doktor. Hon bor faktiskt i ett vanligt hus. Inget doktorshus eller så.",
+      "Hon äter heller ingen speciell doktorsmat. Bara vanlig mat."
+    ],
+    "en": [
+      "This is Ann. Ann is a doctor. She actually lives in an ordinary house. No doctor-house or anything like that.",
+      "She doesn't eat any special doctor-food either. Just ordinary food."
+    ],
+    "art": [
+      { "box": [0.18, 0.445, 0.48, 0.91], "description": "Smiling Ann standing with her hands in the pockets of a long doctor's coat." },
+      { "box": [0.117, 0.82, 0.184, 0.9], "description": "Small grass tuft to Ann's left." },
+      { "box": [0.445, 0.78, 0.527, 0.86], "description": "Grass tuft immediately to Ann's right." },
+      { "box": [0.53, 0.815, 0.625, 0.895], "description": "Second grass tuft on the right." }
+    ],
+    "notes": "Text is clear. Bounding boxes use the portrait image as displayed with EXIF orientation applied. A photographed finger partly covers the bottom-left of Ann's coat/foot; preserve the visible drawing and do not infer hidden strokes for the faithful version."
+  },
+  {
+    "page": 3,
+    "sv": [
+      "Men hon var trots det en doktor och då och då gick hon ut för att göra doktorssaker.",
+      "Ja, ni vet. Hjälpa dom som hade problem. För det är så att om man har ett problem så löser man det. Men om problemet är mitt på en person så är det inte lätt för den personen att lösa det problemet för den har ju problem med den som annars löser problemet."
+    ],
+    "en": [
+      "But she was still a doctor, and now and then she went out to do doctor-things.",
+      "Yes, you know. Help people who had problems. Because when you have a problem, you solve it. But if the problem is right on a person, it isn't easy for that person to solve that problem, because they're having a problem with the one who would otherwise solve the problem."
+    ],
+    "art": [
+      { "box": [0.121, 0.545, 0.375, 0.836], "description": "Black silhouette of Ann's house, with steps and the start of the ground line." },
+      { "box": [0.46, 0.73, 0.537, 0.812], "description": "Tiny black silhouette of Ann walking away from the house." },
+      { "box": [0.35, 0.801, 0.889, 0.834], "description": "Horizontal black ground line with a few small grass tufts." }
+    ],
+    "notes": "Exact colloquial 'dom' and the unusual phrase 'mitt på en person' are retained. The illustration sits between text lines; crop the house, walking figure, and ground separately to avoid carrying handwritten words into the artwork."
+  },
+  {
+    "page": 4,
+    "sv": [
+      "Efter att Ann gått ut träffade hon Mc Dinkelspiel! Nå, många kallade honom för det lille ekollonet men han hette faktiskt Mc Dinkelspiel.",
+      "– Har du problem sa Ann,",
+      "– Nej här är det inga problem sa Mc Dinkelspiel, det är bara det att jag tappat foten."
+    ],
+    "en": [
+      "After Ann went out, she met Mc Dinkelspiel! Well, lots of people called him the Little Acorn, but his name really was Mc Dinkelspiel.",
+      "“Have you got a problem?” said Ann.",
+      "“No, no problems here,” said Mc Dinkelspiel. “It's just that I've lost my foot.”"
+    ],
+    "art": [
+      { "box": [0.14, 0.145, 0.502, 0.51], "description": "Ann's large profile, looking down and right toward Mc Dinkelspiel." },
+      { "box": [0.486, 0.471, 0.774, 0.827], "description": "Mc Dinkelspiel, a little striped acorn character with a curly stalk, bushy eyebrows and huge moustache, raising a leg beside his detached foot." }
+    ],
+    "notes": "Words are clear; terminal punctuation after the first 'Mc Dinkelspiel' looks like an exclamation mark, though it could be an unusually doubled final stroke. 'det lille ekollonet' is retained as handwritten. The Ann portrait rectangle overlaps some text near its lower right; use a polygon/alpha mask around the actual ink rather than the whole rectangle. Exact Swedish dialogue lacks question punctuation after 'Har du problem'; retained."
+  },
+  {
+    "page": 5,
+    "sv": [
+      "– Men är det inte problem att du bara har en fot då? frågade Ann.",
+      "– Jo, men jag tappar den hela tiden. Den växer aldrig fast sa Mc Dinkelspiel",
+      "– Bara för ett problem hänt flera gånger gör det inte att det slutar att vara ett problem sa Ann och la bandage på benet. Låt det nu växa fast igen. Det tar 5 dagar."
+    ],
+    "en": [
+      "“But isn't it a problem that you've only got one foot, then?” asked Ann.",
+      "“Yes, but I lose it all the time. It never grows back on,” said Mc Dinkelspiel.",
+      "“Just because a problem has happened several times doesn't mean it stops being a problem,” said Ann, and she bandaged his leg. “Now let it grow back on again. It takes 5 days.”"
+    ],
+    "art": [
+      { "box": [0.378, 0.586, 0.691, 0.873], "description": "Large close-up of Mc Dinkelspiel's foot and ankle, with a bandage wrapped around the lower leg." }
+    ],
+    "notes": "The first response reads 'Jo'. The handwritten third paragraph says 'Bara för ett problem hänt' without 'att'; retain this wording. The source uses 'la' rather than 'lade'. A rectangular foot crop catches the ends of nearby text on the left; use an ink mask/polygon around the foot."
+  },
+  {
+    "page": 6,
+    "sv": [
+      "Ann och Mc Dinkelspiel provade bandaget under en promenad och stötte snart på Zorbas som var en jättelik bamse. Han såg ledsen ut.",
+      "– Har du problem? Frågade Ann.",
+      "– Nej jag har inga problem sa Zorbas men jag är ledsen. Dom säger att ”Zorbas är så stark att han kan pressa vattnet ur en sten, men i huvudet är han inte stark utan riktigt klen!” Jag har provat att pressa vattnet ur alla stenar jag"
+    ],
+    "en": [
+      "Ann and Mc Dinkelspiel tried out the bandage on a walk and soon came upon Zorbas, a great big bear of a fellow. He looked sad.",
+      "“Have you got a problem?” asked Ann.",
+      "“No, I haven't got any problems,” said Zorbas, “but I'm sad. They say, ‘Zorbas is so strong he can squeeze water out of a stone, but strong in the head? He's feeble instead!’ I've tried to squeeze the water out of every stone I've"
+    ],
+    "art": [],
+    "notes": "This page is text only; the photographed giant to the right belongs to page 7. The last sentence continues onto page 7, starting 'hittat'. Prefer presenting pages 6 and 7 as one reading scene, or clearly continue the sentence across the page turn. Capital 'Frågade' and colloquial 'Dom' retained. The English quoted insult uses 'head/instead' to preserve the source's 'sten/klen' rhyme while retaining its meaning."
+  },
+  {
+    "page": 7,
+    "sv": [
+      "hittat men dom går bara sönder till grus. Jag verkar vara både klen i händerna och i huvudet..."
+    ],
+    "en": [
+      "found, but they just crumble into gravel. I seem to be feeble in my hands and in my head…"
+    ],
+    "art": [
+      { "box": [0.142, 0.362, 0.817, 0.881], "description": "The enormous, sad Zorbas crouching among heaps of crushed stones. He has a little tuft of hair, pointed ears, huge forearms, long legs, and a single falling tear." }
+    ],
+    "notes": "Sentence and dialogue continue directly from page 6; the printed text starts with lowercase 'hittat'. The three trailing dots are in the source, and there is no closing speech mark. No uncertain words. Artwork box excludes the main text and almost all fingers."
+  }
+]

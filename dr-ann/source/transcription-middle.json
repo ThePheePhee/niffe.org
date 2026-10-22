@@ -1,0 +1,76 @@
+[
+  {
+    "page": 8,
+    "sv": [
+      "- Dom har fel! ropar Ann. I sten finns inget vatten så om det är fel varför skulle dom ha rätt om ditt huvud?",
+      "Zorbas satt tyst och funderade.",
+      "- Förresten, fortsatte Ann, så är det inte hur hårt man kan klämma som räknas utan att kunna klämma hårt men när det behövs klämma mjukt.",
+      "Zorbas tittade upp, sträckte fram sin jättelika hand och gav Ann det mjukaste handslag hon känt.",
+      "- Tack, sa han."
+    ],
+    "en": [
+      "— They’re wrong! Ann cries. There isn’t any water in stone, so if they’re wrong about that, why should they be right about your head?",
+      "Zorbas sat quietly, thinking.",
+      "— Besides, Ann went on, it’s not how hard you can squeeze that counts, but being able to squeeze hard and then, when you need to, squeeze gently.",
+      "Zorbas looked up, held out his gigantic hand and gave Ann the gentlest handshake she had ever felt.",
+      "— Thank you, he said."
+    ],
+    "art": [],
+    "notes": "Text-only left page; its illustration is page9. Preserve the colloquial Dom/dom, tense shift ropar, and original grammar. Bounding boxes elsewhere use the portrait orientation displayed after EXIF rotation. No uncertain words."
+  },
+  {
+    "page": 9,
+    "sv": [],
+    "en": [],
+    "art": [
+      {"box": [0.105, 0.23, 0.86, 0.905], "description": "Full illustration: smiling Ann standing on a rock and shaking Zorbas’s enormous hand; small pointed-hat companion at the lower left. Hand extends from the upper right. Black ink with crosshatching on cream paper."},
+      {"box": [0.282, 0.23, 0.86, 0.807], "description": "Main isolated region: Ann and the enormous gently cupped hand. Excludes most foreground stones and the small companion."},
+      {"box": [0.108, 0.765, 0.23, 0.897], "description": "Small seated pointed-hat companion on lower-left rocks, useful as a separate decorative crop."}
+    ],
+    "notes": "Illustration for page8 handshake. The photograph includes human fingers across the bottom edge, slightly obscuring foreground rocks; stop a combined crop around 0.90 height. No printed text on this page; faint writing is bleed-through. Boxes are in EXIF-corrected portrait orientation."
+  },
+  {
+    "page": 10,
+    "sv": [
+      "Här måste vi ta en paus i historien för att inte era tankar ska vandra iväg.",
+      "Det ni säkert undrar är vad alla äter.",
+      "Zorbas åt helst geggaöboy i sin raketmugg som han blandade med ett träd.",
+      "Han gillade också det som ligger i bottnen av sjöar. Sån gucka som jag inte vet vad det är men som tydligen smakar gott för jättelika bamsar,"
+    ],
+    "en": [
+      "Here we must pause the story so your thoughts don’t go wandering off.",
+      "What you’re surely wondering is what everybody eats.",
+      "Zorbas liked muck-o-boy best, out of his rocket mug, stirred with a tree.",
+      "He also liked the stuff that lies at the bottom of lakes. The sort of gunk I don’t know what it is, but which apparently tastes good to gigantic great galumphs,"
+    ],
+    "art": [],
+    "notes": "Text-only left page; its illustration is page11. The coined word reads geggaöboy (geg-ga-ö-boy), kept exactly in Swedish and translated as muck-o-boy to retain the playful cocoa-drink pun. Raketmugg is rocket mug. Bamsar literally evokes great big bears / hulking creatures, rendered great galumphs to retain affectionate childish tone. The final punctuation on the photographed page is a comma. No uncertain words."
+  },
+  {
+    "page": 11,
+    "sv": [],
+    "en": [],
+    "art": [
+      {"box": [0.124, 0.32, 0.45, 0.878], "description": "Tall rocket-shaped mug with fins and a dotted vertical seam, overflowing with black muck, a bare tree sticking up as a stirrer. Black ink crosshatching on cream paper."},
+      {"box": [0.535, 0.718, 0.922, 0.89], "description": "Small heap of squishy lake-bottom gunk with twigs and irregular black patches, in a shallow puddle."}
+    ],
+    "notes": "Illustration for page10 food aside. No text; faint marks are bleed-through. Photograph fingers lie just below these crop bounds. Boxes are in EXIF-corrected portrait orientation."
+  },
+  {
+    "page": 12,
+    "sv": [
+      "Doktor Ann åt som sagt vanlig människomat. Hon gillade kaffe, ostmacka och körsbärstomater.",
+      "Zorbas solade ofta mycket för att klara av sin diet. Var det ingen sol så somnade Zorbas.",
+      "”Kaffe verkar vara för mig det som sol är för Zorbas” brukade Ann tänka.",
+      "Men det spelar nog ingen roll hur mycket kaffe jag får, gegga kan jag inte äta."
+    ],
+    "en": [
+      "Doctor Ann ate ordinary human food, as we said. She liked coffee, a cheese sandwich and cherry tomatoes.",
+      "Zorbas did a lot of sunbathing to keep up with his diet. If there was no sun, Zorbas fell asleep.",
+      "“Coffee seems to do for me what sunshine does for Zorbas,” Ann used to think.",
+      "But however much coffee I have, I don’t think I could eat muck."
+    ],
+    "art": [],
+    "notes": "Text-only left page; illustration continues on page13. Preserve singular ostmacka, solade, and the move to first-person thought in the final paragraph without adding Swedish quotation marks. No uncertain words."
+  }
+]
