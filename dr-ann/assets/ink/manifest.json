@@ -103,7 +103,9 @@
       0.85
     ],
     "paper_noise_floor": 13,
-    "repairs": []
+    "repairs": [],
+    "delivery_file": "assets/ink/ink-3-v3.svg",
+    "delivery_rendering": "Native source PNG, with non-spatial photographic edge-contrast adjustment."
   },
   {
     "page": 4,
@@ -151,7 +153,9 @@
       0.8821078431372549
     ],
     "paper_noise_floor": 6,
-    "repairs": []
+    "repairs": [],
+    "delivery_file": "assets/ink/ink-5-v3.svg",
+    "delivery_rendering": "Native source PNG, with non-spatial photographic edge-contrast adjustment."
   },
   {
     "page": 7,
@@ -240,7 +244,9 @@
       0.8938725490196079
     ],
     "paper_noise_floor": 18,
-    "repairs": []
+    "repairs": [],
+    "delivery_file": "assets/ink/ink-11-v3.svg",
+    "delivery_rendering": "Native source PNG, with non-spatial photographic edge-contrast adjustment."
   },
   {
     "page": 13,

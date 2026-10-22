@@ -13,12 +13,12 @@
   },
   {
     "page": 3,
-    "file": "assets/color-3-v2.webp",
+    "file": "assets/color-3-v3.svg",
     "width": 2428,
     "height": 1293,
     "source_ink": "assets/ink/ink-3.png",
     "source_ink_retained": true,
-    "underpaint_opacity": 0.6,
+    "underpaint_opacity": 0,
     "moving_part_polygon": [
       [
         0.448929,
@@ -150,7 +150,11 @@
       ]
     ],
     "lossless_delivery": true,
-    "foreground_polygon": null
+    "foreground_polygon": null,
+    "archive_file": "assets/color-3-v2.webp",
+    "rendering": "native-svg-focus",
+    "embedded_original_ink_exact": true,
+    "colour_wash_source_clipped": false
   },
   {
     "page": 4,
@@ -166,7 +170,7 @@
   },
   {
     "page": 5,
-    "file": "assets/color-5-v2.webp",
+    "file": "assets/color-5-v3.svg",
     "width": 1027,
     "height": 1248,
     "source_ink": "assets/ink/ink-5.png",
@@ -174,7 +178,11 @@
     "underpaint_opacity": 0.68,
     "moving_part_polygon": null,
     "lossless_delivery": true,
-    "foreground_polygon": null
+    "foreground_polygon": null,
+    "archive_file": "assets/color-5-v2.webp",
+    "rendering": "native-svg-focus",
+    "embedded_original_ink_exact": true,
+    "colour_wash_source_clipped": true
   },
   {
     "page": 7,
@@ -255,7 +263,7 @@
   },
   {
     "page": 11,
-    "file": "assets/color-11-v2.webp",
+    "file": "assets/color-11-v3.svg",
     "width": 2511,
     "height": 2369,
     "source_ink": "assets/ink/ink-11.png",
@@ -353,7 +361,11 @@
         0.415
       ]
     ],
-    "lossless_delivery": true
+    "lossless_delivery": true,
+    "archive_file": "assets/color-11-v2.webp",
+    "rendering": "native-svg-focus",
+    "embedded_original_ink_exact": true,
+    "colour_wash_source_clipped": true
   },
   {
     "page": 13,

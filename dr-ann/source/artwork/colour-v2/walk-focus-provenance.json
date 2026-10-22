@@ -1,0 +1,18 @@
+{
+  "reader_page": 2,
+  "source_page": 3,
+  "rendering": "Self-contained SVG; original native PNG embedded byte-for-byte.",
+  "source_sha256": "dc334962ddc1697026ed5b3b6b3673d262c040dab2dcdf945ad319c0ad6a8498",
+  "canvas": [
+    2428,
+    1293
+  ],
+  "alpha_curve": "0 0 0 .10 .35 .65 .90 1 1 1 1",
+  "colour_scene": "#45404d",
+  "colour_walker": "#000000",
+  "changes": [
+    "Removed offset yellow underpainting and blurred shadow.",
+    "Restrained charcoal/plum silhouette; original walker remains black.",
+    "Suppressed faint photographic paper halo, preserving native positions and complete silhouettes."
+  ]
+}

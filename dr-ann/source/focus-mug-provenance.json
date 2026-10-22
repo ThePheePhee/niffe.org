@@ -1,0 +1,173 @@
+{
+  "page": 11,
+  "canvas": [
+    2511,
+    2369
+  ],
+  "builder": "source/build-focus-mug.py",
+  "outputs": [
+    "assets/color-11-v3.svg",
+    "assets/ink/ink-11-v3.svg"
+  ],
+  "self_contained": true,
+  "ink_input": {
+    "file": "assets/ink/ink-11.png",
+    "sha256": "e4f37374ebb7515ed77d45cef67ff0bc705ee1fdf96e2e9e87c41ad631925aae",
+    "embedded_bytes_equal_source": true,
+    "resampled": false,
+    "reencoded": false,
+    "morphology": false,
+    "paint_mask_applied_to_ink": false
+  },
+  "paint_input": {
+    "file": "source/artwork/colour-v2/color-11-underpaint.png",
+    "sha256": "fb3ea4bdef11c7ef23a9e1d554dac3cb6ed69966944c56bf0e275ec5eb77b769",
+    "input_size": [
+      1291,
+      1218
+    ],
+    "embedded_size": [
+      1291,
+      1218
+    ],
+    "embedded_bytes_equal_source": true,
+    "rendered_size": [
+      2511,
+      2369
+    ],
+    "resize": "SVG image placement, pigment only; original PNG not reencoded",
+    "opacity": 0.67,
+    "original_file_unchanged": true
+  },
+  "focus": {
+    "region": "native tree polygon including bare twigs and trunk",
+    "polygon_pixels": [
+      [
+        20,
+        42
+      ],
+      [
+        309,
+        42
+      ],
+      [
+        316,
+        292
+      ],
+      [
+        260,
+        365
+      ],
+      [
+        226,
+        418
+      ],
+      [
+        237,
+        478
+      ],
+      [
+        344,
+        785
+      ],
+      [
+        397,
+        905
+      ],
+      [
+        412,
+        930
+      ],
+      [
+        394,
+        943
+      ],
+      [
+        284,
+        946
+      ],
+      [
+        242,
+        923
+      ],
+      [
+        205,
+        851
+      ],
+      [
+        111,
+        582
+      ],
+      [
+        47,
+        478
+      ],
+      [
+        20,
+        424
+      ],
+      [
+        26,
+        338
+      ],
+      [
+        20,
+        286
+      ]
+    ],
+    "operator": "SVG feComponentTransfer alpha table only",
+    "alpha_table_values": [
+      0,
+      0.03,
+      0.16,
+      0.34,
+      0.62,
+      0.84,
+      0.98,
+      1,
+      1,
+      1,
+      1
+    ],
+    "black_rgb_unchanged": true,
+    "shape_coordinates_unchanged": true,
+    "complementary_selection": "in/out selector, recombined by arithmetic sum",
+    "non_tree_ink_filter_output": "unchanged source alpha/RGB"
+  },
+  "paint_silhouette": {
+    "barrier_alpha_threshold": 40,
+    "temporary_barrier_close_kernel": 11,
+    "temporary_puddle_bridge_pixels": [
+      [
+        [
+          1647,
+          2254
+        ],
+        [
+          1795,
+          2254
+        ]
+      ],
+      [
+        [
+          2398,
+          2105
+        ],
+        [
+          2456,
+          2191
+        ]
+      ]
+    ],
+    "temporary_puddle_bridge_width": 13,
+    "actual_ink_morphology": false,
+    "original_nonzero_ink_covered": true,
+    "original_ink_opacity_never_clipped": true,
+    "nonzero_silhouette_pixels": 1660461
+  },
+  "notes": [
+    "No app code, metadata, stylesheet or service worker changed.",
+    "Ink focus curve changes display opacity only; archival source rasters remain byte-identical.",
+    "Paint silhouette construction may close tiny gaps on a disposable mask; no ink stroke is redrawn or clipped."
+  ]
+}

@@ -32,11 +32,14 @@ function save() {
 }
 
 // Complete native-resolution masters, extracted once from the audited photographs.
+function inkSource(page) {
+  return `${BASE}${inkMetadata.get(page)?.delivery_file||`assets/ink/ink-${page}.webp`}?v=focus-2`;
+}
 function faithfulArt(page,cls='') {
   const meta=inkMetadata.get(page)||{width:1000,height:1200};
   const index=page===17?10:definitions.findIndex(s=>s.art===page);
   const description=page===1?(state.lang==='sv'?'Bokens handritade omslag':'The handmade original cover'):title(index<0?0:index);
-  return `<img class="ink-master ${cls}" src="${BASE}assets/ink/ink-${page}.webp?v=fidelity-4" width="${meta.width}" height="${meta.height}" alt="${escape(description)}" decoding="async">`;
+  return `<img class="ink-master ${cls}" src="${inkSource(page)}" width="${meta.width}" height="${meta.height}" alt="${escape(description)}" decoding="async">`;
 }
 
 function effects(effect) {
@@ -70,7 +73,7 @@ function spread() {
       const words={2:['doktor','doctor'],3:['doktorssaker','doctor-things'],4:['foten','foot'],5:['bandage','bandaged'],7:['stenar','stones'],9:['mjukaste handslag','gentlest handshake'],11:['geggaöboy','muck-o-boy','raketmugg','rocket mug','träd','tree'],13:['kaffe','coffee'],15:['slingerstek','wriggle-roast'],17:['solen','sun']};
       for(const word of words[scene.art]||[])html=html.replace(new RegExp(`(?<![\\p{L}])${word}(?![\\p{L}])`,'iu'),match=>`<button class="story-word" data-illustration>${match}</button>`);
     }
-    if(p==='Slut.')html=`<span class="sr-only">Slut.</span><img class="ink-end" src="${BASE}assets/ink/ink-end.webp?v=fidelity-4" alt="" width="733" height="493">`;
+    if(p==='Slut.')html=`<span class="sr-only">Slut.</span><img class="ink-end" src="${BASE}assets/ink/ink-end.webp?v=focus-2" alt="" width="733" height="493">`;
     return `<p class="${/^\s*[-—–“‘]/.test(p)?'dialogue ':''}${/^(Slut\.|The End\.)$/.test(p)?'the-end':''}" data-paragraph="${i}">${html}</p>`;
   };
   const paras=scene[state.lang].map(paragraph);
@@ -173,7 +176,7 @@ function wireArt() {
 }
 function preloadNext(){
   const next=scenes[Math.min(state.page+1,10)];
-  const img=new Image();img.src=state.edition==='colour'?`${BASE}${colourMetadata.get(next.art)?.file||'assets/color-'+next.art+'-v2.webp'}`:`${BASE}assets/ink/ink-${next.art}.webp?v=fidelity-4`;
+  const img=new Image();img.src=state.edition==='colour'?`${BASE}${colourMetadata.get(next.art)?.file||'assets/color-'+next.art+'-v2.webp'}`:inkSource(next.art);
 }
 function chapters() {
   $('chapter-grid').innerHTML=scenes.map((s,i)=>`<button class="chapter" data-page="${i}" ${i===state.page?'aria-current="page"':''}><span class="chapter-thumb" aria-hidden="true">${state.edition==='colour'?`<img src="${BASE}${colourMetadata.get(s.art)?.file||'assets/color-'+s.art+'-v2.webp'}" loading="lazy" alt="">`:faithfulArt(i===0?1:s.art)}</span><span class="chapter-num">${i?String(i).padStart(2,'0'):t('cover')}</span><span class="chapter-name">${escape(title(i))}</span></button>`).join('');
@@ -204,7 +207,7 @@ async function offline(){
 }
 
 async function init(){
-  const [response,inkResponse,colourResponse]=await Promise.all([fetch(`${BASE}source/transcription.json`),fetch(`${BASE}assets/ink/manifest.json?v=fidelity-4`),fetch(`${BASE}assets/colour-v2.json?v=fidelity-4`)]);
+  const [response,inkResponse,colourResponse]=await Promise.all([fetch(`${BASE}source/transcription.json`),fetch(`${BASE}assets/ink/manifest.json?v=focus-2`),fetch(`${BASE}assets/colour-v2.json?v=focus-2`)]);
   if(!response.ok||!inkResponse.ok||!colourResponse.ok)throw new Error('The book could not be loaded.');
   const [raw,inkRows,colourRows]=await Promise.all([response.json(),inkResponse.json(),colourResponse.json()]);
   inkMetadata=new Map(inkRows.map(row=>[row.page,row]));
