@@ -78,7 +78,8 @@ function updateUI() {
   const phase=world.phase,near=world.nearTarget(),active=mode==='playing';
   $('objective').textContent=t('goals')[phase]+(phase===5?` ${world.stirs} / 3`:'');
   $('chapter').textContent=`0${phase<3?1:phase<7?2:3} / 03`;
-  $('character').textContent=t(phase<3?'chapterAnn':phase<7?'chapterZorbas':'chapterSunset')+' · '+(phase<3?'Dr. Ann':'Zorbas');
+  const actor=phase<3?'Dr. Ann':'Zorbas';
+  $('character').textContent=innerWidth<=700?actor:t(phase<3?'chapterAnn':phase<7?'chapterZorbas':'chapterSunset')+' · '+actor;
   $('heart-count').textContent=world.heartCount;
   $('heart-count').setAttribute('aria-label',`${world.heartCount} ${t('hearts')}`);
   $('progress').style.width=world.progress()+'%';
@@ -122,8 +123,16 @@ document.addEventListener('keydown',e=>{
 });
 document.addEventListener('keyup',e=>{if(keys[e.key]){setInput('key:'+e.code,keys[e.key],false);if(mode==='playing')e.preventDefault();}});
 document.querySelectorAll('[data-control]').forEach(button=>{
-  button.addEventListener('pointerdown',e=>{if(mode!=='playing')return;e.preventDefault();button.setPointerCapture(e.pointerId);setInput('pointer:'+e.pointerId,button.dataset.control,true);});
-  for(const name of ['pointerup','pointercancel','lostpointercapture'])button.addEventListener(name,e=>setInput('pointer:'+e.pointerId,button.dataset.control,false));
+  let pressAt=0;
+  button.addEventListener('pointerdown',e=>{if(mode!=='playing')return;e.preventDefault();pressAt=performance.now();button.setPointerCapture(e.pointerId);setInput('pointer:'+e.pointerId,button.dataset.control,true);});
+  button.addEventListener('pointerup',e=>{
+    const source='pointer:'+e.pointerId,key=button.dataset.control;
+    const startedAt=pressAt;
+    // A quick little tap should still make a visible step or an action.
+    const remaining=Math.max(0,(key==='left'||key==='right'?140:65)-(performance.now()-pressAt));
+    setTimeout(()=>{if(pressAt===startedAt)setInput(source,key,false);},remaining);
+  });
+  button.addEventListener('pointercancel',e=>setInput('pointer:'+e.pointerId,button.dataset.control,false));
   button.addEventListener('keydown',e=>{if((e.key===' '||e.key==='Enter')&&mode==='playing'){e.preventDefault();setInput('button:'+button.id,button.dataset.control,true);}});
   button.addEventListener('keyup',e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();setInput('button:'+button.id,button.dataset.control,false);}});
   button.addEventListener('contextmenu',e=>e.preventDefault());
