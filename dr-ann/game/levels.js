@@ -14,5 +14,10 @@ LEVELS[0].platforms.push(platform(1540,100,76),platform(3115,80,65));
 // Missing this high jump returns to the approach, rather than trapping Ann
 // on the ground between two walls taller than her standing jump.
 LEVELS[0].hazards.push({x:1320,w:40,kind:'mud'});
+// Checkpoints are dry, unobstructed positions for the whole character body.
+LEVELS[0].checkpoints=[100,560,1030,1650,2150,2440,3080];
+LEVELS[1].checkpoints=[110,580,1020,1310,2120,3075];
+LEVELS[2].checkpoints=[150,740,1330,2030,2690];
+LEVELS[3].checkpoints=[140,240,1010,1240,2510];
 LEVELS[1].platforms.push(platform(1840,110,60),platform(2960,110,44));
 export const levelById=id=>LEVELS.find(l=>l.id===id);

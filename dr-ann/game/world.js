@@ -1,4 +1,4 @@
-import {LEVELS,levelById} from './levels.js?v=20';
+import {LEVELS,levelById} from './levels.js?v=21';
 const PICKUPS=['bandage','coffee','cheese','tomato'],foodIds=['coffee','cheese','tomato'];
 export class World {
  constructor(reducedMotion=false,saved=null){
@@ -17,9 +17,11 @@ export class World {
  enter(id,announce=true){
   const d=levelById(id);if(!d||!this.unlocked.includes(id))return false;
   if(this.player)this.positions[this.levelId]={x:this.falling?this.checkpoint:this.player.x,y:this.falling?0:this.player.y,checkpoint:this.checkpoint};
-  this.level=structuredClone(d);this.levelId=id;this.scene=d.actor;const pos=this.positions[id];this.checkpoint=Number(pos?.checkpoint)||d.spawn;
+  this.level=structuredClone(d);this.levelId=id;this.scene=d.actor;const pos=this.positions[id];this.checkpoint=d.checkpoints.filter(point=>point<=(Number(pos?.checkpoint)||d.spawn)).at(-1)||d.spawn;
   const actor=d.actor==='ann'?{w:34,h:62}:{w:108,h:174};
   this.player={x:Math.max(30,Math.min(d.length-150,Number(pos?.x)||d.spawn)),y:Math.max(0,Math.min(190,Number(pos?.y)||0)),...actor,vx:0,vy:0,facing:1,grounded:false};
+  const blocked=d.platforms.some(s=>(!s.requires||this.flags[s.requires])&&this.player.x+actor.w>s.x&&this.player.x<s.x+s.w&&this.player.y<s.h-1);
+  if(blocked){this.player.x=this.checkpoint;this.player.y=0;}
   this.camera=Math.max(0,this.player.x-300);this.activity=null;this.hold=0;this.lastStir=0;this.actionLatch=true;this.jumpLatch=true;this.respawnTime=0;this.falling=false;this.action=null;
   this.lastByActor[d.actor]=id;this.refresh();if(announce)this.emit('level',id);return true;
  }

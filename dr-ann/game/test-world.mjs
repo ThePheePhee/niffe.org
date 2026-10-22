@@ -348,14 +348,31 @@ for (const level of LEVELS) {
 }
 
 test('missing the highest bandage ledge cannot trap Ann between tall walls', () => {
-  const world=fixture('ann-garden',{bandage1:true,bandage2:true},{x:1065,y:0});
+  const world=fixture('ann-garden',{bandage1:true,bandage2:true},{x:1030,y:0});
   Object.assign(world.player,{x:1323,y:0,vy:0,grounded:true});
   // This is the landing of a missed jump between the 100 and 152 high walls.
   for(let i=0;i<150&&!world.falls;i++)tick(world);
   assert.equal(world.falls,1);
-  assert.equal(world.player.x,1060);
+  assert.equal(world.player.x,1030);
   assert.equal(world.player.y,0);
   assert.equal(world.countBandages(),2);
   travel(world,1420-17);
   assert.equal(world.countBandages(),3,'The same climb is possible after retrying');
+});
+
+test('every checkpoint is dry and clear for the whole character',()=>{
+  for(const level of LEVELS){const w=level.actor==='ann'?34:108;
+    for(const point of level.checkpoints){
+      assert.ok(!level.platforms.some(s=>point+w>s.x&&point<s.x+s.w),`${level.id} checkpoint ${point} overlaps a platform`);
+      assert.ok(!level.hazards.some(h=>point+w*.6>h.x&&point+w*.4<h.x+h.w),`${level.id} checkpoint ${point} overlaps a fall gap`);
+    }
+  }
+});
+
+test('an older save inside a ledge is restored at a valid checkpoint',()=>{
+  const world=new World();world.flags.bandage1=true;
+  const saved=world.save();saved.positions['ann-garden']={x:1060,y:0,checkpoint:1060};
+  const restored=new World(false,saved);
+  assert.equal(restored.checkpoint,1030);assert.equal(restored.player.x,1030);
+  assert.equal(restored.flags.bandage1,true);
 });

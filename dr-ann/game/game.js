@@ -1,8 +1,8 @@
-import {World} from './world.js?v=20';
-import {LEVELS} from './levels.js?v=20';
-import {render,preloadArt} from './art.js?v=20';
-import {GameAudio} from './music.js?v=20';
-import {COPY} from './copy.js?v=20';
+import {World} from './world.js?v=21';
+import {LEVELS} from './levels.js?v=21';
+import {render,preloadArt} from './art.js?v=21';
+import {GameAudio} from './music.js?v=21';
+import {COPY} from './copy.js?v=21';
 
 const $=id=>document.getElementById(id),motion=matchMedia('(prefers-reduced-motion: reduce)');
 const SAVE='dr-ann-game-v2',PREF='dr-ann-game-preferences-v2';
