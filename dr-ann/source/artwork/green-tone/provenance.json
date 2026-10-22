@@ -1,0 +1,71 @@
+[
+  {
+    "page": 7,
+    "reader_page": 5,
+    "source": "source/artwork/colour-v2/color-7-master.png",
+    "source_sha256": "bcfa1c0ba9d0f8329cfff0c43a16b3dc70728ee5468914cef349d268b4a4ef56",
+    "mask_sha256": "bf1e94758beac21e5bc98628b8aa52f02fbb210146088b27fc8d8c3754277b0b",
+    "canvas": [
+      2113,
+      2218
+    ],
+    "operation": "CIELAB hue adjustment to sage; original lightness and chroma, with chroma reduced only when needed for sRGB",
+    "hue_degrees": 128.0,
+    "generated_imagery_used": false,
+    "changed_pixels": 1044328,
+    "alpha_exact": true,
+    "outside_mask_exact": true,
+    "neutral_ink_exact": true,
+    "original_opaque_pen_exact": true,
+    "gamut_fitted_pixels": 9,
+    "maximum_lightness_rounding": 0.24437332153320312,
+    "master": "source/artwork/green-tone/color-7-master.png",
+    "file": "assets/color-7-green-v1.webp"
+  },
+  {
+    "page": 9,
+    "reader_page": 6,
+    "source": "source/artwork/colour-v2/color-9-master.png",
+    "source_sha256": "a3cef7972d3f530478cfa624bdb8210f77f371fcfb34383a6f53c88b5be8fc81",
+    "mask_sha256": "9a34f2d1e5f8bb531b34bb1f9d17e0c809471e62619ba9b8b5db6f5c01602fe8",
+    "canvas": [
+      2378,
+      2985
+    ],
+    "operation": "CIELAB hue adjustment to sage; original lightness and chroma, with chroma reduced only when needed for sRGB",
+    "hue_degrees": 128.0,
+    "generated_imagery_used": false,
+    "changed_pixels": 1627688,
+    "alpha_exact": true,
+    "outside_mask_exact": true,
+    "neutral_ink_exact": true,
+    "original_opaque_pen_exact": true,
+    "gamut_fitted_pixels": 18423,
+    "maximum_lightness_rounding": 0.24437332153320312,
+    "master": "source/artwork/green-tone/color-9-master.png",
+    "file": "assets/color-9-green-v1.webp"
+  },
+  {
+    "page": 17,
+    "reader_page": 10,
+    "source": "source/artwork/colour-v2/color-17-master.png",
+    "source_sha256": "d7464292fec94f3c1c93dc1a4ea96a8255a2e38816939097a56cb0764833b5d0",
+    "mask_sha256": "4a5462ec667ac29fbad1260186935437ab0e6a683e75e1708e7eac1517377739",
+    "canvas": [
+      2257,
+      1437
+    ],
+    "operation": "CIELAB hue adjustment to sage; original lightness and chroma, with chroma reduced only when needed for sRGB",
+    "hue_degrees": 128.0,
+    "generated_imagery_used": false,
+    "changed_pixels": 117078,
+    "alpha_exact": true,
+    "outside_mask_exact": true,
+    "neutral_ink_exact": true,
+    "original_opaque_pen_exact": true,
+    "gamut_fitted_pixels": 828,
+    "maximum_lightness_rounding": 0.24437332153320312,
+    "master": "source/artwork/green-tone/color-17-master.png",
+    "file": "assets/color-17-green-v1.webp"
+  }
+]

@@ -186,7 +186,7 @@
   },
   {
     "page": 7,
-    "file": "assets/color-7-v2.webp",
+    "file": "assets/color-7-green-v1.webp",
     "width": 2113,
     "height": 2218,
     "source_ink": "assets/ink/ink-7.png",
@@ -247,11 +247,19 @@
       ]
     ],
     "lossless_delivery": true,
-    "foreground_polygon": null
+    "foreground_polygon": null,
+    "master_file": "source/artwork/green-tone/color-7-master.png",
+    "base_file": "assets/color-7-v2.webp",
+    "colour_adjustment": {
+      "hue_CIELAB": 128.0,
+      "mask": "source/artwork/green-tone/mask-7.png",
+      "alpha_exact": true,
+      "outside_mask_exact": true
+    }
   },
   {
     "page": 9,
-    "file": "assets/color-9-v2.webp",
+    "file": "assets/color-9-green-v1.webp",
     "width": 2378,
     "height": 2985,
     "source_ink": "assets/ink/ink-9.png",
@@ -259,7 +267,15 @@
     "underpaint_opacity": 0.64,
     "moving_part_polygon": null,
     "foreground_polygon": null,
-    "lossless_delivery": true
+    "lossless_delivery": true,
+    "master_file": "source/artwork/green-tone/color-9-master.png",
+    "base_file": "assets/color-9-v2.webp",
+    "colour_adjustment": {
+      "hue_CIELAB": 128.0,
+      "mask": "source/artwork/green-tone/mask-9.png",
+      "alpha_exact": true,
+      "outside_mask_exact": true
+    }
   },
   {
     "page": 11,
@@ -427,7 +443,7 @@
   },
   {
     "page": 17,
-    "file": "assets/color-17-v2.webp",
+    "file": "assets/color-17-green-v1.webp",
     "width": 2257,
     "height": 1437,
     "source_ink": "assets/ink/ink-17.png",
@@ -435,6 +451,14 @@
     "underpaint_opacity": 0.66,
     "moving_part_polygon": null,
     "foreground_polygon": null,
-    "lossless_delivery": true
+    "lossless_delivery": true,
+    "master_file": "source/artwork/green-tone/color-17-master.png",
+    "base_file": "assets/color-17-v2.webp",
+    "colour_adjustment": {
+      "hue_CIELAB": 128.0,
+      "mask": "source/artwork/green-tone/mask-17.png",
+      "alpha_exact": true,
+      "outside_mask_exact": true
+    }
   }
 ]

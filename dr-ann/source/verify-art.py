@@ -137,7 +137,17 @@ for row in colour:
     assert not row.get('temporary_qa_only') and row['source_ink_retained'] and row['lossless_delivery']
     assert [row['width'],row['height']]==[ink[n]['width'],ink[n]['height']]
     source=rgba(ROOT/f'assets/ink/ink-{n}.png')
-    master=rgba(ROOT/f'source/artwork/colour-v2/color-{n}-master.png')
+    archive_master=rgba(ROOT/f'source/artwork/colour-v2/color-{n}-master.png')
+    archive_delivery=rgba(ROOT/f'assets/color-{n}-v2.webp')
+    assert np.array_equal(archive_master,archive_delivery),f'Colour archive differs: {n}'
+    master=rgba(ROOT/row.get('master_file',f'source/artwork/colour-v2/color-{n}-master.png'))
+    tone=row.get('colour_adjustment')
+    if tone:
+        selection=np.array(Image.open(ROOT/tone['mask']).convert('L'))>0
+        assert np.array_equal(master[:,:,3],archive_master[:,:,3]),f'Tone changed alpha: {n}'
+        assert np.array_equal(master[~selection],archive_master[~selection]),f'Tone changed surroundings: {n}'
+        neutral=np.ptp(archive_master[:,:,:3],axis=-1)<=2
+        assert np.array_equal(master[neutral],archive_master[neutral]),f'Tone changed neutral ink: {n}'
     is_svg=Path(row['file']).suffix=='.svg'
     if is_svg:
         assert n in FOCUS_PAGES and row.get('embedded_original_ink_exact'),f'Unexpected SVG colour delivery: {n}'

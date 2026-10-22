@@ -33,7 +33,7 @@ function save() {
 
 // Complete native-resolution masters, extracted once from the audited photographs.
 function inkSource(page) {
-  return `${BASE}${inkMetadata.get(page)?.delivery_file||`assets/ink/ink-${page}.webp`}?v=focus-3`;
+  return `${BASE}${inkMetadata.get(page)?.delivery_file||`assets/ink/ink-${page}.webp`}?v=tone-1`;
 }
 function faithfulArt(page,cls='') {
   const meta=inkMetadata.get(page)||{width:1000,height:1200};
@@ -73,7 +73,7 @@ function spread() {
       const words={2:['doktor','doctor'],3:['doktorssaker','doctor-things'],4:['foten','foot'],5:['bandage','bandaged'],7:['stenar','stones'],9:['mjukaste handslag','gentlest handshake'],11:["geggaO'boy","muckO'boy",'raketmugg','rocket mug','träd','tree'],13:['kaffe','coffee'],15:['slingerstek','wriggle-roast'],17:['solen','sun']};
       for(const word of words[scene.art]||[])html=html.replace(new RegExp(`(?<![\\p{L}])${word}(?![\\p{L}])`,'iu'),match=>`<button class="story-word" data-illustration>${match}</button>`);
     }
-    if(p==='Slut.')html=`<span class="sr-only">Slut.</span><img class="ink-end" src="${BASE}assets/ink/ink-end.webp?v=focus-3" alt="" width="733" height="493">`;
+    if(p==='Slut.')html=`<span class="sr-only">Slut.</span><img class="ink-end" src="${BASE}assets/ink/ink-end.webp?v=tone-1" alt="" width="733" height="493">`;
     return `<p class="${/^\s*[-—–“‘]/.test(p)?'dialogue ':''}${/^(Slut\.|The End\.)$/.test(p)?'the-end':''}" data-paragraph="${i}">${html}</p>`;
   };
   const paras=scene[state.lang].map(paragraph);
@@ -207,7 +207,7 @@ async function offline(){
 }
 
 async function init(){
-  const [response,inkResponse,colourResponse]=await Promise.all([fetch(`${BASE}source/transcription.json`),fetch(`${BASE}assets/ink/manifest.json?v=focus-3`),fetch(`${BASE}assets/colour-v2.json?v=focus-3`)]);
+  const [response,inkResponse,colourResponse]=await Promise.all([fetch(`${BASE}source/transcription.json`),fetch(`${BASE}assets/ink/manifest.json?v=tone-1`),fetch(`${BASE}assets/colour-v2.json?v=tone-1`)]);
   if(!response.ok||!inkResponse.ok||!colourResponse.ok)throw new Error('The book could not be loaded.');
   const [raw,inkRows,colourRows]=await Promise.all([response.json(),inkResponse.json(),colourResponse.json()]);
   inkMetadata=new Map(inkRows.map(row=>[row.page,row]));
