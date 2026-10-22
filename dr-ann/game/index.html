@@ -3,86 +3,69 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#f5f2e8">
-  <meta name="description" content="Ett litet spel med Dr. Ann och Zorbas. Hjälp stora och små vänner, i din egen takt.">
+  <meta name="theme-color" content="#eee6d1">
+  <meta name="description" content="Dr. Ann och Zorbas: ett lekfullt äventyr i två storlekar. Utforska skogen, hjälp Mc Dinkelspiel och blanda geggaO’boy.">
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" href="/dr-ann/assets/icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="./style.css?v=1">
-  <title>Dr. Ann · Små steg. Stora vänner.</title>
+  <link rel="stylesheet" href="./style.css?v=20">
+  <title>Dr. Ann · Stora &amp; små äventyr</title>
 </head>
 <body>
   <a class="skip-link" href="#game" data-copy="skip">Till spelet</a>
   <div class="page-shell">
     <header class="topbar">
       <a class="back-link" href="/dr-ann/"><span aria-hidden="true">←</span><span data-copy="back">Till boken</span></a>
-      <a class="wordmark" href="/dr-ann/" aria-label="Dr. Ann">Dr. Ann<span class="wordmark-flower" aria-hidden="true">✳</span></a>
+      <a class="wordmark" href="/dr-ann/" aria-label="Dr. Ann">Dr. Ann<span aria-hidden="true">&amp;</span><small>ZORBAS</small></a>
       <div class="header-actions">
-        <button class="language" id="language" type="button" aria-label="Read in English" data-copy-aria="languageLabel"><span id="lang-sv" class="selected">SV</span><span class="language-separator" aria-hidden="true">/</span><span id="lang-en">EN</span></button>
-        <button class="icon-button" id="sound" type="button" aria-label="Slå på ljud" aria-pressed="false" data-copy-aria="soundOn">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/><path class="sound-waves" d="M17 8q4 4 0 8M20 5q7 7 0 14"/><path class="sound-slash" d="m17 7 5 10"/></svg>
-        </button>
-        <button class="icon-button" id="pause" type="button" aria-label="Pausa" aria-pressed="false" data-copy-aria="pause">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><g class="pause-symbol"><path d="M8 5v14M16 5v14"/></g><path class="play-symbol" d="m9 5 10 7-10 7z"/></svg>
-        </button>
+        <button class="language" id="language" type="button" aria-label="Read in English"><span id="lang-sv" class="selected">SV</span><span aria-hidden="true">/</span><span id="lang-en">EN</span></button>
+        <button class="header-button" id="map-button" type="button" aria-haspopup="dialog" aria-controls="map-dialog" aria-label="Välj kapitel" data-copy-aria="mapAria"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 5 6-2 6 2 6-2v16l-6 2-6-2-6 2zm6-2v16m6-14v16"/></svg><span data-copy="map">Kapitel</span></button>
+        <button class="header-button sound-button" id="sound" type="button" aria-label="Slå på musik" aria-pressed="false" data-copy-aria="soundOn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 17V5l11-2v12M9 8l11-2"/><ellipse cx="6" cy="17" rx="3" ry="2"/><ellipse cx="17" cy="15" rx="3" ry="2"/><path class="sound-slash" d="m3 3 19 18"/></svg><span data-copy="music">Musik</span></button>
+        <button class="icon-button" id="pause" type="button" aria-label="Pausa" aria-pressed="false" data-copy-aria="pause"><svg viewBox="0 0 24 24" aria-hidden="true"><g class="pause-symbol"><path d="M8 5v14M16 5v14"/></g><path class="play-symbol" d="m8 5 11 7-11 7z"/></svg></button>
       </div>
     </header>
 
     <main>
-      <section class="introduction" aria-labelledby="page-title">
-        <p class="eyebrow" data-copy="eyebrow">ETT LITET SPEL OM STORA OCH SMÅ VÄNNER</p>
-        <h1 id="page-title" data-copy="title">Små steg. Stora vänner.</h1>
-        <p class="introduction-copy" data-copy="intro">Ett litet äventyr med Dr. Ann och Zorbas. Alla kan hjälpa till.</p>
-      </section>
-
+      <section class="introduction" aria-labelledby="page-title"><p class="eyebrow" data-copy="eyebrow">ETT ÄVENTYR I TVÅ STORLEKAR</p><h1 id="page-title" data-copy="title">Stora &amp; små äventyr.</h1></section>
       <section class="game-card" aria-label="Dr. Ann och Zorbas" data-copy-aria="gameLabel">
         <div class="game-hud">
-          <div class="chapter-badge"><span class="hud-label" data-copy="chapterLabel">DEL</span><span id="chapter">01 / 03</span></div>
+          <div class="chapter-badge"><span class="hud-label" data-copy="chapterLabel">KAPITEL</span><span id="chapter">01 / 04</span></div>
           <div class="character-badge"><span class="character-dot" aria-hidden="true"></span><span id="character">Dr. Ann</span></div>
-          <div class="friendship-badge"><svg viewBox="0 0 20 18" aria-hidden="true"><path d="M10 16 2 8C-3 1 6-3 10 3c4-6 13-2 8 5z"/></svg><span id="heart-count">0</span><span class="sr-only" data-copy="heartsLabel">vänskapshjärtan</span></div>
+          <div class="collectible-badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4V2m-1 2 5-2M5 10c-1-7 15-7 14 0M4 10h16M6 10c0 7 3 10 6 12 3-2 6-5 6-12"/></svg><span id="heart-count">0</span><span class="sr-only" data-copy="heartsLabel">ekollon</span></div>
         </div>
         <div class="progress-track" aria-hidden="true"><div id="progress"></div></div>
-
         <div class="stage game-viewport" id="stage">
-          <canvas id="game" width="640" height="360" tabindex="0" aria-label="Spela med Dr. Ann och Zorbas" data-copy-aria="canvasLabel"></canvas>
-          <div id="overlay" class="game-overlay">
+          <canvas id="game" width="960" height="540" tabindex="0" aria-label="Spela med Dr. Ann och Zorbas" data-copy-aria="canvasLabel"></canvas>
+          <div id="overlay" class="game-overlay welcome">
             <div class="overlay-panel">
-              <span class="overlay-spark" aria-hidden="true">✳</span>
-              <p class="eyebrow" id="overlay-kicker" data-copy="welcomeKicker">STORA &amp; SMÅ ÄVENTYR</p>
-              <h2 id="overlay-title" data-copy="welcomeTitle">Hej, lilla hjälpare!</h2>
-              <p id="overlay-copy" data-copy="welcomeCopy">Följ med Dr. Ann och Zorbas. Gå, hoppa och hjälp era vänner längs vägen.</p>
-              <button class="start-button" id="start" type="button"><span data-copy="start">Nu leker vi</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></button>
+              <img id="story-art" class="story-art" hidden alt="">
+              <div class="overlay-text"><p class="eyebrow" id="overlay-kicker">TVÅ STORLEKAR · ETT ÄVENTYR</p><h2 id="overlay-title">Stora steg börjar smått.</h2><p id="overlay-copy">Följ med Dr. Ann och Zorbas. Utforska, hoppa och hjälp era vänner längs vägen.</p><div class="overlay-actions"><button class="start-button" id="start" type="button"><span data-copy="start">Börja äventyret</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></button><button class="secondary-button" id="overlay-secondary" type="button" hidden>Fortsätt</button></div></div>
             </div>
           </div>
         </div>
-
         <div class="play-deck">
           <div id="toast" class="toast" role="status" aria-live="polite"></div>
           <div class="objective-row"><p id="objective" role="status" aria-live="polite" data-copy="initialObjective">Ett äventyr väntar på dig.</p><span id="action-hint"></span></div>
           <p id="scene-note" class="scene-note"></p>
           <div class="controls" aria-label="Spelknappar" data-copy-aria="controlsLabel">
             <div class="movement-controls">
-              <button class="control-button direction-button" id="left" type="button" data-control="left" aria-label="Gå åt vänster" data-copy-aria="leftAria"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg><span id="left-label" data-copy="left">Vänster</span></button>
-              <button class="control-button direction-button" id="right" type="button" data-control="right" aria-label="Gå åt höger" data-copy-aria="rightAria"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg><span id="right-label" data-copy="right">Höger</span></button>
+              <button class="control-button direction-button" id="left" type="button" data-control="left" aria-label="Gå åt vänster" data-copy-aria="leftAria"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12H4m7-7-7 7 7 7"/></svg><span id="left-label" data-copy="left">Vänster</span></button>
+              <button class="control-button direction-button" id="right" type="button" data-control="right" aria-label="Gå åt höger" data-copy-aria="rightAria"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16m-7-7 7 7-7 7"/></svg><span id="right-label" data-copy="right">Höger</span></button>
             </div>
             <div class="action-controls">
-              <button class="control-button jump-button" id="jump" type="button" data-control="jump" aria-label="Hoppa" data-copy-aria="jump"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20V5m-6 6 6-6 6 6"/></svg><span id="jump-label" data-copy="jump">Hoppa</span></button>
-              <button class="control-button help-button" id="action" type="button" data-control="action" aria-label="Hjälp en vän" data-copy-aria="actionAria"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20 3 11C-2 4 8-1 12 6c4-7 14-2 9 5z"/></svg><span id="action-label" data-copy="action">Hjälp</span></button>
+              <button class="control-button jump-button" id="jump" type="button" data-control="jump" aria-label="Hoppa" data-copy-aria="jump"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20V4m-7 7 7-7 7 7M5 20h14"/></svg><span id="jump-label" data-copy="jump">Hoppa</span></button>
+              <button class="control-button action-button" id="action" type="button" data-control="action" aria-label="Använd" data-copy-aria="actionAria"><span id="action-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 12V5a2 2 0 0 1 4 0v6-7a2 2 0 0 1 4 0v7-5a2 2 0 0 1 4 0v10c0 4-3 6-7 6-2 0-4-2-5-3L3 13a2 2 0 0 1 3-3l2 2z"/></svg></span><span id="action-label" data-copy="action">Använd</span></button>
             </div>
           </div>
-          <div class="controls-notes"><p id="controls-note" data-copy="controlsNote">← → Gå · Mellanslag Hoppa · X Hjälp</p><p id="gentle-note"><span aria-hidden="true">✳</span><span data-copy="gentleNote">Ingen brådska. Inga liv att förlora.</span></p></div>
+          <div class="adventure-status"><div class="inventory-status"><span id="inventory"></span><span id="checkpoint-label"></span></div><button class="switch-button" id="switch-button" type="button" disabled aria-label="Byt figur" data-copy-aria="switchAria"><svg viewBox="0 0 28 24" aria-hidden="true"><circle cx="6" cy="13" r="2"/><path d="M2 21v-2c0-4 8-4 8 0v2M16 21v-7c0-5 9-5 9 0v7"/><circle cx="20.5" cy="5" r="3"/><path d="M6 5h6m-2-2 2 2-2 2M20 22h-7m2-2-2 2 2 2"/></svg><span data-copy="switch">Byt figur</span><kbd>C</kbd></button></div>
+          <div class="controls-notes"><p id="controls-note" data-copy="controlsNote">← → Gå · Mellanslag Hoppa · E Använd · C Byt figur</p><p id="gentle-note" data-copy="gentleNote">Försök igen. Vännerna väntar.</p></div>
         </div>
       </section>
-
-      <ol class="journey" aria-label="Äventyrets tre delar" data-copy-aria="journeyLabel">
-        <li class="current" data-step="ann"><span class="step-number" aria-hidden="true">01</span><span id="step-ann" data-copy="stepAnn">Små hjälpsamma steg</span></li>
-        <li data-step="zorbas"><span class="step-number" aria-hidden="true">02</span><span id="step-zorbas" data-copy="stepZorbas">I Zorbas stora värld</span></li>
-        <li data-step="sunset"><span class="step-number" aria-hidden="true">03</span><span id="step-sunset" data-copy="stepSunset">Tillsammans hem</span></li>
-      </ol>
+      <ol class="journey" id="journey" aria-label="Äventyrets kapitel" data-copy-aria="journeyLabel"></ol>
     </main>
-
     <footer class="footer"><p><span data-copy="credit">Efter boken av J. Dvärby</span><span class="footer-dot" aria-hidden="true">·</span><a href="/dr-ann/" data-copy="readBook">Läs boken</a></p><button id="restart" type="button"><span aria-hidden="true">↺</span><span data-copy="restart">Börja om</span></button></footer>
   </div>
+  <dialog id="map-dialog" aria-labelledby="map-title"><div class="dialog-heading"><div><p class="eyebrow" data-copy="mapKicker">TVÅ STORLEKAR · SAMMA VÄRLD</p><h2 id="map-title" data-copy="mapTitle">Vart vill du gå?</h2></div><button class="icon-button" id="map-close" type="button" aria-label="Stäng" data-copy-aria="close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div><div id="map-list" class="map-list"></div><p class="map-note" data-copy="mapNote">Upptäck nya kapitel längs vägen. Du kan gå tillbaka till platser du har besökt.</p></dialog>
   <noscript><p class="noscript">Spelet behöver JavaScript för att fungera. / This game needs JavaScript to play.</p></noscript>
-  <script type="module" src="./game.js?v=3"></script>
+  <script type="module" src="./game.js?v=20"></script>
 </body>
 </html>
