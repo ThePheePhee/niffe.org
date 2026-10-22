@@ -1,4 +1,4 @@
-const VERSION='dr-ann-v7';
+const VERSION='dr-ann-v8';
 const ROOT='/dr-ann/';
 const CORE=[ROOT,ROOT+'original/',ROOT+'colour/',ROOT+'book.css',ROOT+'compositions.css',ROOT+'book.js',ROOT+'sound.js',ROOT+'manifest.webmanifest',ROOT+'assets/icon.svg',ROOT+'assets/icon-192.png',ROOT+'assets/icon-512.png',ROOT+'source/transcription.json','/fonts/CormorantGaramond.woff2','/fonts/CormorantGaramond-Italic.woff2'];
 const PAGES=Array.from({length:17},(_,i)=>`${ROOT}assets/page-${i+1}.webp`);
