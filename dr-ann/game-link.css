@@ -1,0 +1,5 @@
+.book-game-invitation{display:inline-flex;align-items:center;gap:11px;align-self:flex-start;order:4;margin-top:20px;padding:12px 16px;border:1px solid #aebda6;border-radius:5px;background:#f0f4e9;color:#3c654c;text-decoration:none;font:11px/1.4 system-ui,sans-serif;letter-spacing:.01em;min-height:44px}
+.book-game-invitation:hover{background:#e4ecd9;border-color:#6e8c64}
+.game-pixel-icon{font:18px/1 'Courier New',monospace;color:#66835b}
+.book-game-settings{display:block;width:max-content;margin-top:14px;text-decoration:underline;text-underline-offset:4px}
+@media(max-width:700px){.book-game-invitation{align-self:center;margin-top:12px;font-size:10px;padding:10px 14px}}
